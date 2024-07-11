@@ -14,6 +14,7 @@ import play.pluv.fake.FakeRestClient;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public abstract class ApplicationTest {
 
+  //TODO: RestClientTest로 코드 넘기기
   @Configuration
   public static class TestRestClientConfig {
 

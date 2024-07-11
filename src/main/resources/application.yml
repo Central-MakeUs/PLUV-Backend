@@ -1,0 +1,11 @@
+spotify:
+  client-id: local-id
+  client-secret: local-secret
+
+---
+
+spring:
+  config:
+    import: classpath:secret/application-prod.yml
+    activate:
+      on-profile: prod

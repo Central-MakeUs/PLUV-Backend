@@ -22,7 +22,7 @@ public class SpotifyConnector implements MusicPlatformConnector {
   @Override
   public PlayList getPlayList(final String authCode) {
     final String accessToken = getAccessToken(authCode);
-    final SpotifyPlayListResponse response = spotifyApiClient.getPlayList(
+    final SpotifyPlayListResponses response = spotifyApiClient.getPlayList(
         String.format(AUTHORIZATION_FORMAT, accessToken)
     );
     return response.toPlayList();

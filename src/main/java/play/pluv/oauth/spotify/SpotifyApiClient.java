@@ -11,7 +11,7 @@ import org.springframework.web.service.annotation.PostExchange;
 public interface SpotifyApiClient {
 
   @GetExchange(url = "https://api.spotify.com/v1/me/playlists")
-  SpotifyPlayListResponse getPlayList(@RequestHeader("Authorization") final String accessToken);
+  SpotifyPlayListResponses getPlayList(@RequestHeader("Authorization") final String accessToken);
 
   @PostExchange(url = "https://accounts.spotify.com/api/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
   SpotifyAccessTokenResponse getAccessToken(@RequestParam final MultiValueMap<String, String> params);

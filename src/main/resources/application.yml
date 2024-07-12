@@ -1,6 +1,7 @@
 spotify:
   client-id: local-id
   client-secret: local-secret
+  redirectUri: http://localhost:8080
 
 ---
 

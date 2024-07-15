@@ -17,12 +17,12 @@ import play.pluv.oauth.spotify.SpotifyApiClient;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public abstract class ApplicationTest {
 
-  @TestConfiguration
+  @Configuration
   public static class mockBeanConfig {
 
     @Bean
     @Primary
-    public SpotifyApiClient spotifyApiClient() {
+    public SpotifyApiClient mockSpotifyApiClient() {
       final SpotifyApiClient spotifyApiClient = mock(SpotifyApiClient.class);
       SpotifyFixture.mockingClient(spotifyApiClient);
       return spotifyApiClient;

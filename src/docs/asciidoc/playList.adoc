@@ -1,0 +1,30 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+
+==== *PlayList 조회 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/read-playList/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/read-playList/request-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/read-playList/path-parameters.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/read-playList/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/read-playList/response-fields.adoc[]

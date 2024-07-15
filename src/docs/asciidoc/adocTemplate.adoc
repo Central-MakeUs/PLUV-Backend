@@ -1,0 +1,29 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+
+==== *adoc template API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/adoc-template/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/adoc-template/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/adoc-template/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/adoc-template/response-fields.adoc[]

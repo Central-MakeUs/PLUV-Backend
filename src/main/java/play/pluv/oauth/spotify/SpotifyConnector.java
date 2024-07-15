@@ -2,6 +2,7 @@ package play.pluv.oauth.spotify;
 
 import static play.pluv.playlist.domain.PlayListProvider.SPOTIFY;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,12 +21,12 @@ public class SpotifyConnector implements MusicPlatformConnector {
   private final SpotifyConfigProperty spotifyConfigProperty;
 
   @Override
-  public PlayList getPlayList(final String authCode) {
+  public List<PlayList> getPlayList(final String authCode) {
     final String accessToken = getAccessToken(authCode);
     final SpotifyPlayListResponses response = spotifyApiClient.getPlayList(
         String.format(AUTHORIZATION_FORMAT, accessToken)
     );
-    return response.toPlayList();
+    return response.toPlayLists();
   }
 
   @Override
@@ -34,11 +35,11 @@ public class SpotifyConnector implements MusicPlatformConnector {
   }
 
   private String getAccessToken(final String authCode) {
-    return spotifyApiClient.getAccessToken(creaeAccessTokenRequestParam(authCode))
+    return spotifyApiClient.getAccessToken(createAccessTokenRequestParam(authCode))
         .accessToken();
   }
 
-  private MultiValueMap<String, String> creaeAccessTokenRequestParam(final String authCode) {
+  private MultiValueMap<String, String> createAccessTokenRequestParam(final String authCode) {
     final MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
     param.add("grant_type", "authorization_code");
     param.add("code", authCode);

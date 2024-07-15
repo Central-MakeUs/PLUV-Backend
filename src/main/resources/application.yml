@@ -1,0 +1,12 @@
+spotify:
+  client-id: local-id
+  client-secret: local-secret
+  redirectUri: http://localhost:8080
+
+---
+
+spring:
+  config:
+    import: classpath:secret/application-prod.yml
+    activate:
+      on-profile: prod

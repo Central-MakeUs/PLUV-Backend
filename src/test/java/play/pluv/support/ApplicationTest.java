@@ -1,35 +1,31 @@
 package play.pluv.support;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.support.RestClientAdapter;
-import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-import play.pluv.fake.FakeRestClient;
+import org.springframework.context.annotation.Primary;
+import play.pluv.fixture.SpotifyFixture;
+import play.pluv.oauth.spotify.SpotifyApiClient;
 
 @SpringBootTest
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public abstract class ApplicationTest {
 
-  //TODO: RestClientTest로 코드 넘기기
   @Configuration
-  public static class TestRestClientConfig {
+  public static class mockBeanConfig {
 
     @Bean
-    public FakeRestClient fakeRestClient() {
-      return createHttpInterface(FakeRestClient.class);
-    }
-
-    private <T> T createHttpInterface(final Class<T> clazz) {
-      final RestClient restClient = RestClient.create();
-      final RestClientAdapter adapter = RestClientAdapter.create(restClient);
-      final HttpServiceProxyFactory factory = HttpServiceProxyFactory
-          .builderFor(adapter)
-          .build();
-      return factory.createClient(clazz);
+    @Primary
+    public SpotifyApiClient mockSpotifyApiClient() {
+      final SpotifyApiClient spotifyApiClient = mock(SpotifyApiClient.class);
+      SpotifyFixture.mockingClient(spotifyApiClient);
+      return spotifyApiClient;
     }
   }
 }

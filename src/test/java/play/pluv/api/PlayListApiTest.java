@@ -16,7 +16,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static play.pluv.playlist.domain.PlayListProvider.SPOTIFY;
 
-import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import play.pluv.playlist.controller.dto.PlayListReadRequest;
@@ -31,9 +30,14 @@ public class PlayListApiTest extends ApiTest {
     final List<PlayList> playLists =
         List.of(
             new PlayList(
-                new PlayListId("id", SPOTIFY),
-                "https://testImage.com/testImage.png", 10,
-                LocalDate.of(2024, 3, 10)
+                new PlayListId("id1", SPOTIFY),
+                "테스트용 플레이리스트 #1",
+                "https://testImage.com/testImage.png", 10
+            ),
+            new PlayList(
+                new PlayListId("id2", SPOTIFY),
+                "테스트용 플레이리스트 #2",
+                "https://testImage.com/testImage.png", 6
             )
         );
 
@@ -57,7 +61,7 @@ public class PlayListApiTest extends ApiTest {
                 fieldWithPath("[]").type(ARRAY).description("플레이리스트 전체"),
                 fieldWithPath("[].thumbNailUrl").type(STRING).description("플레이리스트 섬네일 url"),
                 fieldWithPath("[].songCount").type(NUMBER).description("플레이리스트 안에 있는 곡 수"),
-                fieldWithPath("[].updatedDate").type(STRING).description("최근 업데이트된 날짜"),
+                fieldWithPath("[].name").type(STRING).description("플레이리스트 이름"),
                 fieldWithPath("[].source").type(STRING).description("플레이리스트 출처")
             )
         ));

@@ -1,7 +1,5 @@
 package play.pluv.playlist.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 import play.pluv.playlist.domain.PlayList;
@@ -10,8 +8,7 @@ import play.pluv.playlist.domain.PlayList;
 public record PlayListOverViewResponse(
     String thumbNailUrl,
     Integer songCount,
-    @JsonFormat(pattern = "yyyy.MM.dd")
-    LocalDate updatedDate,
+    String name,
     String source
 ) {
 
@@ -24,8 +21,8 @@ public record PlayListOverViewResponse(
   public static PlayListOverViewResponse from(final PlayList playList) {
     return new PlayListOverViewResponseBuilder()
         .thumbNailUrl(playList.getThumbNailUrl())
-        .updatedDate(playList.getUpdatedDate())
         .songCount(playList.getSongCount())
+        .name(playList.getName())
         .source(playList.getSource().getName())
         .build();
   }

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class Music {
+public class MusicQuery {
 
   @Getter
   private final String name;

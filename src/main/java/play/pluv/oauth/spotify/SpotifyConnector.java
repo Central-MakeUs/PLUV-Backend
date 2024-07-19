@@ -4,15 +4,17 @@ import static java.lang.String.format;
 import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import play.pluv.playlist.application.MusicPlatformConnector;
-import play.pluv.playlist.domain.Music;
-import play.pluv.playlist.domain.PlayList;
+import play.pluv.music.domain.Music;
 import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.application.MusicPlatformConnector;
+import play.pluv.playlist.domain.MusicQuery;
+import play.pluv.playlist.domain.PlayList;
 
 @Component
 @RequiredArgsConstructor
@@ -41,13 +43,10 @@ public class SpotifyConnector implements MusicPlatformConnector {
     return SPOTIFY;
   }
 
-  public List<SpotifySearchMusicResponse> searchMusics(
-      final String accessToken, final List<Music> musics
-  ) {
-    return musics.stream()
-        .map(this::createRequestParamForSearchMusic)
-        .map(param -> spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param))
-        .toList();
+  public Optional<Music> searchMusic(final String accessToken, final MusicQuery query) {
+    final MultiValueMap<String, String> param = createRequestParamForSearchMusic(query);
+    return spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param)
+        .toMusic();
   }
 
   private String getAccessToken(final String authCode) {
@@ -65,7 +64,7 @@ public class SpotifyConnector implements MusicPlatformConnector {
     return param;
   }
 
-  private MultiValueMap<String, String> createRequestParamForSearchMusic(final Music music) {
+  private MultiValueMap<String, String> createRequestParamForSearchMusic(final MusicQuery music) {
     final MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
     final String query = music.getIsrcCode()
         .map(isrc -> format(MUSIC_QUERY_FORMAT_ISRC, isrc))

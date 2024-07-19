@@ -14,5 +14,12 @@ public interface SpotifyApiClient {
   SpotifyPlayListResponses getPlayList(@RequestHeader("Authorization") final String accessToken);
 
   @PostExchange(url = "https://accounts.spotify.com/api/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
-  SpotifyAccessTokenResponse getAccessToken(@RequestParam final MultiValueMap<String, String> params);
+  SpotifyAccessTokenResponse getAccessToken(
+      @RequestParam final MultiValueMap<String, String> params);
+
+  @GetExchange(url = "https://api.spotify.com/v1/search")
+  SpotifySearchMusicResponse searchMusic(
+      @RequestHeader("Authorization") final String accessToken,
+      @RequestParam final MultiValueMap<String, String> params
+  );
 }

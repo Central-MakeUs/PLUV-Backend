@@ -14,7 +14,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static play.pluv.playlist.domain.PlayListProvider.SPOTIFY;
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package play.pluv.fixture;
 
-import static play.pluv.playlist.domain.PlayListProvider.SPOTIFY;
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import play.pluv.music.domain.MusicStreaming;
 
 @Builder
 @ToString
@@ -18,7 +19,7 @@ public class PlayList {
   @Getter
   private final Integer songCount;
 
-  public PlayListProvider getSource() {
-    return playListId.playListProvider();
+  public MusicStreaming getSource() {
+    return playListId.musicStreaming();
   }
 }

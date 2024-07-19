@@ -1,7 +1,7 @@
 package play.pluv.oauth.spotify;
 
 import static java.lang.String.format;
-import static play.pluv.playlist.domain.PlayListProvider.SPOTIFY;
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import java.util.function.Function;
@@ -12,7 +12,7 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.playlist.application.MusicPlatformConnector;
 import play.pluv.playlist.domain.Music;
 import play.pluv.playlist.domain.PlayList;
-import play.pluv.playlist.domain.PlayListProvider;
+import play.pluv.music.domain.MusicStreaming;
 
 @Component
 @RequiredArgsConstructor
@@ -37,7 +37,7 @@ public class SpotifyConnector implements MusicPlatformConnector {
   }
 
   @Override
-  public PlayListProvider supportedType() {
+  public MusicStreaming supportedType() {
     return SPOTIFY;
   }
 

@@ -9,9 +9,9 @@ import play.pluv.playlist.domain.PlayList;
 @RequiredArgsConstructor
 public class PlayListService {
 
-  private final MusicPlatformConnector musicPlatformConnector;
+  private final PlayListConnector playListConnector;
 
   public List<PlayList> getPlayLists(final String authCode, final String source) {
-    return musicPlatformConnector.getPlayList(authCode);
+    return playListConnector.getPlayList(authCode);
   }
 }

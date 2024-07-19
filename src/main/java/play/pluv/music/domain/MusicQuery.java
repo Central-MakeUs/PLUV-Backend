@@ -1,4 +1,4 @@
-package play.pluv.playlist.domain;
+package play.pluv.music.domain;
 
 import java.util.Optional;
 import lombok.Getter;

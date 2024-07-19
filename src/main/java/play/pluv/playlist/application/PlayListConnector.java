@@ -4,7 +4,7 @@ import java.util.List;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.music.domain.MusicStreaming;
 
-public interface MusicPlatformConnector {
+public interface PlayListConnector {
 
   List<PlayList> getPlayList(final String authCode);
 

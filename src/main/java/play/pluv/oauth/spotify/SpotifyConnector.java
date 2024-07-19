@@ -10,15 +10,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.Music;
+import play.pluv.music.domain.MusicQuery;
 import play.pluv.music.domain.MusicStreaming;
-import play.pluv.playlist.application.MusicPlatformConnector;
-import play.pluv.playlist.domain.MusicQuery;
+import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.PlayList;
 
 @Component
 @RequiredArgsConstructor
-public class SpotifyConnector implements MusicPlatformConnector {
+public class SpotifyConnector implements PlayListConnector, MusicExplorer {
 
   private static final String AUTHORIZATION_FORMAT = "Bearer %s";
   private static final Function<String, String> CREATE_AUTH_HEADER
@@ -43,6 +44,7 @@ public class SpotifyConnector implements MusicPlatformConnector {
     return SPOTIFY;
   }
 
+  @Override
   public Optional<Music> searchMusic(final String accessToken, final MusicQuery query) {
     final MultiValueMap<String, String> param = createRequestParamForSearchMusic(query);
     return spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param)

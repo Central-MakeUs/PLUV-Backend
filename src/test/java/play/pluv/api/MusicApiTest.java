@@ -33,7 +33,7 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusic(any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/{destination}/music/search", "spotify")
             .contentType(APPLICATION_JSON_VALUE)

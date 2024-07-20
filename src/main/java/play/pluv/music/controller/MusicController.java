@@ -20,11 +20,11 @@ public class MusicController {
   }
 
   @PostMapping("/{destination}/music/search")
-  public BaseResponse<List<MusicSearchResponse>> searchMusic(
+  public BaseResponse<List<MusicSearchResponse>> searchMusics(
       @RequestBody final MusicSearchRequest musicSearchRequest,
       @PathVariable final String destination
   ) {
-    final var responses = musicService.searchMusic(musicSearchRequest);
+    final var responses = musicService.searchMusics(musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 }

@@ -13,3 +13,7 @@ endif::[]
 == *[ PlayList ]*
 
 include::playList.adoc[]
+
+== *[ Music ]*
+
+include::music.adoc[]

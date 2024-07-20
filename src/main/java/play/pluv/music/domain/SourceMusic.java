@@ -1,11 +1,13 @@
 package play.pluv.music.domain;
 
 import java.util.Optional;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MusicQuery {
+@Builder
+public class SourceMusic {
 
   @Getter
   private final String name;

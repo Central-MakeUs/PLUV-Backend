@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 import java.util.Optional;
-import play.pluv.music.domain.Music;
+import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.spotify.SpotifyPlayListResponses.SpotifyPlayListResponse.ThumbNailResponse;
 
@@ -14,7 +14,7 @@ public record SpotifySearchMusicResponse(
     Track tracks
 ) {
 
-  public Optional<Music> toMusic() {
+  public Optional<DestinationMusic> toMusic() {
     return tracks.toMusic();
   }
 
@@ -22,18 +22,19 @@ public record SpotifySearchMusicResponse(
       List<SpotifyMusic> items
   ) {
 
-    public Optional<Music> toMusic() {
+    public Optional<DestinationMusic> toMusic() {
       if (items.isEmpty()) {
         return Optional.empty();
       }
 
       final SpotifyMusic spotifyMusic = items.get(0);
 
-      return Optional.of(Music.builder()
+      return Optional.of(DestinationMusic.builder()
           .musicId(new MusicId(SPOTIFY, spotifyMusic.id()))
           .imageUrl(spotifyMusic.getImageUrl())
           .artistNames(spotifyMusic.getArtistNames())
           .name(spotifyMusic.name())
+          .isrcCode(spotifyMusic.getIsrcCode())
           .build()
       );
     }
@@ -57,6 +58,10 @@ public record SpotifySearchMusicResponse(
       return artists.stream()
           .map(Artist::name)
           .toList();
+    }
+
+    public String getIsrcCode() {
+      return externalIds().isrc();
     }
   }
 

@@ -1,5 +1,6 @@
 package play.pluv.music.domain;
 
+import java.util.List;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,8 @@ public class SourceMusic {
   @Getter
   private final String name;
   @Getter
-  private final String artistName;
+  private final List<String> artistNames;
+  //Nullable
   private final String isrcCode;
 
   public Optional<String> getIsrcCode(){

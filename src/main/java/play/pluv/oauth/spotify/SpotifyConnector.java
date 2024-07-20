@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
-import play.pluv.music.domain.Music;
-import play.pluv.music.domain.MusicQuery;
+import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicStreaming;
+import play.pluv.music.domain.SourceMusic;
 import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.PlayList;
 
@@ -45,7 +45,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
   }
 
   @Override
-  public Optional<Music> searchMusic(final String accessToken, final MusicQuery query) {
+  public Optional<DestinationMusic> searchMusic(final String accessToken, final SourceMusic query) {
     final MultiValueMap<String, String> param = createRequestParamForSearchMusic(query);
     return spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param)
         .toMusic();
@@ -66,12 +66,15 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
     return param;
   }
 
-  private MultiValueMap<String, String> createRequestParamForSearchMusic(final MusicQuery music) {
+  private MultiValueMap<String, String> createRequestParamForSearchMusic(final SourceMusic music) {
     final MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+
+    final String artistName = String.join(",", music.getArtistNames());
+
     final String query = music.getIsrcCode()
         .map(isrc -> format(MUSIC_QUERY_FORMAT_ISRC, isrc))
         .orElseGet(() ->
-            format(MUSIC_QUERY_FORMAT_NAME_ARTIST, music.getName(), music.getArtistName())
+            format(MUSIC_QUERY_FORMAT_NAME_ARTIST, music.getName(), artistName)
         );
 
     param.add("q", query);

@@ -7,9 +7,9 @@ import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
 
-public class MusicResponseFixture {
+public class MusicFixture {
 
-  public static List<MusicSearchResponse> 음악_검색_결과_예시() {
+  public static List<MusicSearchResponse> 음악_검색_결과() {
     return List.of(
         new MusicSearchResponse(
             true, true, new SourceMusicResponse("좋은 날", "아이유"),
@@ -25,7 +25,7 @@ public class MusicResponseFixture {
     );
   }
 
-  public static MusicSearchRequest 음악_검색_요청_예시() {
+  public static MusicSearchRequest 음악_검색_요청() {
     final List<MusicQuery> musicQueries = List.of(
         new MusicQuery("좋은 날", "아이유", "KRA381001057"),
         new MusicQuery("SPOT!", "지코,제니", null),

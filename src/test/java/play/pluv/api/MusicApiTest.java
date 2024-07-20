@@ -15,8 +15,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static play.pluv.api.fixture.MusicResponseFixture.음악_검색_결과_예시;
-import static play.pluv.api.fixture.MusicResponseFixture.음악_검색_요청_예시;
+import static play.pluv.api.fixture.MusicFixture.음악_검색_결과;
+import static play.pluv.api.fixture.MusicFixture.음악_검색_요청;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -28,8 +28,8 @@ public class MusicApiTest extends ApiTest {
 
   @Test
   void 음악을_읽어서_반환해준다() throws Exception {
-    final MusicSearchRequest 검색_요청 = 음악_검색_요청_예시();
-    final List<MusicSearchResponse> 검색_결과 = 음악_검색_결과_예시();
+    final MusicSearchRequest 검색_요청 = 음악_검색_요청();
+    final List<MusicSearchResponse> 검색_결과 = 음악_검색_결과();
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 

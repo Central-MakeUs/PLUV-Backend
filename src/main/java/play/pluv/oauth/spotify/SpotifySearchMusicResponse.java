@@ -18,7 +18,7 @@ public record SpotifySearchMusicResponse(
     return tracks.toMusic();
   }
 
-  private record Track(
+  public record Track(
       List<SpotifyMusic> items
   ) {
 
@@ -42,7 +42,7 @@ public record SpotifySearchMusicResponse(
   }
 
   @JsonNaming(SnakeCaseStrategy.class)
-  private record SpotifyMusic(
+  public record SpotifyMusic(
       String name,
       String id,
       Album album,
@@ -65,19 +65,19 @@ public record SpotifySearchMusicResponse(
     }
   }
 
-  private record Album(
+  public record Album(
       List<ThumbNailResponse> images
   ) {
 
   }
 
-  private record ExternalId(
+  public record ExternalId(
       String isrc
   ) {
 
   }
 
-  private record Artist(
+  public record Artist(
       String name
   ) {
 

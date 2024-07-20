@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.playlist.application.PlayListService;
-import play.pluv.playlist.controller.dto.PlayListOverViewResponse;
+import play.pluv.playlist.application.dto.PlayListOverViewResponse;
 
 @RestController
 public class PlayListController {

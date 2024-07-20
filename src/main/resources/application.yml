@@ -3,6 +3,9 @@ spotify:
   client-secret: local-secret
   redirectUri: http://localhost:8080
 
+restClient:
+  logging: true
+
 ---
 
 spring:

@@ -1,9 +1,9 @@
-package play.pluv.playlist.domain;
+package play.pluv.music.domain;
 
 import lombok.Getter;
 
 @Getter
-public enum PlayListProvider {
+public enum MusicStreaming {
 
   SPOTIFY("Spotify"),
   YOUTUBE("Youtube"),
@@ -11,7 +11,7 @@ public enum PlayListProvider {
 
   private final String name;
 
-  PlayListProvider(final String name) {
+  MusicStreaming(final String name) {
     this.name = name;
   }
 }

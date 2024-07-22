@@ -3,10 +3,15 @@ package play.pluv.oauth.spotify;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
+import play.pluv.oauth.spotify.dto.SpotifyAccessTokenResponse;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListMusicResponses;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses;
+import play.pluv.oauth.spotify.dto.SpotifySearchMusicResponse;
 
 public interface SpotifyApiClient {
 
@@ -21,5 +26,11 @@ public interface SpotifyApiClient {
   SpotifySearchMusicResponse searchMusic(
       @RequestHeader("Authorization") final String accessToken,
       @RequestParam final MultiValueMap<String, String> params
+  );
+
+  @GetExchange(url = "https://api.spotify.com/v1/playlists/{playListId}/tracks?market=KR")
+  SpotifyPlayListMusicResponses getMusics(
+      @PathVariable final String playListId,
+      @RequestHeader("Authorization") final String accessToken
   );
 }

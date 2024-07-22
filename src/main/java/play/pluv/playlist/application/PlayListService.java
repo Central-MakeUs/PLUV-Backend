@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import play.pluv.playlist.domain.PlayList;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Service
 @RequiredArgsConstructor
@@ -13,5 +14,9 @@ public class PlayListService {
 
   public List<PlayList> getPlayLists(final String accessToken, final String source) {
     return playListConnector.getPlayList(accessToken);
+  }
+
+  public List<PlayListMusic> getPlayListMusics(final String playListId, final String accessToken) {
+    return playListConnector.getMusics(playListId, accessToken);
   }
 }

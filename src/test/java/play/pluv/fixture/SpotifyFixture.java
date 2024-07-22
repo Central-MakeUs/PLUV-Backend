@@ -4,18 +4,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import play.pluv.oauth.spotify.SpotifyAccessTokenResponse;
 import play.pluv.oauth.spotify.SpotifyApiClient;
-import play.pluv.oauth.spotify.SpotifyPlayListResponses;
-import play.pluv.oauth.spotify.SpotifyPlayListResponses.SpotifyPlayListResponse;
-import play.pluv.oauth.spotify.SpotifyPlayListResponses.SpotifyPlayListResponse.ThumbNailResponse;
-import play.pluv.oauth.spotify.SpotifyPlayListResponses.SpotifyPlayListResponse.TrackOverviewResponse;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse.Album;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse.Artist;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse.ExternalId;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse.SpotifyMusic;
-import play.pluv.oauth.spotify.SpotifySearchMusicResponse.Track;
+import play.pluv.oauth.spotify.dto.SpotifyAccessTokenResponse;
+import play.pluv.oauth.spotify.dto.SpotifyMusic;
+import play.pluv.oauth.spotify.dto.SpotifyMusic.Album;
+import play.pluv.oauth.spotify.dto.SpotifyMusic.Artist;
+import play.pluv.oauth.spotify.dto.SpotifyMusic.ExternalId;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses.SpotifyPlayListResponse;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses.SpotifyPlayListResponse.TrackOverviewResponse;
+import play.pluv.oauth.spotify.dto.SpotifySearchMusicResponse;
+import play.pluv.oauth.spotify.dto.SpotifySearchMusicResponse.Track;
+import play.pluv.oauth.spotify.dto.ThumbNailResponse;
 
 public class SpotifyFixture {
 
@@ -35,7 +35,8 @@ public class SpotifyFixture {
     final List<Artist> artists = List.of(new Artist("IU"));
     return new SpotifySearchMusicResponse(
         new Track(List.of(
-            new SpotifyMusic("Good Day", "goodDayId", album, new ExternalId("KRA381001057"), artists)))
+            new SpotifyMusic("Good Day", "goodDayId", album, new ExternalId("KRA381001057"),
+                artists)))
     );
   }
 

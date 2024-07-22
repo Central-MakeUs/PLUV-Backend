@@ -1,4 +1,4 @@
-package play.pluv.oauth.spotify;
+package play.pluv.oauth.spotify.dto;
 
 import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
@@ -20,18 +20,11 @@ public record SpotifyPlayListResponses(
     public PlayList toPlayList() {
       return PlayList.builder()
           .playListId(new PlayListId(id, SPOTIFY))
+          //TODO: 추후 로직 수정하기 images가 nullable함
           .thumbNailUrl(images.get(0).url())
           .songCount(tracks.total())
           .name(name)
           .build();
-    }
-
-    public record ThumbNailResponse(
-        Integer height,
-        Integer width,
-        String url
-    ) {
-
     }
 
     public record TrackOverviewResponse(

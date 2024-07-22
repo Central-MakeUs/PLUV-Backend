@@ -28,3 +28,22 @@ include::{snippets}/../../build/generated-snippets/read-playList/http-response.a
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/read-playList/response-fields.adoc[]
+
+==== *PlayList의 음악 조회 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/read-playList-musics/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/read-playList-musics/request-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/read-playList-musics/path-parameters.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/read-playList-musics/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/read-playList-musics/response-fields.adoc[]

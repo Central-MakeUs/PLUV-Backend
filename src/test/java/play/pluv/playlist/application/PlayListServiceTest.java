@@ -20,7 +20,7 @@ class PlayListServiceTest extends ApplicationTest {
   void 플레이리스트를_읽는다() {
     final List<PlayList> expected = List.of(스포티파이_플레이리스트_1(), 스포티파이_플레이리스트_2());
 
-    final List<PlayList> actual = playListService.getPlayLists("authCode", SPOTIFY.getName());
+    final List<PlayList> actual = playListService.getPlayLists("accessToken", SPOTIFY.getName());
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()

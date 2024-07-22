@@ -14,8 +14,10 @@ import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses;
 import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.PlayList;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
 @RequiredArgsConstructor
@@ -53,6 +55,11 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
   private String getAccessToken(final String authCode) {
     return spotifyApiClient.getAccessToken(createRequestParamForAccessToken(authCode))
         .accessToken();
+  }
+
+  public List<PlayListMusic> getMusics(final String playListId, final String accessToken) {
+    return spotifyApiClient.getMusics(playListId, CREATE_AUTH_HEADER.apply(accessToken))
+        .toMusics();
   }
 
   private MultiValueMap<String, String> createRequestParamForAccessToken(final String authCode) {

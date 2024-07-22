@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.playlist.application.PlayListService;
 import play.pluv.playlist.application.dto.PlayListOverViewResponse;
+import play.pluv.playlist.application.dto.PlayListReadRequest;
 
 @RestController
 public class PlayListController {
@@ -20,9 +21,9 @@ public class PlayListController {
 
   @PostMapping("/{source}/playLists/read")
   public ResponseEntity<List<PlayListOverViewResponse>> readPlayLists(
-      @PathVariable final String source, @RequestBody final String authCode
+      @PathVariable final String source, @RequestBody final PlayListReadRequest request
   ) {
-    final var playLists = playListService.getPlayLists(authCode, source);
+    final var playLists = playListService.getPlayLists(request.accessToken(), source);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
     return ResponseEntity.ok(response);
   }

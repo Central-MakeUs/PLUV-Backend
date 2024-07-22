@@ -8,18 +8,12 @@ import play.pluv.music.domain.MusicStreaming;
 
 @Builder
 @ToString
+@Getter
 @RequiredArgsConstructor
 public class PlayList {
 
   private final PlayListId playListId;
-  @Getter
   private final String name;
-  @Getter
   private final String thumbNailUrl;
-  @Getter
   private final Integer songCount;
-
-  public MusicStreaming getSource() {
-    return playListId.musicStreaming();
-  }
 }

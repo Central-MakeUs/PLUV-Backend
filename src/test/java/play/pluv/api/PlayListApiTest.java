@@ -41,7 +41,7 @@ public class PlayListApiTest extends ApiTest {
             )
         );
 
-    final PlayListReadRequest request = new PlayListReadRequest("autCode");
+    final PlayListReadRequest request = new PlayListReadRequest("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
@@ -55,14 +55,16 @@ public class PlayListApiTest extends ApiTest {
                 parameterWithName("source").description("플레이리스트 제공자(spotify, apple, youtube)")
             ),
             requestFields(
-                fieldWithPath("authCode").type(STRING).description("플레이리스트 제공자의 oauth authCode")
+                fieldWithPath("accessToken").type(STRING)
+                    .description("플레이리스트 제공자의 oauth accessToken")
             ),
             responseFields(
                 fieldWithPath("[]").type(ARRAY).description("플레이리스트 전체"),
                 fieldWithPath("[].thumbNailUrl").type(STRING).description("플레이리스트 섬네일 url"),
                 fieldWithPath("[].songCount").type(NUMBER).description("플레이리스트 안에 있는 곡 수"),
                 fieldWithPath("[].name").type(STRING).description("플레이리스트 이름"),
-                fieldWithPath("[].source").type(STRING).description("플레이리스트 출처")
+                fieldWithPath("[].source").type(STRING).description("플레이리스트 출처"),
+                fieldWithPath("[].id").type(STRING).description("플레이리스트 식별자")
             )
         ));
   }

@@ -31,8 +31,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
   private final SpotifyConfigProperty spotifyConfigProperty;
 
   @Override
-  public List<PlayList> getPlayList(final String authCode) {
-    final String accessToken = getAccessToken(authCode);
+  public List<PlayList> getPlayList(final String accessToken) {
     final SpotifyPlayListResponses response = spotifyApiClient.getPlayList(
         CREATE_AUTH_HEADER.apply(accessToken)
     );

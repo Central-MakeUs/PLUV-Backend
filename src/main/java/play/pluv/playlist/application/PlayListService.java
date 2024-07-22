@@ -11,7 +11,7 @@ public class PlayListService {
 
   private final PlayListConnector playListConnector;
 
-  public List<PlayList> getPlayLists(final String authCode, final String source) {
-    return playListConnector.getPlayList(authCode);
+  public List<PlayList> getPlayLists(final String accessToken, final String source) {
+    return playListConnector.getPlayList(accessToken);
   }
 }

@@ -1,4 +1,4 @@
-package play.pluv.oauth.spotify;
+package play.pluv.oauth.spotify.dto;
 
 import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
@@ -24,14 +24,6 @@ public record SpotifyPlayListResponses(
           .songCount(tracks.total())
           .name(name)
           .build();
-    }
-
-    public record ThumbNailResponse(
-        Integer height,
-        Integer width,
-        String url
-    ) {
-
     }
 
     public record TrackOverviewResponse(

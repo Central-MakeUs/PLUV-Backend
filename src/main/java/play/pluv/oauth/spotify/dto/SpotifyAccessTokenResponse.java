@@ -1,4 +1,4 @@
-package play.pluv.oauth.spotify;
+package play.pluv.oauth.spotify.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

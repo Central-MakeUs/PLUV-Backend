@@ -20,6 +20,7 @@ public record SpotifyPlayListResponses(
     public PlayList toPlayList() {
       return PlayList.builder()
           .playListId(new PlayListId(id, SPOTIFY))
+          //TODO: 추후 로직 수정하기 images가 nullable함
           .thumbNailUrl(images.get(0).url())
           .songCount(tracks.total())
           .name(name)

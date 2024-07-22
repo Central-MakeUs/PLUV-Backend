@@ -14,6 +14,7 @@ public record SpotifyMusic(
 ) {
 
   public String getImageUrl() {
+    //TODO: 추후 로직 수정하기 images가 nullable함
     return album.images().get(0).url();
   }
 

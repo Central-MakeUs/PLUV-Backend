@@ -6,7 +6,7 @@ import play.pluv.music.domain.MusicStreaming;
 
 public interface PlayListConnector {
 
-  List<PlayList> getPlayList(final String authCode);
+  List<PlayList> getPlayList(final String accessToken);
 
   MusicStreaming supportedType();
 }

@@ -1,11 +1,14 @@
 package play.pluv.base;
 
-public class BaseException extends RuntimeException {
+import lombok.Getter;
 
-  private final BaseExceptionType baseExceptionType;
+@Getter
+public abstract class BaseException extends RuntimeException {
 
-  public BaseException(final BaseExceptionType baseExceptionType) {
-    super(baseExceptionType.getMessage());
-    this.baseExceptionType = baseExceptionType;
+  private final BaseExceptionType exceptionType;
+
+  public BaseException(final BaseExceptionType exceptionType) {
+    super(exceptionType.getMessage());
+    this.exceptionType = exceptionType;
   }
 }

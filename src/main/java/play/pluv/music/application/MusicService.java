@@ -5,11 +5,14 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.playlist.domain.PlayListId;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,14 @@ public class MusicService {
         .map(MusicQuery::toDomain)
         .map(sourceMusic -> searchMusic(sourceMusic, accessToken))
         .toList();
+  }
+
+  @Transactional
+  public void addMusics(final MusicAddRequest request) {
+    final List<MusicId> musicIds = request.getMusicIds();
+    final PlayListId playListId = request.getPlayListId();
+
+    musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }
 
   private MusicSearchResponse searchMusic(

@@ -10,9 +10,9 @@ import play.pluv.music.exception.MusicException;
 @Getter
 public enum MusicStreaming {
 
-  SPOTIFY("Spotify"),
-  YOUTUBE("Youtube"),
-  APPLE("Apple");
+  SPOTIFY("spotify"),
+  YOUTUBE("youtube"),
+  APPLE("apple");
 
   private final String name;
 

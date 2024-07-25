@@ -16,6 +16,8 @@ import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.oauth.application.SocialLoginClient;
+import play.pluv.oauth.domain.OAuthMemberInfo;
 import play.pluv.oauth.spotify.dto.SpotifyAddMusicRequest;
 import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListRequest;
 import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListResponse;
@@ -28,7 +30,7 @@ import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
 @RequiredArgsConstructor
-public class SpotifyConnector implements PlayListConnector, MusicExplorer {
+public class SpotifyConnector implements PlayListConnector, MusicExplorer, SocialLoginClient {
 
   private static final Integer MUSIC_ID_MAX_SIZE = 100;
   private static final String AUTHORIZATION_FORMAT = "Bearer %s";
@@ -46,6 +48,13 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
         CREATE_AUTH_HEADER.apply(accessToken)
     );
     return response.toPlayLists();
+  }
+
+  @Override
+  public OAuthMemberInfo fetchMember(final String authCode) {
+    final String accessToken = getAccessToken(authCode);
+    return spotifyApiClient.getUserProfile(CREATE_AUTH_HEADER.apply(accessToken))
+        .toOAuthMemberInfo();
   }
 
   @Override

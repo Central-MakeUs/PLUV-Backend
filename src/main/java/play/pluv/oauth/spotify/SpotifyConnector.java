@@ -3,6 +3,7 @@ package play.pluv.oauth.spotify;
 import static java.lang.String.format;
 import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -15,6 +16,7 @@ import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.oauth.spotify.dto.SpotifyAddMusicRequest;
 import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListRequest;
 import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListResponse;
 import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses;
@@ -28,6 +30,7 @@ import play.pluv.playlist.domain.PlayListMusic;
 @RequiredArgsConstructor
 public class SpotifyConnector implements PlayListConnector, MusicExplorer {
 
+  private static final Integer MUSIC_ID_MAX_SIZE = 100;
   private static final String AUTHORIZATION_FORMAT = "Bearer %s";
   private static final Function<String, String> CREATE_AUTH_HEADER
       = (token) -> String.format(AUTHORIZATION_FORMAT, token);
@@ -58,9 +61,29 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
   }
 
   @Override
-  public void addMusic(
-      final String accessToken, final List<MusicId> musicIds, final String playListId
+  public void addMusics(
+      final String accessToken, final List<MusicId> musicIds, final PlayListId playListId
   ) {
+    final List<SpotifyAddMusicRequest> requests = splitMusicIds(musicIds);
+
+    requests.parallelStream()
+        .forEach(
+            request -> spotifyApiClient.addMusics(
+                CREATE_AUTH_HEADER.apply(accessToken), playListId.id(), request
+            )
+        );
+  }
+
+  private List<SpotifyAddMusicRequest> splitMusicIds(final List<MusicId> musicIds) {
+    final List<List<MusicId>> partitionedMusicIds = new ArrayList<>();
+    for (int i = 0; i < musicIds.size(); i += MUSIC_ID_MAX_SIZE) {
+      partitionedMusicIds.add(
+          musicIds.subList(i, Math.min(i + MUSIC_ID_MAX_SIZE, musicIds.size()))
+      );
+    }
+    return partitionedMusicIds.stream()
+        .map(SpotifyAddMusicRequest::from)
+        .toList();
   }
 
   public String getAccessToken(final String authCode) {

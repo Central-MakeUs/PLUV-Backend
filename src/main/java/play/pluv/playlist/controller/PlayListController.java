@@ -35,7 +35,7 @@ public class PlayListController {
       @PathVariable final String source, @RequestBody final PlayListReadRequest request,
       @PathVariable final String id
   ) {
-    final var musics = playListService.getPlayListMusics(request.accessToken(), id);
+    final var musics = playListService.getPlayListMusics(id, request.accessToken());
     final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
     return BaseResponse.ok(response);
   }

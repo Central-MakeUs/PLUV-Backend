@@ -8,17 +8,16 @@ import play.pluv.playlist.domain.PlayListId;
 public record MusicAddRequest(
     String destinationAccessToken,
     List<String> musicIds,
-    String playListId,
-    MusicStreaming destination
+    String playListId
 ) {
 
-  public List<MusicId> extractMusicIds() {
+  public List<MusicId> extractMusicIds(final MusicStreaming destination) {
     return musicIds.stream()
         .map(id -> new MusicId(destination, id))
         .toList();
   }
 
-  public PlayListId extractPlayListId() {
+  public PlayListId extractPlayListId(final MusicStreaming destination) {
     return new PlayListId(playListId, destination);
   }
 }

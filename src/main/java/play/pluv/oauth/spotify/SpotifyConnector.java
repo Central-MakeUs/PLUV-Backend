@@ -12,11 +12,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListRequest;
+import play.pluv.oauth.spotify.dto.SpotifyCreatePlayListResponse;
 import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses;
+import play.pluv.oauth.spotify.dto.SpotifyUserResponse;
 import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.PlayList;
+import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
@@ -52,7 +57,13 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
         .toMusic();
   }
 
-  private String getAccessToken(final String authCode) {
+  @Override
+  public void addMusic(
+      final String accessToken, final List<MusicId> musicIds, final String playListId
+  ) {
+  }
+
+  public String getAccessToken(final String authCode) {
     return spotifyApiClient.getAccessToken(createRequestParamForAccessToken(authCode))
         .accessToken();
   }
@@ -60,6 +71,16 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
   public List<PlayListMusic> getMusics(final String playListId, final String accessToken) {
     return spotifyApiClient.getMusics(playListId, CREATE_AUTH_HEADER.apply(accessToken))
         .toMusics();
+  }
+
+  @Override
+  public PlayListId createPlayList(final String accessToken, final String name) {
+    final String authorization = CREATE_AUTH_HEADER.apply(accessToken);
+    final SpotifyUserResponse userProfile = spotifyApiClient.getUserProfile(authorization);
+    final SpotifyCreatePlayListResponse response = spotifyApiClient.createPlayList(
+        authorization, userProfile.id(), new SpotifyCreatePlayListRequest(name)
+    );
+    return new PlayListId(response.id(), SPOTIFY);
   }
 
   private MultiValueMap<String, String> createRequestParamForAccessToken(final String authCode) {

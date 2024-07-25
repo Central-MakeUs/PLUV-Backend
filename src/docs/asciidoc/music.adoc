@@ -28,3 +28,18 @@ include::{snippets}/../../build/generated-snippets/search-music/http-response.ad
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/search-music/response-fields.adoc[]
+
+==== *음악 추가 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/add-music/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/add-music/request-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/add-music/path-parameters.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/add-music/http-response.adoc[]

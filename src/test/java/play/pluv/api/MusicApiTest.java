@@ -92,9 +92,12 @@ public class MusicApiTest extends ApiTest {
                 fieldWithPath("destinationAccessToken").type(STRING)
                     .description("플레이리스트 제공자의 accessToken"),
                 fieldWithPath("musicIds[]").type(ARRAY).description("음악 이름"),
-                fieldWithPath("playListId").type(STRING).description("가수 이름들"),
-                fieldWithPath("destination").type(STRING)
-                    .description("플레이리스트 제공자(spotify, apple, youtube)")
+                fieldWithPath("playListId").type(STRING).description("가수 이름들")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data").type(STRING).description("빈 값")
             )
         ));
   }

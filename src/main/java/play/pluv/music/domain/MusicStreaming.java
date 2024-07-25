@@ -20,7 +20,6 @@ public enum MusicStreaming {
     this.name = name;
   }
 
-  @JsonCreator
   public static MusicStreaming from(final String name) {
     return Arrays.stream(values())
         .filter(streaming -> streaming.getName().equals(name))

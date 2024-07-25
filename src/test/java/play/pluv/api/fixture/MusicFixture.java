@@ -41,7 +41,7 @@ public class MusicFixture {
 
   public static MusicAddRequest 음악_추가_요청() {
     return new MusicAddRequest("spotify accessToken",
-        List.of("musicId1", "musicId2","musicId3","musicId4"), "playListIds", SPOTIFY
+        List.of("musicId1", "musicId2","musicId3","musicId4"), "playListIds"
     );
   }
 }

@@ -11,6 +11,7 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
+import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
 import play.pluv.playlist.domain.PlayListId;
 
@@ -31,9 +32,10 @@ public class MusicService {
   }
 
   @Transactional
-  public void addMusics(final MusicAddRequest request) {
-    final List<MusicId> musicIds = request.extractMusicIds();
-    final PlayListId playListId = request.extractPlayListId();
+  public void addMusics(final MusicAddRequest request, final String destinationName) {
+    final MusicStreaming destination = MusicStreaming.from(destinationName);
+    final List<MusicId> musicIds = request.extractMusicIds(destination);
+    final PlayListId playListId = request.extractPlayListId(destination);
 
     musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }

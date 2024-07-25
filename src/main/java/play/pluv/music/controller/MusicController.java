@@ -34,7 +34,7 @@ public class MusicController {
       @RequestBody final MusicAddRequest request,
       @PathVariable final String destination
   ) {
-    musicService.addMusics(request);
+    musicService.addMusics(request, destination);
     return BaseResponse.created();
   }
 }

@@ -130,6 +130,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
     param.add("q", query);
     param.add("type", "track");
     param.add("market", "KR");
+    param.add("locale", "ko");
     return param;
   }
 }

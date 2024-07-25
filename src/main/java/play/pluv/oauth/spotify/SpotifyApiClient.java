@@ -51,7 +51,7 @@ public interface SpotifyApiClient {
       @RequestParam final MultiValueMap<String, String> params
   );
 
-  @GetExchange(url = "https://api.spotify.com/v1/playlists/{playListId}/tracks?market=KR")
+  @GetExchange(url = "https://api.spotify.com/v1/playlists/{playListId}/tracks?market=KR&locale=ko")
   SpotifyPlayListMusicResponses getMusics(
       @PathVariable final String playListId,
       @RequestHeader("Authorization") final String accessToken

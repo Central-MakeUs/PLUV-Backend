@@ -1,11 +1,15 @@
 package play.pluv.api.fixture;
 
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+
 import java.util.List;
+import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
+import play.pluv.music.domain.MusicStreaming;
 
 public class MusicFixture {
 
@@ -33,5 +37,11 @@ public class MusicFixture {
     );
 
     return new MusicSearchRequest("dfj51lk5", musicQueries);
+  }
+
+  public static MusicAddRequest 음악_추가_요청() {
+    return new MusicAddRequest("spotify accessToken",
+        List.of("musicId1", "musicId2","musicId3","musicId4"), "playListIds", SPOTIFY
+    );
   }
 }

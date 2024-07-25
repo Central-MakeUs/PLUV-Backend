@@ -12,13 +12,13 @@ public record MusicAddRequest(
     MusicStreaming destination
 ) {
 
-  public List<MusicId> getMusicIds() {
+  public List<MusicId> extractMusicIds() {
     return musicIds.stream()
         .map(id -> new MusicId(destination, id))
         .toList();
   }
 
-  public PlayListId getPlayListId() {
+  public PlayListId extractPlayListId() {
     return new PlayListId(playListId, destination);
   }
 }

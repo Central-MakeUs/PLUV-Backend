@@ -14,6 +14,10 @@ public record BaseResponse<T>(
     return new BaseResponse<>(200, "Ok", data);
   }
 
+  public static BaseResponse<String> created() {
+    return new BaseResponse<>(201, "Created", "");
+  }
+
   public static BaseResponse<String> badRequest(final String msg) {
     return new BaseResponse<>(400, msg, EXCEPTION_DATA);
   }

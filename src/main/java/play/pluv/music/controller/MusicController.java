@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
 import play.pluv.music.application.MusicService;
+import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchResponse;
 
@@ -26,5 +27,14 @@ public class MusicController {
   ) {
     final var responses = musicService.searchMusics(musicSearchRequest);
     return BaseResponse.ok(responses);
+  }
+
+  @PostMapping("/{destination}/music/add")
+  public BaseResponse<String> addMusics(
+      @RequestBody final MusicAddRequest request,
+      @PathVariable final String destination
+  ) {
+    musicService.addMusics(request);
+    return BaseResponse.created();
   }
 }

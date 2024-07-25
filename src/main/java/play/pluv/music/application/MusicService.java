@@ -32,8 +32,8 @@ public class MusicService {
 
   @Transactional
   public void addMusics(final MusicAddRequest request) {
-    final List<MusicId> musicIds = request.getMusicIds();
-    final PlayListId playListId = request.getPlayListId();
+    final List<MusicId> musicIds = request.extractMusicIds();
+    final PlayListId playListId = request.extractPlayListId();
 
     musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }

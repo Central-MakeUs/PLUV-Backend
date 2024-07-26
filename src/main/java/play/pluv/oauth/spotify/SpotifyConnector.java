@@ -51,8 +51,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
   }
 
   @Override
-  public OAuthMemberInfo fetchMember(final String authCode) {
-    final String accessToken = getAccessToken(authCode);
+  public OAuthMemberInfo fetchMember(final String accessToken) {
     return spotifyApiClient.getUserProfile(CREATE_AUTH_HEADER.apply(accessToken))
         .toOAuthMemberInfo();
   }

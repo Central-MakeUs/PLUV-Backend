@@ -18,7 +18,8 @@ spotify:
   redirectUri: http://localhost:8080
 restClient:
   logging: true
-
+jwt:
+  secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="
 ---
 
 spring:

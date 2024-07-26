@@ -37,9 +37,7 @@ public class MusicService {
     musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }
 
-  private MusicSearchResponse searchMusic(
-      final SourceMusic sourceMusic, final String accessToken
-  ) {
+  private MusicSearchResponse searchMusic(final SourceMusic sourceMusic, final String accessToken) {
     final Optional<DestinationMusic> result = musicExplorer.searchMusic(accessToken, sourceMusic);
     return result
         .map(

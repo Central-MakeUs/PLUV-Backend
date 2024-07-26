@@ -6,7 +6,7 @@ import play.pluv.playlist.domain.PlayListMusic;
 
 @Builder
 public record PlayListMusicResponse(
-    String name, String artistNames, String isrcCode, String imageUrl
+    String title, String artistNames, String isrcCode, String imageUrl
 ) {
 
   public static List<PlayListMusicResponse> createList(final List<PlayListMusic> musics) {
@@ -17,7 +17,7 @@ public record PlayListMusicResponse(
 
   private static PlayListMusicResponse from(final PlayListMusic playListMusic){
     return PlayListMusicResponse.builder()
-        .name(playListMusic.getName())
+        .title(playListMusic.getTitle())
         .artistNames(String.join(",",playListMusic.getArtistNames()))
         .imageUrl(playListMusic.getImageUrl())
         .isrcCode(playListMusic.getIsrcCode().get())

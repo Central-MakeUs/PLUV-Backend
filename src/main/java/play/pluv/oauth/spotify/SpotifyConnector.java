@@ -124,7 +124,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer {
     final String query = music.getIsrcCode()
         .map(isrc -> format(MUSIC_QUERY_FORMAT_ISRC, isrc))
         .orElseGet(() ->
-            format(MUSIC_QUERY_FORMAT_NAME_ARTIST, music.getName(), artistName)
+            format(MUSIC_QUERY_FORMAT_NAME_ARTIST, music.getTitle(), artistName)
         );
 
     param.add("q", query);

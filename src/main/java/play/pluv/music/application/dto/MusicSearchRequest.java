@@ -9,7 +9,7 @@ public record MusicSearchRequest(
 ) {
 
   public record MusicQuery(
-      String musicName, String artistName, String isrcCode
+      String title, String artistName, String isrcCode
   ) {
 
     public SourceMusic toDomain() {
@@ -18,7 +18,7 @@ public record MusicSearchRequest(
           .toList();
 
       return SourceMusic.builder()
-          .name(musicName)
+          .title(title)
           .artistNames(names)
           .isrcCode(isrcCode)
           .build();

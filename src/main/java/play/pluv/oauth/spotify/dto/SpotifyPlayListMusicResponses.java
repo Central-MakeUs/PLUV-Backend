@@ -21,7 +21,7 @@ public record SpotifyPlayListMusicResponses(
       return PlayListMusic.builder()
           .artistNames(track.getArtistNames())
           .isrcCode(track.getIsrcCode())
-          .name(track.name())
+          .title(track.name())
           .imageUrl(track.getImageUrl())
           .build();
     }

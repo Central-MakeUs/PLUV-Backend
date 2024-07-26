@@ -37,13 +37,13 @@ public record MusicSearchResponse(
   }
 
   public record SourceMusicResponse(
-      String name,
+      String title,
       String artistName
   ) {
 
     public static SourceMusicResponse from(final SourceMusic sourceMusic) {
       return new SourceMusicResponse(
-          sourceMusic.getName(),
+          sourceMusic.getTitle(),
           String.join(",", sourceMusic.getArtistNames())
       );
     }
@@ -51,7 +51,7 @@ public record MusicSearchResponse(
 
   public record DestinationMusicResponse(
       String id,
-      String name,
+      String title,
       String artistName,
       String imageUrl
   ) {

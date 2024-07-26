@@ -49,7 +49,7 @@ public class MusicApiTest extends ApiTest {
             requestFields(
                 fieldWithPath("destinationAccessToken").type(STRING)
                     .description("플레이리스트 제공자의 accessToken"),
-                fieldWithPath("musics[].musicName").type(STRING).description("음악 이름"),
+                fieldWithPath("musics[].title").type(STRING).description("음악 이름"),
                 fieldWithPath("musics[].artistName").type(STRING).description("가수 이름들"),
                 fieldWithPath("musics[].isrcCode").type(STRING).description("음악의 isrc코드").optional()
             ),
@@ -58,13 +58,13 @@ public class MusicApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data[].isEqual").type(BOOLEAN).description("동일한 음악인지"),
                 fieldWithPath("data[].isFound").type(BOOLEAN).description("찾았는지"),
-                fieldWithPath("data[].sourceMusic.name").type(STRING).description("검색하려는 음악의 이름"),
+                fieldWithPath("data[].sourceMusic.title").type(STRING).description("검색하려는 음악의 이름"),
                 fieldWithPath("data[].sourceMusic.artistName").type(STRING)
                     .description("검색하려는 음악의 가수 이름"),
                 fieldWithPath("data[].destinationMusic").type(OBJECT).description("조회된 음악 정보")
                     .optional(),
                 fieldWithPath("data[].destinationMusic.id").type(STRING).description("조회된 음악 id"),
-                fieldWithPath("data[].destinationMusic.name").type(STRING)
+                fieldWithPath("data[].destinationMusic.title").type(STRING)
                     .description("조회된 음악의 이름"),
                 fieldWithPath("data[].destinationMusic.artistName").type(STRING)
                     .description("조회된 음악의 가수 이름"),

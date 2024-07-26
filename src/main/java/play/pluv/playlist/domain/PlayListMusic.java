@@ -13,7 +13,7 @@ import lombok.ToString;
 public class PlayListMusic {
 
   @Getter
-  private final String name;
+  private final String title;
   @Getter
   private final List<String> artistNames;
   //Nullable

@@ -24,7 +24,7 @@ public class LoginController {
       @PathVariable final String oauth, @RequestBody final LoginRequest loginRequest
   ) {
     final var memberId = loginService
-        .createToken(MusicStreaming.from(oauth), loginRequest.authCode());
+        .createToken(MusicStreaming.from(oauth), loginRequest.accessToken());
     final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
     return BaseResponse.ok(loginResponse);
   }

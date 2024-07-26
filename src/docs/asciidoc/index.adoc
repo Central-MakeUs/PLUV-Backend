@@ -10,6 +10,10 @@ endif::[]
 
 = PLUV-API 문서
 
+== *[ Login ]*
+
+include::login.adoc[]
+
 == *[ PlayList ]*
 
 include::playList.adoc[]

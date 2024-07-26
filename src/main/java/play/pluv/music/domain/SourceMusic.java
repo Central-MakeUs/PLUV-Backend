@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class SourceMusic {
 
   @Getter
-  private final String name;
+  private final String title;
   @Getter
   private final List<String> artistNames;
   //Nullable

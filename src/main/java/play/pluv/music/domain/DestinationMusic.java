@@ -33,6 +33,6 @@ public class DestinationMusic {
     final Set<String> set1 = new HashSet<>(artistNames);
     final Set<String> set2 = new HashSet<>(sourceMusic.getArtistNames());
 
-    return Objects.equals(sourceMusic.getName(), name) && set1.equals(set2);
+    return Objects.equals(sourceMusic.getTitle(), name) && set1.equals(set2);
   }
 }

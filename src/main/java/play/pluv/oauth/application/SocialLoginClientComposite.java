@@ -22,8 +22,8 @@ public class SocialLoginClientComposite {
         .collect(toMap(SocialLoginClient::supportedType, identity()));
   }
 
-  public OAuthMemberInfo fetchMemberInfo(final MusicStreaming serverType, final String authCode) {
-    return getClient(serverType).fetchMember(authCode);
+  public OAuthMemberInfo fetchMemberInfo(final MusicStreaming serverType, final String accessToken) {
+    return getClient(serverType).fetchMember(accessToken);
   }
 
   private SocialLoginClient getClient(final MusicStreaming serverType) {

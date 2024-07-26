@@ -22,11 +22,11 @@ public class LoginApiTest extends ApiTest {
 
   @Test
   void 소셜_로그인을_한다() throws Exception {
-    final LoginRequest loginRequest = new LoginRequest("authCode");
+    final LoginRequest loginRequest = new LoginRequest("accessToken");
 
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
 
-    when(loginService.createToken(SPOTIFY, "authCode")).thenReturn(2L);
+    when(loginService.createToken(SPOTIFY, "accessToken")).thenReturn(2L);
 
     mockMvc.perform(post("/{oauth}/login", "spotify")
             .contentType(APPLICATION_JSON_VALUE)
@@ -37,8 +37,7 @@ public class LoginApiTest extends ApiTest {
                 parameterWithName("oauth").description("소셜 로그인 제공자(spotify, apple, youtube)")
             ),
             requestFields(
-                fieldWithPath("authCode").type(STRING)
-                    .description("소셜 로그인 제공자의 authCode/accessToken")
+                fieldWithPath("accessToken").type(STRING).description("소셜 로그인 제공자의 accessToken")
             ),
             responseFields(
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),

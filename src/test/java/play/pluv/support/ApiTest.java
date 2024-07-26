@@ -11,16 +11,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import play.pluv.login.application.JwtProvider;
+import play.pluv.login.application.LoginService;
 import play.pluv.music.application.MusicService;
 import play.pluv.playlist.application.PlayListService;
 
 @WebMvcTest
+@Import(JwtProvider.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public abstract class ApiTest {
@@ -33,6 +37,8 @@ public abstract class ApiTest {
   protected PlayListService playListService;
   @MockBean
   protected MusicService musicService;
+  @MockBean
+  protected LoginService loginService;
 
   @BeforeEach
   void setUp(

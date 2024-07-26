@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
@@ -21,7 +20,6 @@ public class MusicService {
 
   private final MusicExplorer musicExplorer;
 
-  @Transactional(readOnly = true)
   public List<MusicSearchResponse> searchMusics(final MusicSearchRequest request) {
     final String accessToken = request.destinationAccessToken();
 
@@ -31,7 +29,6 @@ public class MusicService {
         .toList();
   }
 
-  @Transactional
   public void addMusics(final MusicAddRequest request, final String destinationName) {
     final MusicStreaming destination = MusicStreaming.from(destinationName);
     final List<MusicId> musicIds = request.extractMusicIds(destination);
@@ -40,9 +37,7 @@ public class MusicService {
     musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }
 
-  private MusicSearchResponse searchMusic(
-      final SourceMusic sourceMusic, final String accessToken
-  ) {
+  private MusicSearchResponse searchMusic(final SourceMusic sourceMusic, final String accessToken) {
     final Optional<DestinationMusic> result = musicExplorer.searchMusic(accessToken, sourceMusic);
     return result
         .map(

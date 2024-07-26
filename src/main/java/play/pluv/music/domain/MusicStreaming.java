@@ -2,7 +2,6 @@ package play.pluv.music.domain;
 
 import static play.pluv.music.exception.MusicExceptionType.MUSIC_STREAMING_NOT_FOUND;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 import lombok.Getter;
 import play.pluv.music.exception.MusicException;

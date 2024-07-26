@@ -15,9 +15,12 @@ import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses.SpotifyPlayListRespo
 import play.pluv.oauth.spotify.dto.SpotifyPlayListResponses.SpotifyPlayListResponse.TrackOverviewResponse;
 import play.pluv.oauth.spotify.dto.SpotifySearchMusicResponse;
 import play.pluv.oauth.spotify.dto.SpotifySearchMusicResponse.Track;
+import play.pluv.oauth.spotify.dto.SpotifyUserResponse;
 import play.pluv.oauth.spotify.dto.ThumbNailResponse;
 
 public class SpotifyFixture {
+
+  public static final String USER_ID = "1234";
 
   public static void mockingClient(final SpotifyApiClient spotifyApiClient) {
     when(spotifyApiClient.getAccessToken(any()))
@@ -28,6 +31,9 @@ public class SpotifyFixture {
 
     final SpotifySearchMusicResponse searchMusic = 음악검색_조회_결과();
     when(spotifyApiClient.searchMusic(any(), any())).thenReturn(searchMusic);
+
+    when(spotifyApiClient.getUserProfile(any()))
+        .thenReturn(new SpotifyUserResponse(USER_ID));
   }
 
   private static SpotifySearchMusicResponse 음악검색_조회_결과() {

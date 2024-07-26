@@ -106,7 +106,7 @@ public class PlayListApiTest extends ApiTest {
             responseFields(
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
-                fieldWithPath("data[].name").type(STRING).description("음악의 이름"),
+                fieldWithPath("data[].title").type(STRING).description("음악의 이름"),
                 fieldWithPath("data[].artistNames").type(STRING).description("음악의 가수 이름"),
                 fieldWithPath("data[].isrcCode").type(STRING).description("조회된 음악의 isrcCode").optional(),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악의 이미지 url")

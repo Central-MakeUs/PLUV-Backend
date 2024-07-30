@@ -12,12 +12,12 @@ import play.pluv.oauth.domain.OAuthMemberInfo;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class RegisterUpdater {
 
   private final SocialLoginIdRepository socialLoginIdRepository;
   private final NickNameGenerator nickNameGenerator;
 
-  @Transactional
   public Member registerNewMember(final OAuthMemberInfo memberInfo) {
     final NickName nickName = nickNameGenerator.generateNickName();
     final Member member = new Member(nickName);

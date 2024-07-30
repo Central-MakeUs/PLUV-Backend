@@ -66,7 +66,7 @@ tasks.named('test') {
 }
 
 openapi3 {
-    server = "http://localhost:8080"
+    server = "https://pluv.kro.kr"
     title = "pluv api 문서"
     description = "pluv api를 확인하기 위한 문서"
     format = 'json'

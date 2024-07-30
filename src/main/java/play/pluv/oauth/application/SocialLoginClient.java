@@ -5,7 +5,7 @@ import play.pluv.oauth.domain.OAuthMemberInfo;
 
 public interface SocialLoginClient {
 
-  OAuthMemberInfo fetchMember(final String accessToken);
+  OAuthMemberInfo fetchMember(final String key);
 
   MusicStreaming supportedType();
 }

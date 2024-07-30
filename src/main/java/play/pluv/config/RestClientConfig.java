@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClient.Builder;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+import play.pluv.oauth.google.GoogleApiClient;
 import play.pluv.oauth.spotify.SpotifyApiClient;
 
 @Configuration
@@ -28,6 +29,11 @@ public class RestClientConfig {
   @Bean
   public SpotifyApiClient spotifyApiClient() {
     return createHttpInterface(SpotifyApiClient.class);
+  }
+
+  @Bean
+  public GoogleApiClient googleApiClient() {
+    return createHttpInterface(GoogleApiClient.class);
   }
 
   private <T> T createHttpInterface(final Class<T> clazz) {

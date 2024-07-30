@@ -20,6 +20,10 @@ spotify:
   client-id: local-id
   client-secret: local-secret
   redirectUri: http://localhost:8080
+google:
+  client-id: local-id
+  client-secret: local-secret
+  redirectUri: http://localhost:8080
 restClient:
   logging: true
 jwt:

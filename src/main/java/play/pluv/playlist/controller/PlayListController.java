@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
 import play.pluv.playlist.application.PlayListService;
@@ -13,6 +14,7 @@ import play.pluv.playlist.application.dto.PlayListOverViewResponse;
 import play.pluv.playlist.application.dto.PlayListReadRequest;
 
 @RestController
+@RequestMapping("/playlist")
 public class PlayListController {
 
   private final PlayListService playListService;
@@ -21,7 +23,7 @@ public class PlayListController {
     this.playListService = playListService;
   }
 
-  @PostMapping("/{source}/playLists/read")
+  @PostMapping("/{source}/read")
   public ResponseEntity<List<PlayListOverViewResponse>> readPlayLists(
       @PathVariable final String source, @RequestBody final PlayListReadRequest request
   ) {
@@ -30,7 +32,7 @@ public class PlayListController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/{source}/playLists/{id}/read")
+  @PostMapping("/{source}/{id}/read")
   public BaseResponse<List<PlayListMusicResponse>> readPlayLists(
       @PathVariable final String source, @RequestBody final PlayListReadRequest request,
       @PathVariable final String id

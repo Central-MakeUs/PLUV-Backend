@@ -21,7 +21,7 @@ public class LoginController {
   private final LoginService loginService;
   private final JwtProvider jwtProvider;
 
-  @PostMapping("/spotify/login")
+  @PostMapping("/login/spotify")
   public BaseResponse<LoginResponse> loginSpotify(
       @RequestBody final SpotifyLoginRequest loginRequest
   ) {
@@ -30,7 +30,7 @@ public class LoginController {
     return BaseResponse.ok(loginResponse);
   }
 
-  @PostMapping("/google/login")
+  @PostMapping("/login/google")
   public BaseResponse<LoginResponse> loginGoogle(
       @RequestBody final GoogleLoginRequest loginRequest
   ) {

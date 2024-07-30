@@ -15,9 +15,9 @@ public class LoginService {
   private final RegisterUpdater registerUpdater;
   private final SocialLoginClientComposite socialLoginClientComposite;
 
-  public Long createToken(final MusicStreaming serverType, final String accessToken) {
+  public Long createToken(final MusicStreaming serverType, final String key) {
     final OAuthMemberInfo memberInfo = socialLoginClientComposite
-        .fetchMemberInfo(serverType, accessToken);
+        .fetchMemberInfo(serverType, key);
 
     final Member member = registerReader.findByOAuthMemberInfo(memberInfo)
         .orElseGet(() -> registerUpdater.registerNewMember(memberInfo));

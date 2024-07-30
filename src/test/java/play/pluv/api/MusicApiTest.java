@@ -1,9 +1,9 @@
 package play.pluv.api;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;

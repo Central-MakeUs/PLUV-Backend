@@ -1,9 +1,9 @@
 package play.pluv.api;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
@@ -108,7 +108,8 @@ public class PlayListApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data[].title").type(STRING).description("음악의 이름"),
                 fieldWithPath("data[].artistNames").type(STRING).description("음악의 가수 이름"),
-                fieldWithPath("data[].isrcCode").type(STRING).description("조회된 음악의 isrcCode").optional(),
+                fieldWithPath("data[].isrcCode").type(STRING).description("조회된 음악의 isrcCode")
+                    .optional(),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악의 이미지 url")
             )
         ));

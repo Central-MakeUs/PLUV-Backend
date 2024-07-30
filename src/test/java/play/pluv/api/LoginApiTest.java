@@ -1,9 +1,12 @@
 package play.pluv.api;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -28,7 +31,7 @@ public class LoginApiTest extends ApiTest {
 
     when(loginService.createToken(SPOTIFY, "accessToken")).thenReturn(2L);
 
-    mockMvc.perform(post("/spotify/login")
+    mockMvc.perform(post("/login/spotify")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
@@ -52,11 +55,13 @@ public class LoginApiTest extends ApiTest {
 
     when(loginService.createToken(YOUTUBE, "idToken")).thenReturn(2L);
 
-    mockMvc.perform(post("/google/login", "spotify")
+    mockMvc.perform(post("/login/google")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
         .andDo(document("google-login",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
             requestFields(
                 fieldWithPath("idToken").type(STRING).description("구글의 accessToken")
             ),

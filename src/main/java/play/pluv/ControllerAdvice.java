@@ -2,10 +2,13 @@ package play.pluv;
 
 import java.net.BindException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import play.pluv.base.BaseException;
 import play.pluv.base.BaseExceptionType;
 import play.pluv.base.BaseResponse;
@@ -33,6 +36,11 @@ public class ControllerAdvice {
     final String message = "요청 파라미터가 올바르지 않습니다.";
     loggingClientException(e, message);
     return BaseResponse.badRequest(message);
+  }
+
+  @ExceptionHandler(NoResourceFoundException.class)
+  public ResponseEntity<Void> handleNoResourceFoundException() {
+    return ResponseEntity.notFound().build();
   }
 
   private void loggingClientException(final Exception e, final String message) {

@@ -48,7 +48,7 @@ public class PlayListApiTest extends ApiTest {
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
 
-    mockMvc.perform(post("/{source}/playLists/read", "spotify")
+    mockMvc.perform(post("/playlist/{source}/read", "spotify")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
@@ -90,7 +90,7 @@ public class PlayListApiTest extends ApiTest {
 
     when(playListService.getPlayListMusics(any(), any())).thenReturn(playListMusics);
 
-    mockMvc.perform(post("/{source}/playLists/{id}/read", "spotify", "playListId")
+    mockMvc.perform(post("/playlist/{source}/{id}/read", "spotify", "playListId")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())

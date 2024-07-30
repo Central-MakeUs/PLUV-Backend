@@ -38,7 +38,7 @@ public class MusicApiTest extends ApiTest {
 
     when(musicService.searchMusics(any())).thenReturn(검색_결과);
 
-    mockMvc.perform(post("/{destination}/music/search", "spotify")
+    mockMvc.perform(post("/music/{destination}/search", "spotify")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
@@ -80,7 +80,7 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
-    mockMvc.perform(post("/{destination}/music/add", "spotify")
+    mockMvc.perform(post("/music/{destination}/add", "spotify")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())

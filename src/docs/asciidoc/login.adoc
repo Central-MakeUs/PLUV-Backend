@@ -10,21 +10,38 @@ endif::[]
 :operation-http-request-title: Example Request
 :operation-http-response-title: Example Response
 
-==== *회원가입/로그인 API*
+==== *회원가입/로그인(스포티파이) API*
 
 ===== *Http Request*
 
-include::{snippets}/../../build/generated-snippets/social-login/http-request.adoc[]
+include::{snippets}/../../build/generated-snippets/spotify-login/http-request.adoc[]
 
 ===== *Http Request Description*
 
-include::{snippets}/../../build/generated-snippets/social-login/request-fields.adoc[]
-include::{snippets}/../../build/generated-snippets/social-login/path-parameters.adoc[]
+include::{snippets}/../../build/generated-snippets/spotify-login/request-fields.adoc[]
 
 ===== *Http Response*
 
-include::{snippets}/../../build/generated-snippets/social-login/http-response.adoc[]
+include::{snippets}/../../build/generated-snippets/spotify-login/http-response.adoc[]
 
 ===== *Http Response Description*
 
-include::{snippets}/../../build/generated-snippets/social-login/response-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/spotify-login/response-fields.adoc[]
+
+==== *회원가입/로그인(구글) API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/google-login/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/google-login/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/google-login/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/google-login/response-fields.adoc[]

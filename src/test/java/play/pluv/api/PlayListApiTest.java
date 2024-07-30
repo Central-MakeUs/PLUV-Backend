@@ -19,7 +19,7 @@ import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import play.pluv.playlist.application.dto.PlayListMusicReadRequest;
-import play.pluv.playlist.application.dto.PlayListReadRequest;
+import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAccessToken;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
@@ -43,19 +43,16 @@ public class PlayListApiTest extends ApiTest {
             )
         );
 
-    final PlayListReadRequest request = new PlayListReadRequest("accessToken");
+    final OAuthAccessToken request = new OAuthAccessToken("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
 
-    mockMvc.perform(post("/playlist/{source}/read", "spotify")
+    mockMvc.perform(post("/playlist/spotify/read")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
         .andDo(document("read-playList",
-            pathParameters(
-                parameterWithName("source").description("플레이리스트 제공자(spotify, apple, youtube)")
-            ),
             requestFields(
                 fieldWithPath("accessToken").type(STRING)
                     .description("플레이리스트 제공자의 oauth accessToken")
@@ -88,15 +85,14 @@ public class PlayListApiTest extends ApiTest {
     final PlayListMusicReadRequest request = new PlayListMusicReadRequest("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
-    when(playListService.getPlayListMusics(any(), any())).thenReturn(playListMusics);
+    when(playListService.getPlayListMusics(any(), any(), any())).thenReturn(playListMusics);
 
-    mockMvc.perform(post("/playlist/{source}/{id}/read", "spotify", "playListId")
+    mockMvc.perform(post("/playlist/spotify/{id}/read", "playListId")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
         .andDo(document("read-playList-musics",
             pathParameters(
-                parameterWithName("source").description("플레이리스트 제공자(spotify, apple, youtube)"),
                 parameterWithName("id").description("플레이리스트의 식별자")
             ),
             requestFields(

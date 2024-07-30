@@ -1,5 +1,8 @@
 package play.pluv.playlist.controller;
 
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.music.domain.MusicStreaming.YOUTUBE;
+
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +14,8 @@ import play.pluv.base.BaseResponse;
 import play.pluv.playlist.application.PlayListService;
 import play.pluv.playlist.application.dto.PlayListMusicResponse;
 import play.pluv.playlist.application.dto.PlayListOverViewResponse;
-import play.pluv.playlist.application.dto.PlayListReadRequest;
+import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAccessToken;
+import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAuthCode;
 
 @RestController
 @RequestMapping("/playlist")
@@ -23,21 +27,29 @@ public class PlayListController {
     this.playListService = playListService;
   }
 
-  @PostMapping("/{source}/read")
-  public ResponseEntity<List<PlayListOverViewResponse>> readPlayLists(
-      @PathVariable final String source, @RequestBody final PlayListReadRequest request
+  @PostMapping("/spotify/read")
+  public ResponseEntity<List<PlayListOverViewResponse>> readSpotifyPlayLists(
+      @RequestBody final OAuthAccessToken request
   ) {
-    final var playLists = playListService.getPlayLists(request.accessToken(), source);
+    final var playLists = playListService.getPlayLists(request.accessToken(), SPOTIFY);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/{source}/{id}/read")
-  public BaseResponse<List<PlayListMusicResponse>> readPlayLists(
-      @PathVariable final String source, @RequestBody final PlayListReadRequest request,
-      @PathVariable final String id
+  @PostMapping("/youtube/read")
+  public ResponseEntity<List<PlayListOverViewResponse>> readYoutubePlayLists(
+      @RequestBody final OAuthAuthCode request
   ) {
-    final var musics = playListService.getPlayListMusics(id, request.accessToken());
+    final var playLists = playListService.getPlayLists(request.authCode(), YOUTUBE);
+    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/spotify/{id}/read")
+  public BaseResponse<List<PlayListMusicResponse>> readSpotifyMusics(
+      @RequestBody final OAuthAccessToken accessToken, @PathVariable final String id
+  ) {
+    final var musics = playListService.getPlayListMusics(id, accessToken.accessToken(), SPOTIFY);
     final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
     return BaseResponse.ok(response);
   }

@@ -33,8 +33,7 @@ public class MusicController {
 
   @PostMapping("/{destination}/add")
   public BaseResponse<String> addMusics(
-      @RequestBody final MusicAddRequest request,
-      @PathVariable final String destination
+      @RequestBody final MusicAddRequest request, @PathVariable final String destination
   ) {
     musicService.addMusics(request, destination);
     return BaseResponse.created();

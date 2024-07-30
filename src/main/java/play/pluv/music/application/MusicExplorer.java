@@ -10,10 +10,10 @@ import play.pluv.playlist.domain.PlayListId;
 
 public interface MusicExplorer {
 
-  Optional<DestinationMusic> searchMusic(final String accessToken, final SourceMusic query);
+  Optional<DestinationMusic> searchMusic(final String authKey, final SourceMusic query);
 
   void addMusics(
-      final String accessToken, final List<MusicId> musicIds, final PlayListId playListId
+      final String authKey, final List<MusicId> musicIds, final PlayListId playListId
   );
 
   MusicStreaming supportedType();

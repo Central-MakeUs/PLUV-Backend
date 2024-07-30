@@ -8,11 +8,11 @@ import play.pluv.playlist.domain.PlayListMusic;
 
 public interface PlayListConnector {
 
-  List<PlayList> getPlayList(final String accessToken);
+  List<PlayList> getPlayList(final String authKey);
 
-  List<PlayListMusic> getMusics(final String playListId, final String accessToken);
+  List<PlayListMusic> getMusics(final String playListId, final String authKey);
 
-  PlayListId createPlayList(final String accessToken, final String name);
+  PlayListId createPlayList(final String authKey, final String name);
 
   MusicStreaming supportedType();
 }

@@ -1,0 +1,53 @@
+name: PLUV Backend Prod Server CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 빌드
+    runs-on: ubuntu-22.04
+    steps:
+      - name: workflow_dispatch에서 지정한 branch로 checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+
+      - name: JDK 17로 설정
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Gradle에 실행 권한 부여
+        run: chmod +x gradlew
+
+      - name: gradle 빌드
+        run: ./gradlew build
+
+      - name: upload java build file
+        uses: actions/upload-artifact@v3
+        with:
+          name: BackendApplication
+          path: build/libs/PLUV.jar
+
+  deploy:
+    needs: build
+    name: 배포
+    runs-on: [ self-hosted, prod ]
+    steps:
+      - name: 구버전 jar 삭제
+        run: rm -rf /home/ubuntu/server/PLUV.jar
+
+      - name: artifact에서 jar파일 다운 받기
+        uses: actions/download-artifact@v3
+        with:
+          name: BackendApplicationJar
+          path: /home/ubuntu/server
+
+      - name: 권한부여
+        run: chmod +x /home/ubuntu/server/PLUV.jar
+
+      - name: 배포하기
+        run: /home/ubuntu/server/deploy.sh

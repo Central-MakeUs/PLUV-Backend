@@ -43,7 +43,7 @@ jobs:
       - name: artifact에서 jar파일 다운 받기
         uses: actions/download-artifact@v3
         with:
-          name: BackendApplicationJar
+          name: BackendApplication
           path: /home/ubuntu/server
 
       - name: 권한부여

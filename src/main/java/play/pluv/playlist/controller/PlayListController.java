@@ -52,4 +52,13 @@ public class PlayListController {
     final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
     return BaseResponse.ok(response);
   }
+
+  @PostMapping("/youtube/{id}/read")
+  public BaseResponse<List<PlayListMusicResponse>> readYoutubeMusics(
+      @RequestBody final OAuthAccessToken accessToken, @PathVariable final String id
+  ) {
+    final var musics = playListService.getPlayListMusics(id, accessToken.accessToken(), YOUTUBE);
+    final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
+    return BaseResponse.ok(response);
+  }
 }

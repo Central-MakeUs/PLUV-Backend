@@ -11,6 +11,7 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
+import play.pluv.playlist.domain.PlayListMusic;
 import play.pluv.playlist.exception.PlayListException;
 
 @Component
@@ -23,8 +24,14 @@ public class PlayListConnectorComposite {
         .collect(toMap(PlayListConnector::supportedType, identity()));
   }
 
-  public List<PlayList> getPlayList (final MusicStreaming serverType, final String authKey) {
-    return getClient(serverType).getPlayList(authKey);
+  public List<PlayList> getPlayList(final MusicStreaming serverType, final String accessToken) {
+    return getClient(serverType).getPlayList(accessToken);
+  }
+
+  public List<PlayListMusic> getMusics(
+      final MusicStreaming serverType, final String accessToken, final String playListId
+  ) {
+    return getClient(serverType).getMusics(playListId, accessToken);
   }
 
   private PlayListConnector getClient(final MusicStreaming serverType) {

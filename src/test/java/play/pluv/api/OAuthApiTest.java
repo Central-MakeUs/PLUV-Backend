@@ -7,6 +7,8 @@ import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,13 @@ public class OAuthApiTest extends ApiTest {
 
     when(oAuthService.getAccessToken(authCode)).thenReturn(accessToken);
 
-    mockMvc.perform(get("/youtube/oauth/token?code=" + authCode))
+    mockMvc.perform(get("/oauth/youtube/token")
+            .param("code", authCode))
         .andExpect(status().isOk())
         .andDo(document("get-google-accessToken",
+            queryParameters(
+                parameterWithName("code").description("google의 auth code")
+            ),
             responseFields(
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),

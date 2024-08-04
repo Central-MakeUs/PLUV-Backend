@@ -10,6 +10,7 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import play.pluv.oauth.google.dto.GoogleIdTokenResponse;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
+import play.pluv.oauth.google.dto.YoutubeAddMusicRequest;
 import play.pluv.oauth.google.dto.YoutubeCreatePlayListRequest;
 import play.pluv.oauth.google.dto.YoutubeCreatePlayListResponse;
 import play.pluv.oauth.google.dto.YoutubeMusicResponses;
@@ -42,5 +43,11 @@ public interface GoogleApiClient {
   YoutubeCreatePlayListResponse createPlayList(
       @RequestHeader("Authorization") final String accessToken,
       @RequestBody final YoutubeCreatePlayListRequest request
+  );
+
+  @PostExchange(url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet")
+  void addMusic(
+      @RequestHeader("Authorization") final String accessToken,
+      @RequestBody final YoutubeAddMusicRequest request
   );
 }

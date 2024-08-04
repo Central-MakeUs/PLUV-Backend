@@ -18,6 +18,7 @@ import play.pluv.music.domain.SourceMusic;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
+import play.pluv.oauth.google.dto.YoutubeAddMusicRequest;
 import play.pluv.oauth.google.dto.YoutubeCreatePlayListRequest;
 import play.pluv.oauth.google.dto.YoutubeMusicResponses;
 import play.pluv.playlist.application.PlayListConnector;
@@ -83,8 +84,10 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
       final String accessToken, final List<MusicId> musicIds, final String playListName
   ) {
     final PlayListId playListId = createPlayList(accessToken, playListName);
-
-
+    final String authorization = CREATE_AUTH_HEADER.apply(accessToken);
+    musicIds.stream()
+        .map(musicId -> YoutubeAddMusicRequest.of(playListId.id(), musicId))
+        .forEach(request -> googleApiClient.addMusic(authorization, request));
   }
 
   @Override

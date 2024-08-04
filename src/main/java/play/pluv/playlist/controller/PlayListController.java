@@ -15,7 +15,6 @@ import play.pluv.playlist.application.PlayListService;
 import play.pluv.playlist.application.dto.PlayListMusicResponse;
 import play.pluv.playlist.application.dto.PlayListOverViewResponse;
 import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAccessToken;
-import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAuthCode;
 
 @RestController
 @RequestMapping("/playlist")
@@ -38,9 +37,9 @@ public class PlayListController {
 
   @PostMapping("/youtube/read")
   public ResponseEntity<List<PlayListOverViewResponse>> readYoutubePlayLists(
-      @RequestBody final OAuthAuthCode request
+      @RequestBody final OAuthAccessToken request
   ) {
-    final var playLists = playListService.getPlayLists(request.authCode(), YOUTUBE);
+    final var playLists = playListService.getPlayLists(request.accessToken(), YOUTUBE);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
     return ResponseEntity.ok(response);
   }

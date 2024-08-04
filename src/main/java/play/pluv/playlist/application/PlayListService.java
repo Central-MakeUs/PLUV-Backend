@@ -15,8 +15,8 @@ public class PlayListService {
   private final PlayListConnectorComposite playListConnectorComposite;
   private final SpotifyConnector spotifyConnector;
 
-  public List<PlayList> getPlayLists(final String authKey, final MusicStreaming source) {
-    return playListConnectorComposite.getPlayList(source, authKey);
+  public List<PlayList> getPlayLists(final String accessToken, final MusicStreaming source) {
+    return playListConnectorComposite.getPlayList(source, accessToken);
   }
 
   public List<PlayListMusic> getPlayListMusics(

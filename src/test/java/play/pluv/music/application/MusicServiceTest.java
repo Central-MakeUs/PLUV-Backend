@@ -1,6 +1,7 @@
 package play.pluv.music.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class MusicServiceTest extends ApplicationTest {
         List.of(new MusicQuery("좋은 날", "아이유", "KRA381001057"))
     );
 
-    final List<MusicSearchResponse> actual = musicService.searchMusics(request);
+    final List<MusicSearchResponse> actual = musicService.searchMusics(SPOTIFY, request);
     final List<MusicSearchResponse> expected = List.of(
         new MusicSearchResponse(true, true,
             new SourceMusicResponse("좋은 날", "아이유"),

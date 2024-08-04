@@ -12,20 +12,24 @@ import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.oauth.spotify.SpotifyConnector;
 import play.pluv.playlist.domain.PlayListId;
 
 @Service
 @RequiredArgsConstructor
 public class MusicService {
 
-  private final MusicExplorer musicExplorer;
+  private final SpotifyConnector musicExplorer;
+  private final MusicExplorerComposite musicExplorerComposite;
 
-  public List<MusicSearchResponse> searchMusics(final MusicSearchRequest request) {
+  public List<MusicSearchResponse> searchMusics(
+      final MusicStreaming musicStreaming, final MusicSearchRequest request
+  ) {
     final String accessToken = request.destinationAccessToken();
 
     return request.musics().parallelStream()
         .map(MusicQuery::toDomain)
-        .map(sourceMusic -> searchMusic(sourceMusic, accessToken))
+        .map(sourceMusic -> searchMusic(musicStreaming, sourceMusic, accessToken))
         .toList();
   }
 
@@ -37,8 +41,11 @@ public class MusicService {
     musicExplorer.addMusics(request.destinationAccessToken(), musicIds, playListId);
   }
 
-  private MusicSearchResponse searchMusic(final SourceMusic sourceMusic, final String accessToken) {
-    final Optional<DestinationMusic> result = musicExplorer.searchMusic(accessToken, sourceMusic);
+  private MusicSearchResponse searchMusic(
+      final MusicStreaming musicStreaming, final SourceMusic sourceMusic, final String accessToken
+  ) {
+    final Optional<DestinationMusic> result
+        = musicExplorerComposite.searchMusic(musicStreaming, accessToken, sourceMusic);
     return result
         .map(
             destination -> MusicSearchResponse.createFound(sourceMusic, destination)

@@ -7,7 +7,7 @@ import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 
-public record GoogleSearchMusicResponses(
+public record YoutubeSearchMusicResponses(
     List<YoutubeMusicVideo> items
 ) {
 

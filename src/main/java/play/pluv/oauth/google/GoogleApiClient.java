@@ -9,9 +9,9 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import play.pluv.oauth.google.dto.GoogleIdTokenResponse;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
-import play.pluv.oauth.google.dto.GoogleSearchMusicResponses;
 import play.pluv.oauth.google.dto.YoutubeMusicResponses;
 import play.pluv.oauth.google.dto.YoutubePlayListResponses;
+import play.pluv.oauth.google.dto.YoutubeSearchMusicResponses;
 
 public interface GoogleApiClient {
 
@@ -31,7 +31,7 @@ public interface GoogleApiClient {
   );
 
   @GetExchange(url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video")
-  GoogleSearchMusicResponses searchMusic(
+  YoutubeSearchMusicResponses searchMusic(
       @RequestHeader("Authorization") final String accessToken, @RequestParam final String q
   );
 }

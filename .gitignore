@@ -39,5 +39,6 @@ out/
 ### personal file
 test.json
 openapi3.json
+.DS_Store
 # api
 external/

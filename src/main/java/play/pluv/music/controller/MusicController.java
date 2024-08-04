@@ -1,5 +1,8 @@
 package play.pluv.music.controller;
 
+import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.music.domain.MusicStreaming.YOUTUBE;
+
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,12 +25,19 @@ public class MusicController {
     this.musicService = musicService;
   }
 
-  @PostMapping("/{destination}/search")
-  public BaseResponse<List<MusicSearchResponse>> searchMusics(
-      @RequestBody final MusicSearchRequest musicSearchRequest,
-      @PathVariable final String destination
+  @PostMapping("/spotify/search")
+  public BaseResponse<List<MusicSearchResponse>> searchSpotifyMusics(
+      @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService.searchMusics(musicSearchRequest);
+    final var responses = musicService.searchMusics(SPOTIFY, musicSearchRequest);
+    return BaseResponse.ok(responses);
+  }
+
+  @PostMapping("/youtube/search")
+  public BaseResponse<List<MusicSearchResponse>> searchYoutubeMusics(
+      @RequestBody final MusicSearchRequest musicSearchRequest
+  ) {
+    final var responses = musicService.searchMusics(YOUTUBE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 

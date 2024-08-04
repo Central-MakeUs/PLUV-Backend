@@ -69,15 +69,17 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
   }
 
   @Override
-  public void addMusics(
-      final String accessToken, final List<MusicId> musicIds, final PlayListId playListId
+  public void transferMusics(
+      final String accessToken, final List<MusicId> musicIds, final String playlistName
   ) {
+    final PlayListId playlistId = createPlayList(accessToken, playlistName);
+
     final List<SpotifyAddMusicRequest> requests = splitMusicIds(musicIds);
 
     requests.parallelStream()
         .forEach(
             request -> spotifyApiClient.addMusics(
-                CREATE_AUTH_HEADER.apply(accessToken), playListId.id(), request
+                CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
             )
         );
   }

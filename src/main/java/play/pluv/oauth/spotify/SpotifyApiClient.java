@@ -43,7 +43,8 @@ public interface SpotifyApiClient {
 
   @PostExchange(url = "https://accounts.spotify.com/api/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
   SpotifyAccessTokenResponse getAccessToken(
-      @RequestParam final MultiValueMap<String, String> params);
+      @RequestParam final MultiValueMap<String, String> params
+  );
 
   @GetExchange(url = "https://api.spotify.com/v1/search")
   SpotifySearchMusicResponse searchMusic(

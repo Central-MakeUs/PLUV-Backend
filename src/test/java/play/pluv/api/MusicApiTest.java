@@ -13,8 +13,6 @@ import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static play.pluv.api.fixture.MusicFixture.스포티파이_음악_검색_결과;
 import static play.pluv.api.fixture.MusicFixture.유튜브_음악_검색_결과;
@@ -57,6 +55,17 @@ public class MusicApiTest extends ApiTest {
           fieldWithPath("data[].destinationMusic.imageUrl").type(STRING)
               .description("조회된 음악의 커버 이미지 url")
       )};
+  private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {requestFields(
+      fieldWithPath("destinationAccessToken").type(STRING)
+          .description("플레이리스트 제공자의 accessToken"),
+      fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
+      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름들")
+  ),
+      responseFields(
+          fieldWithPath("code").type(NUMBER).description("상태 코드"),
+          fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+          fieldWithPath("data").type(STRING).description("빈 값")
+      )};
 
   @Test
   void 스포티파이_음악을_읽어서_반환해준다() throws Exception {
@@ -95,30 +104,32 @@ public class MusicApiTest extends ApiTest {
   }
 
   @Test
-  void 음악들을_새로운_플리에_추가한다() throws Exception {
+  void 음악들을_스포티파이의_새로운_플리에_추가한다() throws Exception {
     final MusicAddRequest 음악_추가_요청 = 음악_추가_요청();
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
-    mockMvc.perform(post("/music/{destination}/add", "spotify")
+    mockMvc.perform(post("/music/spotify/add")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
-        .andDo(document("add-music",
-            pathParameters(
-                parameterWithName("destination").description("플레이리스트 제공자(spotify, apple, youtube)")
-            ),
-            requestFields(
-                fieldWithPath("destinationAccessToken").type(STRING)
-                    .description("플레이리스트 제공자의 accessToken"),
-                fieldWithPath("musicIds[]").type(ARRAY).description("음악 이름"),
-                fieldWithPath("playListId").type(STRING).description("가수 이름들")
-            ),
-            responseFields(
-                fieldWithPath("code").type(NUMBER).description("상태 코드"),
-                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
-                fieldWithPath("data").type(STRING).description("빈 값")
-            )
+        .andDo(document("add-spotify-music",
+            TRANSFER_MUSIC_SNIPPET
+        ));
+  }
+
+  @Test
+  void 음악들을_유튜브뮤직의_새로운_플리에_추가한다() throws Exception {
+    final MusicAddRequest 음악_추가_요청 = 음악_추가_요청();
+
+    final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
+
+    mockMvc.perform(post("/music/youtube/add")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("add-youtube-music",
+            TRANSFER_MUSIC_SNIPPET
         ));
   }
 }

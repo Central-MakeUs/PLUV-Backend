@@ -4,7 +4,6 @@ import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.music.domain.MusicStreaming.YOUTUBE;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,11 +40,15 @@ public class MusicController {
     return BaseResponse.ok(responses);
   }
 
-  @PostMapping("/{destination}/add")
-  public BaseResponse<String> addMusics(
-      @RequestBody final MusicAddRequest request, @PathVariable final String destination
-  ) {
-    musicService.addMusics(request, destination);
+  @PostMapping("/spotify/add")
+  public BaseResponse<String> transferSpotifyMusics(@RequestBody final MusicAddRequest request) {
+    musicService.transferMusics(request, SPOTIFY);
+    return BaseResponse.created();
+  }
+
+  @PostMapping("/youtube/add")
+  public BaseResponse<String> transferYoutubeMusics(@RequestBody final MusicAddRequest request) {
+    musicService.transferMusics(request, YOUTUBE);
     return BaseResponse.created();
   }
 }

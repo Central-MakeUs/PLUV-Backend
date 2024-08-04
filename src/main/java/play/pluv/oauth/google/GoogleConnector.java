@@ -18,6 +18,8 @@ import play.pluv.music.domain.SourceMusic;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
+import play.pluv.oauth.google.dto.YoutubeAddMusicRequest;
+import play.pluv.oauth.google.dto.YoutubeCreatePlayListRequest;
 import play.pluv.oauth.google.dto.YoutubeMusicResponses;
 import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.PlayList;
@@ -64,8 +66,10 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   }
 
   @Override
-  public PlayListId createPlayList(final String accessToken, final String name) {
-    return null;
+  public PlayListId createPlayList(final String accessToken, final String title) {
+    return googleApiClient.createPlayList(
+        CREATE_AUTH_HEADER.apply(accessToken), YoutubeCreatePlayListRequest.from(title)
+    ).toPlayListId();
   }
 
   @Override
@@ -76,9 +80,15 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   }
 
   @Override
-  public void addMusics(
-      final String accessToken, final List<MusicId> musicIds, final PlayListId playListId
+  //todo : webflux로 전환, parrllelStream 쓰면 오류나는 이유 찾기
+  public void transferMusics(
+      final String accessToken, final List<MusicId> musicIds, final String playListName
   ) {
+    final PlayListId playListId = createPlayList(accessToken, playListName);
+    final String authorization = CREATE_AUTH_HEADER.apply(accessToken);
+    musicIds.stream()
+        .map(musicId -> YoutubeAddMusicRequest.of(playListId.id(), musicId))
+        .forEach(request -> googleApiClient.addMusic(authorization, request));
   }
 
   @Override

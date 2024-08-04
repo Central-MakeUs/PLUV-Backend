@@ -4,11 +4,13 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static play.pluv.music.exception.MusicExceptionType.MUSIC_STREAMING_NOT_FOUND;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
 import play.pluv.music.exception.MusicException;
@@ -27,6 +29,13 @@ public class MusicExplorerComposite {
       final MusicStreaming musicStreaming, final String accessToken, final SourceMusic query
   ) {
     return getClient(musicStreaming).searchMusic(accessToken, query);
+  }
+
+  public void transferMusics(
+      final MusicStreaming destination, final String accessToken, final List<MusicId> musicIds,
+      final String playListName
+  ) {
+    getClient(destination).transferMusics(accessToken, musicIds, playListName);
   }
 
   private MusicExplorer getClient(final MusicStreaming serverType) {

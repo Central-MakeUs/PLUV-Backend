@@ -12,13 +12,11 @@ import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.music.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
-import play.pluv.oauth.spotify.SpotifyConnector;
 
 @Service
 @RequiredArgsConstructor
 public class MusicService {
 
-  private final SpotifyConnector musicExplorer;
   private final MusicExplorerComposite musicExplorerComposite;
 
   public List<MusicSearchResponse> searchMusics(
@@ -36,8 +34,8 @@ public class MusicService {
     final MusicStreaming destination = MusicStreaming.from(destinationName);
     final List<MusicId> musicIds = request.extractMusicIds(destination);
 
-    musicExplorer.transferMusics(
-        request.destinationAccessToken(), musicIds, request.playListName()
+    musicExplorerComposite.transferMusics(
+        destination, request.destinationAccessToken(), musicIds, request.playListName()
     );
   }
 

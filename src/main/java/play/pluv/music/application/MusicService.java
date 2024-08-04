@@ -33,7 +33,7 @@ public class MusicService {
         .toList();
   }
 
-  public void addMusics(final MusicAddRequest request, final String destinationName) {
+  public void transferMusics(final MusicAddRequest request, final String destinationName) {
     final MusicStreaming destination = MusicStreaming.from(destinationName);
     final List<MusicId> musicIds = request.extractMusicIds(destination);
     final PlayListId playListId = request.extractPlayListId(destination);

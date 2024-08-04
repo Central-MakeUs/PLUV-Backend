@@ -45,7 +45,7 @@ public class MusicController {
   public BaseResponse<String> addMusics(
       @RequestBody final MusicAddRequest request, @PathVariable final String destination
   ) {
-    musicService.addMusics(request, destination);
+    musicService.transferMusics(request, destination);
     return BaseResponse.created();
   }
 }

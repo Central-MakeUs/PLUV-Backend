@@ -9,6 +9,7 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import play.pluv.oauth.google.dto.GoogleIdTokenResponse;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
+import play.pluv.oauth.google.dto.YoutubeMusicResponses;
 import play.pluv.oauth.google.dto.YoutubePlayListResponses;
 
 public interface GoogleApiClient {
@@ -21,4 +22,10 @@ public interface GoogleApiClient {
 
   @GetExchange("https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&maxResults=50")
   YoutubePlayListResponses getPlayList(@RequestHeader("Authorization") final String accessToken);
+
+  @GetExchange("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50")
+  YoutubeMusicResponses getPlayListItems(
+      @RequestHeader("Authorization") final String accessToken,
+      @RequestParam final String playlistId, @RequestParam(required = false) final String pageToken
+  );
 }

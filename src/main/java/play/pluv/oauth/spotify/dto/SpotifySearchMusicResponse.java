@@ -30,7 +30,7 @@ public record SpotifySearchMusicResponse(
           .musicId(new MusicId(SPOTIFY, spotifyMusic.id()))
           .imageUrl(spotifyMusic.getImageUrl())
           .artistNames(spotifyMusic.getArtistNames())
-          .name(spotifyMusic.name())
+          .title(spotifyMusic.name())
           .isrcCode(spotifyMusic.getIsrcCode())
           .build()
       );

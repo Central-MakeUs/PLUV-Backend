@@ -135,7 +135,7 @@ public class PlayListApiTest extends ApiTest {
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
-        .andDo(document("read-playList-musics",
+        .andDo(document("read-playList-spotify-musics",
             pathParameters(
                 parameterWithName("id").description("플레이리스트의 식별자")
             ),
@@ -172,7 +172,7 @@ public class PlayListApiTest extends ApiTest {
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
-        .andDo(document("read-playList-musics",
+        .andDo(document("read-playList-youtube-musics",
             pathParameters(
                 parameterWithName("id").description("플레이리스트의 식별자")
             ),

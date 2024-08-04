@@ -117,11 +117,11 @@ public class PlayListApiTest extends ApiTest {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
-                "좋은 날", List.of("아이유"), "KRA381001057",
+                "좋은 날", List.of(), null,
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
             ),
             new PlayListMusic(
-                "ㅈㅣㅂ", List.of("hanroro"), "KRA381001234",
+                "ㅈㅣㅂ", List.of(), null,
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
             )
         );

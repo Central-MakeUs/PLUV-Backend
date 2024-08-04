@@ -20,7 +20,7 @@ public record PlayListMusicResponse(
         .title(playListMusic.getTitle())
         .artistNames(String.join(",",playListMusic.getArtistNames()))
         .imageUrl(playListMusic.getImageUrl())
-        .isrcCode(playListMusic.getIsrcCode().get())
+        .isrcCode(playListMusic.getIsrcCode().orElse(null))
         .build();
   }
 }

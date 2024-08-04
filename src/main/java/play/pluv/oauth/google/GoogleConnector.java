@@ -56,7 +56,7 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector {
     return YOUTUBE;
   }
 
-  private GoogleOAuthResponse getAccessToken(final String authCode) {
+  public GoogleOAuthResponse getAccessToken(final String authCode) {
     return googleApiClient.fetchToken(createRequestParam(authCode));
   }
 

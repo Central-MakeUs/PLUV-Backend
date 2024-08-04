@@ -14,7 +14,7 @@ public class OAuthController {
 
   private final OAuthService oauthService;
 
-  @GetMapping("/youtube/oauth/token")
+  @GetMapping("/oauth/youtube/token")
   public BaseResponse<GoogleAccessToken> getToken(@RequestParam final String code) {
     final var accessToken = oauthService.getAccessToken(code);
     return BaseResponse.ok(accessToken);

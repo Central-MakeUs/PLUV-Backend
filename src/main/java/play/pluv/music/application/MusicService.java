@@ -30,8 +30,7 @@ public class MusicService {
         .toList();
   }
 
-  public void transferMusics(final MusicAddRequest request, final String destinationName) {
-    final MusicStreaming destination = MusicStreaming.from(destinationName);
+  public void transferMusics(final MusicAddRequest request, final MusicStreaming destination) {
     final List<MusicId> musicIds = request.extractMusicIds(destination);
 
     musicExplorerComposite.transferMusics(

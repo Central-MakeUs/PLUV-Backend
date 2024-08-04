@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import play.pluv.login.application.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.music.application.MusicService;
+import play.pluv.oauth.application.OAuthService;
 import play.pluv.playlist.application.PlayListService;
 
 @WebMvcTest
@@ -39,6 +40,8 @@ public abstract class ApiTest {
   protected MusicService musicService;
   @MockBean
   protected LoginService loginService;
+  @MockBean
+  protected OAuthService oAuthService;
 
   @BeforeEach
   void setUp(

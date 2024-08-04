@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import play.pluv.playlist.application.dto.PlayListMusicReadRequest;
 import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAccessToken;
-import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAuthCode;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
@@ -96,7 +95,7 @@ public class PlayListApiTest extends ApiTest {
             )
         );
 
-    final OAuthAuthCode request = new OAuthAuthCode("authCode");
+    final OAuthAccessToken request = new OAuthAccessToken("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
@@ -107,7 +106,7 @@ public class PlayListApiTest extends ApiTest {
         .andExpect(status().isOk())
         .andDo(document("read-playList-youtube",
             requestFields(
-                fieldWithPath("authCode").type(STRING).description("google의 authCode")
+                fieldWithPath("accessToken").type(STRING).description("google의 accessToken")
             ),
             responseFields(PLAY_LIST_RESPONSE)
         ));

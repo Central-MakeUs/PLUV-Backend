@@ -35,19 +35,18 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector {
   }
 
   @Override
-  public List<PlayList> getPlayList(final String authCode) {
-    final String accessToken = getAccessToken(authCode).accessToken();
+  public List<PlayList> getPlayList(final String accessToken) {
     return googleApiClient.getPlayList(CREATE_AUTH_HEADER.apply(accessToken))
         .toPlayLists();
   }
 
   @Override
-  public List<PlayListMusic> getMusics(final String playListId, final String authCode) {
+  public List<PlayListMusic> getMusics(final String playListId, final String accessToken) {
     return List.of();
   }
 
   @Override
-  public PlayListId createPlayList(final String authCode, final String name) {
+  public PlayListId createPlayList(final String accessToken, final String name) {
     return null;
   }
 
@@ -56,7 +55,7 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector {
     return YOUTUBE;
   }
 
-  private GoogleOAuthResponse getAccessToken(final String authCode) {
+  public GoogleOAuthResponse getAccessToken(final String authCode) {
     return googleApiClient.fetchToken(createRequestParam(authCode));
   }
 

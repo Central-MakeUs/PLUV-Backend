@@ -113,7 +113,7 @@ public class PlayListApiTest extends ApiTest {
   }
 
   @Test
-  void 플레이리스트의_음악을_읽어서_반환해준다() throws Exception {
+  void 스포티파이_플레이리스트의_음악을_읽어서_반환해준다() throws Exception {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
@@ -132,6 +132,43 @@ public class PlayListApiTest extends ApiTest {
     when(playListService.getPlayListMusics(any(), any(), any())).thenReturn(playListMusics);
 
     mockMvc.perform(post("/playlist/spotify/{id}/read", "playListId")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("read-playList-musics",
+            pathParameters(
+                parameterWithName("id").description("플레이리스트의 식별자")
+            ),
+            requestFields(
+                fieldWithPath("accessToken").type(STRING)
+                    .description("플레이리스트 제공자의 oauth accessToken")
+            ),
+            responseFields(
+                MUSIC_RESPONSE
+            )
+        ));
+  }
+
+  @Test
+  void 유튜브_플레이리스트의_음악을_읽어서_반환해준다() throws Exception {
+    final List<PlayListMusic> playListMusics =
+        List.of(
+            new PlayListMusic(
+                "좋은 날", List.of("아이유"), "KRA381001057",
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
+            ),
+            new PlayListMusic(
+                "ㅈㅣㅂ", List.of("hanroro"), "KRA381001234",
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
+            )
+        );
+
+    final PlayListMusicReadRequest request = new PlayListMusicReadRequest("accessToken");
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    when(playListService.getPlayListMusics(any(), any(), any())).thenReturn(playListMusics);
+
+    mockMvc.perform(post("/playlist/youtube/{id}/read", "playListId")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())

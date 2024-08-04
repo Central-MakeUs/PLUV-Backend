@@ -1,7 +1,5 @@
 package play.pluv.api.fixture;
 
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
-
 import java.util.List;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
@@ -9,11 +7,10 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
-import play.pluv.music.domain.MusicStreaming;
 
 public class MusicFixture {
 
-  public static List<MusicSearchResponse> 음악_검색_결과() {
+  public static List<MusicSearchResponse> 스포티파이_음악_검색_결과() {
     return List.of(
         new MusicSearchResponse(
             true, true, new SourceMusicResponse("좋은 날", "아이유"),
@@ -22,6 +19,22 @@ public class MusicFixture {
         ),
         new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro"),
             new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
+                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
+        new MusicSearchResponse(false, false,
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수"), null
+        )
+    );
+  }
+
+  public static List<MusicSearchResponse> 유튜브_음악_검색_결과() {
+    return List.of(
+        new MusicSearchResponse(
+            true, true, new SourceMusicResponse("좋은 날", "아이유"),
+            new DestinationMusicResponse("124nkd3fh", "Good Day - MV", "",
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
+        ),
+        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro"),
+            new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
         new MusicSearchResponse(false, false,
             new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수"), null
@@ -41,7 +54,7 @@ public class MusicFixture {
 
   public static MusicAddRequest 음악_추가_요청() {
     return new MusicAddRequest("spotify accessToken",
-        List.of("musicId1", "musicId2","musicId3","musicId4"), "playListIds"
+        List.of("musicId1", "musicId2", "musicId3", "musicId4"), "playListIds"
     );
   }
 }

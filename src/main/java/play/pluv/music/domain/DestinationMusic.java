@@ -15,7 +15,7 @@ public class DestinationMusic {
 
   private final MusicId musicId;
   private final List<String> artistNames;
-  private final String name;
+  private final String title;
   private final String imageUrl;
   //nullable한 값
   private final String isrcCode;
@@ -33,6 +33,6 @@ public class DestinationMusic {
     final Set<String> set1 = new HashSet<>(artistNames);
     final Set<String> set2 = new HashSet<>(sourceMusic.getArtistNames());
 
-    return Objects.equals(sourceMusic.getTitle(), name) && set1.equals(set2);
+    return Objects.equals(sourceMusic.getTitle(), title) && set1.equals(set2);
   }
 }

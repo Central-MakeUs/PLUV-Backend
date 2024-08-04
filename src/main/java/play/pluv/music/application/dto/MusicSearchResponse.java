@@ -59,7 +59,7 @@ public record MusicSearchResponse(
     public static DestinationMusicResponse from(final DestinationMusic destinationMusic) {
       return new DestinationMusicResponse(
           destinationMusic.getMusicId().id(),
-          destinationMusic.getName(),
+          destinationMusic.getTitle(),
           String.join(",", destinationMusic.getArtistNames()),
           destinationMusic.getImageUrl()
       );

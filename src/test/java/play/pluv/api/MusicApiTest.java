@@ -89,7 +89,7 @@ public class MusicApiTest extends ApiTest {
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())
-        .andDo(document("search-spotify-music",
+        .andDo(document("search-youtube-music",
             MUSIC_SEARCH_SNIPPETS
         ));
   }

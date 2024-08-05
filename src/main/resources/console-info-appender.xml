@@ -9,19 +9,15 @@
       </onMismatch> <!-- 다른 수준의 레벨은 기록하지 않는다.(상위 레벨도 기록 안함), 상위 수준의 레벨에 대한 기록을 원하면 ACCEPT 로 하면 기록된다. -->
     </filter> <!-- 레벨별 필터링이 필요없을 경우 filter class 관련된 부분을 삭제하면 됨-->
 
-    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-      <providers>
-        <mdc/>
-        <pattern>
-          <pattern>
-            {
-            "timestamp": "%date{yyyy-MM-dd HH:mm:ss}",
-            "message": "%message"
-            }
-          </pattern>
-        </pattern>
-      </providers>
-      <timestampPattern>yyyyMMddHHmmss.SSSSSS</timestampPattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+        <timestampFormat>yyyy-MM-dd' 'HH:mm:ss</timestampFormat>
+        <timestampFormatTimezoneId>Asia/Seoul</timestampFormatTimezoneId>
+        <appendLineSeparator>true</appendLineSeparator>
+        <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+          <prettyPrint>true</prettyPrint>
+        </jsonFormatter>
+      </layout>
     </encoder>
 
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

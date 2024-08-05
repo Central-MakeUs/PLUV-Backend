@@ -20,6 +20,6 @@ public class PlayListService {
   public List<PlayListMusic> getPlayListMusics(
       final String playListId, final String accessToken, final MusicStreaming source
   ) {
-    return playListConnectorComposite.getMusics(source, playListId, accessToken);
+    return playListConnectorComposite.getMusics(source, accessToken, playListId);
   }
 }

@@ -42,3 +42,4 @@ openapi3.json
 .DS_Store
 # api
 external/
+logs/

@@ -1,10 +1,10 @@
-package play.pluv.music.domain;
+package play.pluv.playlist.domain;
 
-import static play.pluv.music.exception.MusicExceptionType.MUSIC_STREAMING_NOT_FOUND;
+import static play.pluv.playlist.exception.PlayListExceptionType.PLAYLIST_PROVIDER_NOT_FOUND;
 
 import java.util.Arrays;
 import lombok.Getter;
-import play.pluv.music.exception.MusicException;
+import play.pluv.playlist.exception.PlayListException;
 
 @Getter
 public enum MusicStreaming {
@@ -23,6 +23,6 @@ public enum MusicStreaming {
     return Arrays.stream(values())
         .filter(streaming -> streaming.getName().equals(name))
         .findAny()
-        .orElseThrow(() -> new MusicException(MUSIC_STREAMING_NOT_FOUND));
+        .orElseThrow(() -> new PlayListException(PLAYLIST_PROVIDER_NOT_FOUND));
   }
 }

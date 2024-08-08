@@ -1,7 +1,7 @@
 package play.pluv.music.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import org.junit.jupiter.api.Nested;

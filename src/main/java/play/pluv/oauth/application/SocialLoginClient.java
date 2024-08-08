@@ -1,6 +1,6 @@
 package play.pluv.oauth.application;
 
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 
 public interface SocialLoginClient {

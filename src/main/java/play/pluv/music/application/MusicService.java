@@ -10,7 +10,7 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
 
 @Service

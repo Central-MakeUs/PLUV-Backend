@@ -1,6 +1,6 @@
 package play.pluv.oauth.spotify.dto;
 
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import java.util.Optional;

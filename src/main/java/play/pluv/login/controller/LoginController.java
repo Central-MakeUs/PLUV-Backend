@@ -1,7 +1,7 @@
 package play.pluv.login.controller;
 
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
-import static play.pluv.music.domain.MusicStreaming.YOUTUBE;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

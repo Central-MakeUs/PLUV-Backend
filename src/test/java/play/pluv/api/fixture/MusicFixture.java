@@ -1,5 +1,7 @@
 package play.pluv.api.fixture;
 
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
+
 import java.util.List;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
@@ -7,6 +9,9 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
+import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.MusicId;
+import play.pluv.playlist.domain.PlayListMusic;
 
 public class MusicFixture {
 
@@ -55,6 +60,31 @@ public class MusicFixture {
   public static MusicAddRequest 음악_추가_요청() {
     return new MusicAddRequest("추가할 playlistName", "accessToken",
         List.of("musicId1", "musicId2", "musicId3", "musicId4")
+    );
+  }
+
+  public static List<DestinationMusic> 이전된_음악_목록() {
+    return List.of(
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId1")).title("ㅈㅣㅂ").imageUrl("imageUrl")
+            .isrcCode(null).artistNames(List.of("한로로")).build(),
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId2")).title("좋은 날").imageUrl("imageUrl")
+            .isrcCode("KRDDAFA3").artistNames(List.of("아이유")).build(),
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId3")).title("Always Awake").imageUrl("imageUrl")
+            .isrcCode(null).artistNames(List.of("재지팩트")).build()
+    );
+  }
+
+  public static List<PlayListMusic> 이전되지_못한_음악_목록() {
+    return List.of(
+        PlayListMusic.builder()
+            .title("레이디버드").imageUrl("imageUrl").isrcCode(null).artistNames(List.of("잔나비"))
+            .build(),
+        PlayListMusic.builder()
+            .title("하루살이").imageUrl("imageUrl").isrcCode(null).artistNames(List.of("한로로"))
+            .build()
     );
   }
 }

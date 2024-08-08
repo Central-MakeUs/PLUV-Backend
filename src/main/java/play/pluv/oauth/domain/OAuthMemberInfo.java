@@ -4,7 +4,7 @@ import static jakarta.persistence.EnumType.STRING;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 
 @Embeddable
 public record OAuthMemberInfo(

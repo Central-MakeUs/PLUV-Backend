@@ -3,7 +3,7 @@ package play.pluv.playlist.application;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListMusic;
 

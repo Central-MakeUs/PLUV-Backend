@@ -17,7 +17,7 @@ public class SourceMusic {
   //Nullable
   private final String isrcCode;
 
-  public Optional<String> getIsrcCode(){
+  public Optional<String> getIsrcCode() {
     return Optional.ofNullable(isrcCode);
   }
 }

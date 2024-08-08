@@ -2,7 +2,7 @@ package play.pluv.login.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.MemberFixture.멤버_홍혁준;
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Nested;

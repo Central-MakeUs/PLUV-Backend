@@ -1,7 +1,7 @@
 package play.pluv.oauth.spotify;
 
 import static java.lang.String.format;
-import static play.pluv.music.domain.MusicStreaming.SPOTIFY;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.music.domain.SourceMusic;
 
 public interface MusicExplorer {

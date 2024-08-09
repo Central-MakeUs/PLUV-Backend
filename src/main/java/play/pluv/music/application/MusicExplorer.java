@@ -9,7 +9,7 @@ import play.pluv.playlist.domain.PlayListMusic;
 
 public interface MusicExplorer {
 
-  Optional<DestinationMusic> searchMusic(final String accessToken, final PlayListMusic source);
+  List<DestinationMusic> searchMusic(final String accessToken, final PlayListMusic source);
 
   void transferMusics(
       final String accessToken, final List<MusicId> musicIds, final String playlistName

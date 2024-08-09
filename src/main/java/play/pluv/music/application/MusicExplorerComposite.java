@@ -25,7 +25,7 @@ public class MusicExplorerComposite {
         .collect(toMap(MusicExplorer::supportedType, identity()));
   }
 
-  public Optional<DestinationMusic> searchMusic(
+  public List<DestinationMusic> searchMusic(
       final MusicStreaming musicStreaming, final String accessToken, final PlayListMusic source
   ) {
     return getClient(musicStreaming).searchMusic(accessToken, source);

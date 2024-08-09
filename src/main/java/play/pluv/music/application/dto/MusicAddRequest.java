@@ -2,7 +2,7 @@ package play.pluv.music.application.dto;
 
 import java.util.List;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.MusicStreaming;
+import play.pluv.playlist.domain.MusicStreaming;
 
 public record MusicAddRequest(
     String playListName,

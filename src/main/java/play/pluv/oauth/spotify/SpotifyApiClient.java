@@ -33,7 +33,8 @@ public interface SpotifyApiClient {
       @RequestBody final SpotifyCreatePlayListRequest request
   );
 
-  //최대 100개까지만 한 번에 가능 //추후 webflux로 바꾸기
+  //최대 100개까지만 한 번에 가능
+  //추후 webflux로 바꾸기
   @PostExchange(url = "https://api.spotify.com/v1/playlists/{playListId}/tracks")
   void addMusics(
       @RequestHeader("Authorization") final String accessToken,

@@ -1,6 +1,6 @@
 package play.pluv.oauth.google.dto;
 
-import static play.pluv.music.domain.MusicStreaming.YOUTUBE;
+import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import play.pluv.oauth.domain.OAuthMemberInfo;
 

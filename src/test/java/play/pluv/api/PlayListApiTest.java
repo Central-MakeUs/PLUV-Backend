@@ -21,7 +21,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import play.pluv.playlist.application.dto.PlayListMusicReadRequest;
-import play.pluv.playlist.application.dto.PlayListReadRequest.OAuthAccessToken;
+import play.pluv.playlist.application.dto.PlayListReadRequest;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
@@ -62,7 +62,7 @@ public class PlayListApiTest extends ApiTest {
             )
         );
 
-    final OAuthAccessToken request = new OAuthAccessToken("accessToken");
+    final PlayListReadRequest request = new PlayListReadRequest("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
@@ -95,7 +95,7 @@ public class PlayListApiTest extends ApiTest {
             )
         );
 
-    final OAuthAccessToken request = new OAuthAccessToken("accessToken");
+    final PlayListReadRequest request = new PlayListReadRequest("accessToken");
     final String requestBody = objectMapper.writeValueAsString(request);
 
     when(playListService.getPlayLists(any(), any())).thenReturn(playLists);

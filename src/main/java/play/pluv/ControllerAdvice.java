@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -37,6 +38,13 @@ public class ControllerAdvice {
   @ExceptionHandler(BindException.class)
   public ResponseEntity<BaseResponse<String>> handleBindExceptionHandler(final Exception e) {
     final String message = "요청 파라미터가 올바르지 않습니다.";
+    loggingClientException(e, message);
+    return new ResponseEntity<>(BaseResponse.badRequest(message), BAD_REQUEST);
+  }
+
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<BaseResponse<String>> handleMethodParameter(final Exception e) {
+    final String message = "request parameter가 적절하지 않습니다.";
     loggingClientException(e, message);
     return new ResponseEntity<>(BaseResponse.badRequest(message), BAD_REQUEST);
   }

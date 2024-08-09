@@ -1,5 +1,10 @@
 package play.pluv.login.application.dto;
 
-public record GoogleLoginRequest(String idToken) {
+import jakarta.validation.constraints.NotBlank;
+
+public record GoogleLoginRequest(
+    @NotBlank
+    String idToken
+) {
 
 }

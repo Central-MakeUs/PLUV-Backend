@@ -1,5 +1,10 @@
 package play.pluv.login.application.dto;
 
-public record SpotifyLoginRequest(String accessToken) {
+import jakarta.validation.constraints.NotBlank;
+
+public record SpotifyLoginRequest(
+    @NotBlank
+    String accessToken
+) {
 
 }

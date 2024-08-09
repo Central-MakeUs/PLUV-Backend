@@ -1,15 +1,19 @@
 package play.pluv.music.application.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import play.pluv.playlist.domain.PlayListMusic;
 
 public record MusicSearchRequest(
-    String destinationAccessToken, List<MusicQuery> musics
+    @NotBlank String destinationAccessToken,
+    @NotNull @Valid List<MusicQuery> musics
 ) {
 
   public record MusicQuery(
-      String title, String artistName, String isrcCode, String imageUrl
+      @NotBlank String title, @NotNull String artistName, String isrcCode, @NotNull String imageUrl
   ) {
 
     public PlayListMusic toDomain() {

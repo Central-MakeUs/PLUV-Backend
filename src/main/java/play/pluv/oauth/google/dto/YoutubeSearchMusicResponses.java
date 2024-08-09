@@ -5,6 +5,7 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 import java.util.List;
 import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 
 public record YoutubeSearchMusicResponses(
@@ -27,11 +28,11 @@ public record YoutubeSearchMusicResponses(
     );
   }
 
-  public List<DestinationMusic> toDestinationMusics() {
-    return items.stream()
+  public DestinationMusics toDestinationMusics() {
+    return new DestinationMusics(items.stream()
         .map(YoutubeMusicVideo::toDestinationMusic)
         .limit(5)
-        .toList();
+        .toList());
   }
 
   private record YoutubeMusicVideo(

@@ -2,13 +2,14 @@ package play.pluv.oauth.spotify.dto;
 
 import java.util.List;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 
 public record SpotifySearchMusicResponse(
     Track tracks
 ) {
 
-  public List<DestinationMusic> toDestinationMusics() {
-    return tracks.toMusics();
+  public DestinationMusics toDestinationMusics() {
+    return new DestinationMusics(tracks.toMusics());
   }
 
   public record Track(

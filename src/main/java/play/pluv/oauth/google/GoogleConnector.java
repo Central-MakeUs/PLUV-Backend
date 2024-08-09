@@ -11,6 +11,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -71,7 +72,7 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   }
 
   @Override
-  public List<DestinationMusic> searchMusic(
+  public DestinationMusics searchMusic(
       final String accessToken, final PlayListMusic source
   ) {
     final String q = source.getTitle() + String.join(",", source.getArtistNames());

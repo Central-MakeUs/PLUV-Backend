@@ -10,6 +10,7 @@ import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.PlayListMusic;
 
@@ -76,6 +77,17 @@ public class MusicFixture {
             .musicId(new MusicId(SPOTIFY, "musicId3")).title("Always Awake").imageUrl("imageUrl")
             .isrcCode(null).artistNames(List.of("재지팩트")).build()
     );
+  }
+
+  public static DestinationMusics 한로로_집_아이유_좋은날() {
+    return new DestinationMusics(List.of(
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId1")).title("ㅈㅣㅂ").imageUrl("imageUrl")
+            .isrcCode(null).artistNames(List.of("한로로")).build(),
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId2")).title("좋은 날").imageUrl("imageUrl")
+            .isrcCode("KRDDAFA3").artistNames(List.of("아이유")).build()
+    ));
   }
 
   public static List<PlayListMusic> 이전되지_못한_음악_목록() {

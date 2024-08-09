@@ -3,6 +3,7 @@ package play.pluv.login.controller;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ public class LoginController {
 
   @PostMapping("/login/spotify")
   public BaseResponse<LoginResponse> loginSpotify(
-      @RequestBody final SpotifyLoginRequest loginRequest
+      @Valid @RequestBody final SpotifyLoginRequest loginRequest
   ) {
     final var memberId = loginService.createToken(SPOTIFY, loginRequest.accessToken());
     final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
@@ -32,7 +33,7 @@ public class LoginController {
 
   @PostMapping("/login/google")
   public BaseResponse<LoginResponse> loginGoogle(
-      @RequestBody final GoogleLoginRequest loginRequest
+      @Valid @RequestBody final GoogleLoginRequest loginRequest
   ) {
     final var memberId = loginService.createToken(YOUTUBE, loginRequest.idToken());
     final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));

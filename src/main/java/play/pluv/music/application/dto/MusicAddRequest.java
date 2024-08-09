@@ -1,13 +1,14 @@
 package play.pluv.music.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
 
 public record MusicAddRequest(
-    String playListName,
-    String destinationAccessToken,
-    List<String> musicIds
+    @NotBlank String playListName,
+    @NotBlank String destinationAccessToken,
+    @NotBlank List<String> musicIds
 ) {
 
   public List<MusicId> extractMusicIds(final MusicStreaming destination) {

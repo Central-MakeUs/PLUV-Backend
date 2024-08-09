@@ -11,7 +11,7 @@ import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.music.domain.SourceMusic;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class MusicService {
 
     return request.musics().parallelStream()
         .map(MusicQuery::toDomain)
-        .map(sourceMusic -> searchMusic(musicStreaming, sourceMusic, accessToken))
+        .map(playListMusic -> searchMusic(musicStreaming, playListMusic, accessToken))
         .toList();
   }
 
@@ -39,14 +39,14 @@ public class MusicService {
   }
 
   private MusicSearchResponse searchMusic(
-      final MusicStreaming musicStreaming, final SourceMusic sourceMusic, final String accessToken
+      final MusicStreaming musicStreaming, final PlayListMusic playlistMusic, final String accessToken
   ) {
     final Optional<DestinationMusic> result
-        = musicExplorerComposite.searchMusic(musicStreaming, accessToken, sourceMusic);
+        = musicExplorerComposite.searchMusic(musicStreaming, accessToken, playlistMusic);
     return result
         .map(
-            destination -> MusicSearchResponse.createFound(sourceMusic, destination)
+            destination -> MusicSearchResponse.createFound(playlistMusic, destination)
         )
-        .orElseGet(() -> MusicSearchResponse.createNotFound(sourceMusic));
+        .orElseGet(() -> MusicSearchResponse.createNotFound(playlistMusic));
   }
 }

@@ -11,9 +11,9 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.SourceMusic;
 import play.pluv.music.exception.MusicException;
 import play.pluv.playlist.domain.MusicStreaming;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
 public class MusicExplorerComposite {
@@ -26,9 +26,9 @@ public class MusicExplorerComposite {
   }
 
   public Optional<DestinationMusic> searchMusic(
-      final MusicStreaming musicStreaming, final String accessToken, final SourceMusic query
+      final MusicStreaming musicStreaming, final String accessToken, final PlayListMusic source
   ) {
-    return getClient(musicStreaming).searchMusic(accessToken, query);
+    return getClient(musicStreaming).searchMusic(accessToken, source);
   }
 
   public void transferMusics(

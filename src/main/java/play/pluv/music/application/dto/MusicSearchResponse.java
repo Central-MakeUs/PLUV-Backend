@@ -3,6 +3,7 @@ package play.pluv.music.application.dto;
 import lombok.Builder;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.SourceMusic;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Builder
 public record MusicSearchResponse(
@@ -13,7 +14,7 @@ public record MusicSearchResponse(
 ) {
 
   public static MusicSearchResponse createFound(
-      final SourceMusic sourceMusic, final DestinationMusic destinationMusic
+      final PlayListMusic sourceMusic, final DestinationMusic destinationMusic
   ) {
     final SourceMusicResponse sourceMusicResponse = SourceMusicResponse.from(sourceMusic);
     final DestinationMusicResponse destinationMusicResponse
@@ -27,8 +28,8 @@ public record MusicSearchResponse(
         .build();
   }
 
-  public static MusicSearchResponse createNotFound(final SourceMusic sourceMusic) {
-    final SourceMusicResponse response = SourceMusicResponse.from(sourceMusic);
+  public static MusicSearchResponse createNotFound(final PlayListMusic playListMusic) {
+    final SourceMusicResponse response = SourceMusicResponse.from(playListMusic);
     return MusicSearchResponse.builder()
         .sourceMusic(response)
         .isEqual(false)
@@ -38,13 +39,15 @@ public record MusicSearchResponse(
 
   public record SourceMusicResponse(
       String title,
-      String artistName
+      String artistName,
+      String imageUrl
   ) {
 
-    public static SourceMusicResponse from(final SourceMusic sourceMusic) {
+    public static SourceMusicResponse from(final PlayListMusic playListMusic) {
       return new SourceMusicResponse(
-          sourceMusic.getTitle(),
-          String.join(",", sourceMusic.getArtistNames())
+          playListMusic.getTitle(),
+          String.join(",", playListMusic.getArtistNames()),
+          playListMusic.getImageUrl()
       );
     }
   }

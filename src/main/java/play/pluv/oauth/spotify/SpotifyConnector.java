@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.SourceMusic;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 import play.pluv.oauth.spotify.dto.SpotifyAddMusicRequest;
@@ -62,8 +61,10 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
   }
 
   @Override
-  public Optional<DestinationMusic> searchMusic(final String accessToken, final SourceMusic query) {
-    final MultiValueMap<String, String> param = createRequestParamForSearchMusic(query);
+  public Optional<DestinationMusic> searchMusic(
+      final String accessToken, final PlayListMusic source
+  ) {
+    final MultiValueMap<String, String> param = createRequestParamForSearchMusic(source);
     return spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param)
         .toMusic();
   }
@@ -126,7 +127,9 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
     return param;
   }
 
-  private MultiValueMap<String, String> createRequestParamForSearchMusic(final SourceMusic music) {
+  private MultiValueMap<String, String> createRequestParamForSearchMusic(
+      final PlayListMusic music
+  ) {
     final MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 
     final String artistName = String.join(",", music.getArtistNames());

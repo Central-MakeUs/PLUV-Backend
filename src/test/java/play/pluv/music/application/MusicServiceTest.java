@@ -21,13 +21,13 @@ class MusicServiceTest extends ApplicationTest {
   @Test
   void 음악을_조회한다() {
     final MusicSearchRequest request = new MusicSearchRequest("accessToken",
-        List.of(new MusicQuery("좋은 날", "아이유", "KRA381001057"))
+        List.of(new MusicQuery("좋은 날", "아이유", "KRA381001057", "imageUrl"))
     );
 
     final List<MusicSearchResponse> actual = musicService.searchMusics(SPOTIFY, request);
     final List<MusicSearchResponse> expected = List.of(
         new MusicSearchResponse(true, true,
-            new SourceMusicResponse("좋은 날", "아이유"),
+            new SourceMusicResponse("좋은 날", "아이유","imageUrl"),
             new DestinationMusicResponse("goodDayId", "Good Day", "IU", "href")
         )
     );

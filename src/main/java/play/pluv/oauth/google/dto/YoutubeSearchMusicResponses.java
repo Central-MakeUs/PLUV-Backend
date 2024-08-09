@@ -27,10 +27,27 @@ public record YoutubeSearchMusicResponses(
     );
   }
 
+  public List<DestinationMusic> toDestinationMusics() {
+    return items.stream()
+        .map(YoutubeMusicVideo::toDestinationMusic)
+        .limit(5)
+        .toList();
+  }
+
   private record YoutubeMusicVideo(
       VideoId id,
       YoutubeMusicDetail snippet
   ) {
+
+    public DestinationMusic toDestinationMusic() {
+      return DestinationMusic.builder()
+          .musicId(new MusicId(YOUTUBE, id.videoId()))
+          .imageUrl(snippet().thumbnails().getUrl())
+          .artistNames(List.of())
+          .title(snippet().title())
+          .isrcCode(null)
+          .build();
+    }
 
     private String getId() {
       return id.videoId();

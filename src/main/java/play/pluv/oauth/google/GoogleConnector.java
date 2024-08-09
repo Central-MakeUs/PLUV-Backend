@@ -4,7 +4,6 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -72,12 +71,12 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   }
 
   @Override
-  public Optional<DestinationMusic> searchMusic(
+  public List<DestinationMusic> searchMusic(
       final String accessToken, final PlayListMusic source
   ) {
     final String q = source.getTitle() + String.join(",", source.getArtistNames());
     return googleApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), q)
-        .toDestinationMusic();
+        .toDestinationMusics();
   }
 
   @Override

@@ -18,15 +18,15 @@ public class MusicFixture {
   public static List<MusicSearchResponse> 스포티파이_음악_검색_결과() {
     return List.of(
         new MusicSearchResponse(
-            true, true, new SourceMusicResponse("좋은 날", "아이유"),
+            true, true, new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
             new DestinationMusicResponse("124nkd3fh", "Good Day", "IU",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
         ),
-        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro"),
+        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
             new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
         new MusicSearchResponse(false, false,
-            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수"), null
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), null
         )
     );
   }
@@ -34,24 +34,24 @@ public class MusicFixture {
   public static List<MusicSearchResponse> 유튜브_음악_검색_결과() {
     return List.of(
         new MusicSearchResponse(
-            true, true, new SourceMusicResponse("좋은 날", "아이유"),
+            true, true, new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
             new DestinationMusicResponse("124nkd3fh", "Good Day - MV", "",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
         ),
-        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro"),
+        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
             new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
         new MusicSearchResponse(false, false,
-            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수"), null
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), null
         )
     );
   }
 
   public static MusicSearchRequest 음악_검색_요청() {
     final List<MusicQuery> musicQueries = List.of(
-        new MusicQuery("좋은 날", "아이유", "KRA381001057"),
-        new MusicQuery("SPOT!", "지코,제니", null),
-        new MusicQuery("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", null)
+        new MusicQuery("좋은 날", "아이유", "KRA381001057", "imageUrl"),
+        new MusicQuery("SPOT!", "지코,제니", null, "imageUrl"),
+        new MusicQuery("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", null, "imageUrl")
     );
 
     return new MusicSearchRequest("dfj51lk5", musicQueries);

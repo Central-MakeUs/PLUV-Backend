@@ -7,6 +7,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @ToString
 @Getter
@@ -20,19 +21,19 @@ public class DestinationMusic {
   //nullable한 값
   private final String isrcCode;
 
-  public Boolean isSame(final SourceMusic sourceMusic) {
+  public Boolean isSame(final PlayListMusic playListMusic) {
     if (isrcCode != null) {
-      return sourceMusic.getIsrcCode()
+      return playListMusic.getIsrcCode()
           .map(isrc -> isrc.equals(isrcCode))
-          .orElseGet(() -> compareName(sourceMusic));
+          .orElseGet(() -> compareName(playListMusic));
     }
-    return compareName(sourceMusic);
+    return compareName(playListMusic);
   }
 
-  private Boolean compareName(final SourceMusic sourceMusic) {
+  private Boolean compareName(final PlayListMusic playListMusic) {
     final Set<String> set1 = new HashSet<>(artistNames);
-    final Set<String> set2 = new HashSet<>(sourceMusic.getArtistNames());
+    final Set<String> set2 = new HashSet<>(playListMusic.getArtistNames());
 
-    return Objects.equals(sourceMusic.getTitle(), title) && set1.equals(set2);
+    return Objects.equals(playListMusic.getTitle(), title) && set1.equals(set2);
   }
 }

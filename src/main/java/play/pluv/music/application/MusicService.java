@@ -1,14 +1,13 @@
 package play.pluv.music.application;
 
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
-import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayListMusic;
@@ -39,14 +38,14 @@ public class MusicService {
   }
 
   private MusicSearchResponse searchMusic(
-      final MusicStreaming musicStreaming, final PlayListMusic playlistMusic, final String accessToken
+      final MusicStreaming musicStreaming, final PlayListMusic playlistMusic,
+      final String accessToken
   ) {
-    final Optional<DestinationMusic> result
-        = musicExplorerComposite.searchMusic(musicStreaming, accessToken, playlistMusic);
-    return result
-        .map(
-            destination -> MusicSearchResponse.createFound(playlistMusic, destination)
-        )
-        .orElseGet(() -> MusicSearchResponse.createNotFound(playlistMusic));
+    final DestinationMusics destinationMusics = musicExplorerComposite
+        .searchMusic(musicStreaming, accessToken, playlistMusic);
+    if (destinationMusics.isEmpty()) {
+      return MusicSearchResponse.createNotFound(playlistMusic);
+    }
+    return MusicSearchResponse.createFound(playlistMusic, destinationMusics);
   }
 }

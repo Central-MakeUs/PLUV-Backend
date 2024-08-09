@@ -1,8 +1,6 @@
 package play.pluv.music.application;
 
 import java.util.List;
-import java.util.Optional;
-import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;

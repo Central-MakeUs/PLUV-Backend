@@ -27,7 +27,7 @@ public class MusicFixture {
             List.of(new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
         new MusicSearchResponse(false, false,
-            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), null
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), List.of()
         )
     );
   }

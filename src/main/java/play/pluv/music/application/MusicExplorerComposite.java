@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Component;
-import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.music.exception.MusicException;
 import play.pluv.playlist.domain.MusicStreaming;
@@ -25,7 +25,7 @@ public class MusicExplorerComposite {
         .collect(toMap(MusicExplorer::supportedType, identity()));
   }
 
-  public Optional<DestinationMusic> searchMusic(
+  public DestinationMusics searchMusic(
       final MusicStreaming musicStreaming, final String accessToken, final PlayListMusic source
   ) {
     return getClient(musicStreaming).searchMusic(accessToken, source);

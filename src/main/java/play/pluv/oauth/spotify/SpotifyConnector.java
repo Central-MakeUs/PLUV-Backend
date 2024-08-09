@@ -5,14 +5,13 @@ import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
-import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -61,12 +60,12 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
   }
 
   @Override
-  public Optional<DestinationMusic> searchMusic(
+  public DestinationMusics searchMusic(
       final String accessToken, final PlayListMusic source
   ) {
     final MultiValueMap<String, String> param = createRequestParamForSearchMusic(source);
     return spotifyApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), param)
-        .toMusic();
+        .toDestinationMusics();
   }
 
   @Override

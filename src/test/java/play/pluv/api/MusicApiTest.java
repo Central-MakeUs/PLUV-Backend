@@ -8,7 +8,6 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
-import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -47,14 +46,14 @@ public class MusicApiTest extends ApiTest {
           fieldWithPath("data[].sourceMusic.imageUrl").type(STRING).description("음악 imageUrl"),
           fieldWithPath("data[].sourceMusic.artistName").type(STRING)
               .description("검색하려는 음악의 가수 이름"),
-          fieldWithPath("data[].destinationMusic").type(OBJECT).description("조회된 음악 정보")
+          fieldWithPath("data[].destinationMusics").type(ARRAY).description("조회된 음악 정보")
               .optional(),
-          fieldWithPath("data[].destinationMusic.id").type(STRING).description("조회된 음악 id"),
-          fieldWithPath("data[].destinationMusic.title").type(STRING)
+          fieldWithPath("data[].destinationMusics[].id").type(STRING).description("조회된 음악 id"),
+          fieldWithPath("data[].destinationMusics[].title").type(STRING)
               .description("조회된 음악의 이름"),
-          fieldWithPath("data[].destinationMusic.artistName").type(STRING)
+          fieldWithPath("data[].destinationMusics[].artistName").type(STRING)
               .description("조회된 음악의 가수 이름"),
-          fieldWithPath("data[].destinationMusic.imageUrl").type(STRING)
+          fieldWithPath("data[].destinationMusics[].imageUrl").type(STRING)
               .description("조회된 음악의 커버 이미지 url")
       )};
   private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {requestFields(

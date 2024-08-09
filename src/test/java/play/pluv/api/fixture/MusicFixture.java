@@ -10,6 +10,7 @@ import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
 import play.pluv.music.domain.DestinationMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.PlayListMusic;
 
@@ -19,14 +20,15 @@ public class MusicFixture {
     return List.of(
         new MusicSearchResponse(
             true, true, new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
-            new DestinationMusicResponse("124nkd3fh", "Good Day", "IU",
+            List.of(new DestinationMusicResponse("124nkd3fh", "Good Day", "IU",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
+            )
         ),
         new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
-            new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
-                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
+            List.of(new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
+                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
         new MusicSearchResponse(false, false,
-            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), null
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), List.of()
         )
     );
   }
@@ -35,14 +37,14 @@ public class MusicFixture {
     return List.of(
         new MusicSearchResponse(
             true, true, new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
-            new DestinationMusicResponse("124nkd3fh", "Good Day - MV", "",
-                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
+            List.of(new DestinationMusicResponse("124nkd3fh", "Good Day - MV", "",
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"))
         ),
         new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
-            new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
-                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538")),
+            List.of(new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
+                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
         new MusicSearchResponse(false, false,
-            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), null
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), List.of()
         )
     );
   }
@@ -75,6 +77,17 @@ public class MusicFixture {
             .musicId(new MusicId(SPOTIFY, "musicId3")).title("Always Awake").imageUrl("imageUrl")
             .isrcCode(null).artistNames(List.of("재지팩트")).build()
     );
+  }
+
+  public static DestinationMusics 한로로_집_아이유_좋은날() {
+    return new DestinationMusics(List.of(
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId1")).title("ㅈㅣㅂ").imageUrl("imageUrl")
+            .isrcCode(null).artistNames(List.of("한로로")).build(),
+        DestinationMusic.builder()
+            .musicId(new MusicId(SPOTIFY, "musicId2")).title("좋은 날").imageUrl("imageUrl")
+            .isrcCode("KRDDAFA3").artistNames(List.of("아이유")).build()
+    ));
   }
 
   public static List<PlayListMusic> 이전되지_못한_음악_목록() {

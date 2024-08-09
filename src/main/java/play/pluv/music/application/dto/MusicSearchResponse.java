@@ -1,8 +1,9 @@
 package play.pluv.music.application.dto;
 
+import java.util.List;
 import lombok.Builder;
 import play.pluv.music.domain.DestinationMusic;
-import play.pluv.music.domain.SourceMusic;
+import play.pluv.music.domain.DestinationMusics;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Builder
@@ -10,21 +11,22 @@ public record MusicSearchResponse(
     Boolean isEqual,
     Boolean isFound,
     SourceMusicResponse sourceMusic,
-    DestinationMusicResponse destinationMusic
+    List<DestinationMusicResponse> destinationMusics
 ) {
 
   public static MusicSearchResponse createFound(
-      final PlayListMusic sourceMusic, final DestinationMusic destinationMusic
+      final PlayListMusic sourceMusic, final DestinationMusics destinationMusics
   ) {
     final SourceMusicResponse sourceMusicResponse = SourceMusicResponse.from(sourceMusic);
-    final DestinationMusicResponse destinationMusicResponse
-        = DestinationMusicResponse.from(destinationMusic);
+    final List<DestinationMusicResponse> destinationMusicResponses
+        = DestinationMusicResponse.extractEqualOrConvert(destinationMusics.getDestinationMusics(),
+        sourceMusic);
 
     return MusicSearchResponse.builder()
         .sourceMusic(sourceMusicResponse)
-        .destinationMusic(destinationMusicResponse)
+        .destinationMusics(destinationMusicResponses)
         .isFound(true)
-        .isEqual(destinationMusic.isSame(sourceMusic))
+        .isEqual(destinationMusics.containEqual(sourceMusic))
         .build();
   }
 
@@ -66,6 +68,24 @@ public record MusicSearchResponse(
           String.join(",", destinationMusic.getArtistNames()),
           destinationMusic.getImageUrl()
       );
+    }
+
+    public static List<DestinationMusicResponse> from(
+        final List<DestinationMusic> destinationMusics
+    ) {
+      return destinationMusics.stream()
+          .map(DestinationMusicResponse::from)
+          .toList();
+    }
+
+    public static List<DestinationMusicResponse> extractEqualOrConvert(
+        final List<DestinationMusic> destinationMusics, final PlayListMusic playListMusic
+    ) {
+      return destinationMusics.stream()
+          .filter(destinationMusic -> destinationMusic.isSame(playListMusic))
+          .findAny()
+          .map(destinationMusic -> List.of(DestinationMusicResponse.from(destinationMusic)))
+          .orElseGet(() -> DestinationMusicResponse.from(destinationMusics));
     }
   }
 }

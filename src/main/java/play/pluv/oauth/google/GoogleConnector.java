@@ -13,8 +13,6 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
-import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.music.domain.SourceMusic;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
@@ -22,6 +20,7 @@ import play.pluv.oauth.google.dto.YoutubeAddMusicRequest;
 import play.pluv.oauth.google.dto.YoutubeCreatePlayListRequest;
 import play.pluv.oauth.google.dto.YoutubeMusicResponses;
 import play.pluv.playlist.application.PlayListConnector;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
@@ -73,8 +72,10 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   }
 
   @Override
-  public Optional<DestinationMusic> searchMusic(final String accessToken, final SourceMusic query) {
-    final String q = query.getTitle() + String.join(",", query.getArtistNames());
+  public Optional<DestinationMusic> searchMusic(
+      final String accessToken, final PlayListMusic source
+  ) {
+    final String q = source.getTitle() + String.join(",", source.getArtistNames());
     return googleApiClient.searchMusic(CREATE_AUTH_HEADER.apply(accessToken), q)
         .toDestinationMusic();
   }

@@ -5,11 +5,11 @@ import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.music.domain.SourceMusic;
+import play.pluv.playlist.domain.PlayListMusic;
 
 public interface MusicExplorer {
 
-  Optional<DestinationMusic> searchMusic(final String accessToken, final SourceMusic query);
+  Optional<DestinationMusic> searchMusic(final String accessToken, final PlayListMusic source);
 
   void transferMusics(
       final String accessToken, final List<MusicId> musicIds, final String playlistName

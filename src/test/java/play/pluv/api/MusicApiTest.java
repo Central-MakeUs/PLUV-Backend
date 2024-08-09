@@ -35,6 +35,7 @@ public class MusicApiTest extends ApiTest {
               .description("플레이리스트 제공자의 accessToken"),
           fieldWithPath("musics[].title").type(STRING).description("음악 이름"),
           fieldWithPath("musics[].artistName").type(STRING).description("가수 이름들"),
+          fieldWithPath("musics[].imageUrl").type(STRING).description("음악 image url"),
           fieldWithPath("musics[].isrcCode").type(STRING).description("음악의 isrc코드").optional()
       ),
       responseFields(
@@ -43,6 +44,7 @@ public class MusicApiTest extends ApiTest {
           fieldWithPath("data[].isEqual").type(BOOLEAN).description("동일한 음악인지"),
           fieldWithPath("data[].isFound").type(BOOLEAN).description("찾았는지"),
           fieldWithPath("data[].sourceMusic.title").type(STRING).description("검색하려는 음악의 이름"),
+          fieldWithPath("data[].sourceMusic.imageUrl").type(STRING).description("음악 imageUrl"),
           fieldWithPath("data[].sourceMusic.artistName").type(STRING)
               .description("검색하려는 음악의 가수 이름"),
           fieldWithPath("data[].destinationMusic").type(OBJECT).description("조회된 음악 정보")

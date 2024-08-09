@@ -27,8 +27,8 @@ class MusicServiceTest extends ApplicationTest {
     final List<MusicSearchResponse> actual = musicService.searchMusics(SPOTIFY, request);
     final List<MusicSearchResponse> expected = List.of(
         new MusicSearchResponse(true, true,
-            new SourceMusicResponse("좋은 날", "아이유","imageUrl"),
-            new DestinationMusicResponse("goodDayId", "Good Day", "IU", "href")
+            new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
+            List.of(new DestinationMusicResponse("goodDayId", "Good Day", "IU", "href"))
         )
     );
 

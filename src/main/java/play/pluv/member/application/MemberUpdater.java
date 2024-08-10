@@ -17,4 +17,8 @@ public class MemberUpdater {
     memberRepository.readById(memberId)
         .updateNickName(nickName);
   }
+
+  public void unregister(final Long memberId) {
+    memberRepository.deleteById(memberId);
+  }
 }

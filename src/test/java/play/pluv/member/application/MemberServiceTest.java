@@ -3,6 +3,7 @@ package play.pluv.member.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.pluv.member.domain.Member;
@@ -27,5 +28,15 @@ class MemberServiceTest extends ApplicationTest {
     final NickName actual = memberRepository.readById(member.getId()).getNickName();
     assertThat(actual.getNickName())
         .isEqualTo(changeNickName);
+  }
+
+  @Test
+  void 회원탈퇴한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+
+    memberService.unregister(member.getId());
+
+    final Optional<Member> foundMember = memberRepository.findById(member.getId());
+    assertThat(foundMember).isEmpty();
   }
 }

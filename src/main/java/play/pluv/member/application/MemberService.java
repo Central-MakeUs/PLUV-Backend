@@ -15,4 +15,9 @@ public class MemberService {
   public void updateNickname(final Long memberId, final String nickName) {
     memberUpdater.updateNickName(memberId, new NickName(nickName));
   }
+
+  @Transactional
+  public void unregister(final Long memberId) {
+    memberUpdater.unregister(memberId);
+  }
 }

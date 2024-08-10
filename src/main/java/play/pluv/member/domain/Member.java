@@ -1,6 +1,7 @@
 package play.pluv.member.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.lang.Boolean.FALSE;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Embedded;
@@ -9,18 +10,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
+@Getter
+@SQLDelete(sql = "UPDATE member SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Member {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  @Getter
   private Long id;
+
   @Embedded
-  @Getter
   private NickName nickName;
+
+  private Boolean deleted = FALSE;
 
   public Member(final NickName nickName) {
     this.nickName = nickName;

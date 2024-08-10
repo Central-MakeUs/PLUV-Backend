@@ -46,4 +46,24 @@ public class MemberApiTest extends ApiTest {
         ));
     verify(memberService).updateNickname(memberId, nickName);
   }
+
+  @Test
+  void 멤버가_회원탈퇴한다() throws Exception {
+    final String token = "access Token";
+    final Long memberId = 10L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/member/unregister")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("unregister",
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data").type(STRING).description("빈 값")
+            )
+        ));
+//    verify(memberService).unregister(memberId);
+  }
 }

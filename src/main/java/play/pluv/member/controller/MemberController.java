@@ -25,4 +25,10 @@ public class MemberController {
     memberService.updateNickname(jwtMemberId.memberId(), updateNickNameRequest.nickName());
     return ResponseEntity.ok(BaseResponse.ok(""));
   }
+
+  @PostMapping("/member/unregister")
+  public ResponseEntity<BaseResponse<String>> unregister(final JwtMemberId jwtMemberId) {
+    memberService.unregister(jwtMemberId.memberId());
+    return ResponseEntity.ok(BaseResponse.ok(""));
+  }
 }

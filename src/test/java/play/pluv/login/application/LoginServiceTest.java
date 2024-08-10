@@ -5,7 +5,7 @@ import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.pluv.member.domain.MemberRepository;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.support.ApplicationTest;
 
 class LoginServiceTest extends ApplicationTest {

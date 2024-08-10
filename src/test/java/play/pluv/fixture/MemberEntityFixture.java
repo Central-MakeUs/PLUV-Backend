@@ -1,7 +1,7 @@
 package play.pluv.fixture;
 
 import play.pluv.member.domain.Member;
-import play.pluv.member.domain.MemberRepository;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.member.domain.NickName;
 
 public class MemberEntityFixture {

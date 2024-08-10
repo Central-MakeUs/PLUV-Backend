@@ -1,5 +1,6 @@
 package play.pluv.support;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import play.pluv.base.LocalDateTimeProvider;
 import play.pluv.login.application.JwtProvider;
 import play.pluv.login.application.LoginService;
+import play.pluv.member.application.MemberService;
 import play.pluv.music.application.MusicService;
 import play.pluv.oauth.application.OAuthService;
 import play.pluv.playlist.application.PlayListService;
@@ -48,6 +50,10 @@ public abstract class ApiTest {
   protected LoginService loginService;
   @MockBean
   protected OAuthService oAuthService;
+  @MockBean
+  protected MemberService memberService;
+  @MockBean
+  protected JwtProvider jwtProvider;
 
   @BeforeEach
   void setUp(
@@ -59,6 +65,14 @@ public abstract class ApiTest {
             .withRequestDefaults(prettyPrint())
             .withResponseDefaults(prettyPrint()))
         .build();
+  }
+
+  protected void setAccessToken(final String accessToken, final Long id) {
+    when(jwtProvider.parseMemberId(accessToken)).thenReturn(id);
+  }
+
+  protected void setCreateToken(final String accessToken, final Long id) {
+    when(jwtProvider.createAccessTokenWith(id)).thenReturn(accessToken);
   }
 
   @Configuration

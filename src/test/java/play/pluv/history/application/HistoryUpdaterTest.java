@@ -12,7 +12,7 @@ import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.member.domain.Member;
-import play.pluv.member.domain.MemberRepository;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.playlist.domain.PlayListMusic;
 import play.pluv.support.ApplicationTest;
 

@@ -14,4 +14,6 @@ public interface SocialLoginIdRepository extends JpaRepository<SocialLoginId, Lo
       where s.oauthMemberInfo = :oauthMemberInfo
       """)
   Optional<SocialLoginId> findByOAuthMemberInfo(final OAuthMemberInfo oauthMemberInfo);
+
+  Boolean existsByOauthMemberInfo(final OAuthMemberInfo oauthMemberInfo);
 }

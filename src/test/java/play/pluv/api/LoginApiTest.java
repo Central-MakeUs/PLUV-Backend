@@ -2,6 +2,7 @@ package play.pluv.api;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -71,6 +72,62 @@ public class LoginApiTest extends ApiTest {
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data.token").type(STRING).description("로그인 할 떄 쓸 accessToken")
+            )
+        ));
+  }
+
+  @Test
+  void 구글_소셜_로그인_방법을_추가한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "access Token";
+    final GoogleLoginRequest loginRequest = new GoogleLoginRequest("idToken");
+
+    final String requestBody = objectMapper.writeValueAsString(loginRequest);
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/login/google/add")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("google-login-add",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            requestFields(
+                fieldWithPath("idToken").type(STRING).description("구글의 accessToken")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data").type(STRING).description("")
+            )
+        ));
+  }
+
+  @Test
+  void 스포티파이_소셜_로그인_방법을_추가한다() throws Exception {
+    final String token = "access Token";
+    final Long memberId = 10L;
+    final SpotifyLoginRequest loginRequest = new SpotifyLoginRequest("accessToken");
+
+    final String requestBody = objectMapper.writeValueAsString(loginRequest);
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/login/spotify/add")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("spotify-login-add",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            requestFields(
+                fieldWithPath("accessToken").type(STRING).description("스포티파이의 accessToken")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data").type(STRING).description("")
             )
         ));
   }

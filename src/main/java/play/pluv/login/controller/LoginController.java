@@ -12,6 +12,7 @@ import play.pluv.base.BaseResponse;
 import play.pluv.login.application.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.login.application.dto.GoogleLoginRequest;
+import play.pluv.login.application.dto.JwtMemberId;
 import play.pluv.login.application.dto.LoginResponse;
 import play.pluv.login.application.dto.SpotifyLoginRequest;
 
@@ -38,5 +39,21 @@ public class LoginController {
     final var memberId = loginService.createToken(YOUTUBE, loginRequest.idToken());
     final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
     return BaseResponse.ok(loginResponse);
+  }
+
+  @PostMapping("/login/google/add")
+  public BaseResponse<String> addGoogleLoginWay(
+      @Valid @RequestBody final GoogleLoginRequest loginRequest, final JwtMemberId jwtMemberId
+  ) {
+    loginService.addOtherLoginWay(YOUTUBE, jwtMemberId.memberId(), loginRequest.idToken());
+    return BaseResponse.ok("");
+  }
+
+  @PostMapping("/login/spotify/add")
+  public BaseResponse<String> addSpotifyLoginWay(
+      @Valid @RequestBody final SpotifyLoginRequest loginRequest, final JwtMemberId jwtMemberId
+  ) {
+    loginService.addOtherLoginWay(SPOTIFY, jwtMemberId.memberId(), loginRequest.accessToken());
+    return BaseResponse.ok("");
   }
 }

@@ -26,19 +26,19 @@ public class History extends BaseEntity {
 
   private int transferredSongCount;
 
-  private int transferFailSongCount;
+  private int totalSongCount;
 
   private Long memberId;
 
   @Builder
   public History(
       final String title, final String thumbNailUrl, final int transferredSongCount,
-      final int transferFailSongCount, final Long memberId
+      final int totalSongCount, final Long memberId
   ) {
     this.title = title;
     this.thumbNailUrl = thumbNailUrl;
     this.transferredSongCount = transferredSongCount;
-    this.transferFailSongCount = transferFailSongCount;
+    this.totalSongCount = totalSongCount;
     this.memberId = memberId;
   }
 }

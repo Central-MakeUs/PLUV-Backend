@@ -21,13 +21,13 @@ public class HistoryUpdater {
   @Transactional
   public Long createHistory(
       final String title, final String thumbNailUrl, final Member member,
-      final List<PlayListMusic> cantTransferredMusics, final int canTransferSongCount
+      final List<PlayListMusic> cantTransferredMusics, final int totalSongCount
   ) {
     final History history = History.builder()
-        .transferFailSongCount(cantTransferredMusics.size())
+        .totalSongCount(totalSongCount)
         .thumbNailUrl(thumbNailUrl)
         .memberId(member.getId())
-        .transferredSongCount(canTransferSongCount)
+        .transferredSongCount(0)
         .title(title)
         .build();
 

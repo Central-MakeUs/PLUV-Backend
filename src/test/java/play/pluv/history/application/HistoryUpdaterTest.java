@@ -26,15 +26,15 @@ public class HistoryUpdaterTest extends ApplicationTest {
   @Test
   void DestinationMusic으로_히스토리를_생성한다() {
     final List<PlayListMusic> cantTransferredMusics = 이전되지_못한_음악_목록();
-    final int canTransferSongCount = 3;
+    final int totalTransferSongCount = 10;
     final Member member = 멤버_홍혁준(memberRepository);
 
     final Long historyId = historyUpdater.createHistory(
-        "title", "imageUrl", member, cantTransferredMusics, canTransferSongCount
+        "title", "imageUrl", member, cantTransferredMusics, totalTransferSongCount
     );
 
     final History history = historyRepository.findById(historyId).orElseThrow();
-    final History expected = new History("title", "imageUrl", 3, 2, member.getId());
+    final History expected = new History("title", "imageUrl", 0, 10, member.getId());
 
     assertThat(history)
         .usingRecursiveComparison()

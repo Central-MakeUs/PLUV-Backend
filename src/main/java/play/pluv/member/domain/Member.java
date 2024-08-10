@@ -19,9 +19,14 @@ public class Member {
   @Getter
   private Long id;
   @Embedded
+  @Getter
   private NickName nickName;
 
   public Member(final NickName nickName) {
+    this.nickName = nickName;
+  }
+
+  public void updateNickName(final NickName nickName) {
     this.nickName = nickName;
   }
 }

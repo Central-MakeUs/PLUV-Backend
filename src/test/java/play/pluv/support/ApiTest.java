@@ -71,6 +71,10 @@ public abstract class ApiTest {
     when(jwtProvider.parseMemberId(accessToken)).thenReturn(id);
   }
 
+  protected void setCreateToken(final String accessToken, final Long id) {
+    when(jwtProvider.createAccessTokenWith(id)).thenReturn(accessToken);
+  }
+
   @Configuration
   static class RestDocsResultConfig {
 

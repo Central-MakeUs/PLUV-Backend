@@ -32,4 +32,18 @@ public class RegisterUpdater {
 
     return memberRepository.save(member);
   }
+
+  public void addOtherLoginSource(final Long memberId, final OAuthMemberInfo memberInfo) {
+    if (socialLoginIdRepository.existsByOauthMemberInfo(memberInfo)) {
+      return;
+    }
+    final Member member = memberRepository.readById(memberId);
+
+    final SocialLoginId loginId = SocialLoginId.builder()
+        .oauthMemberInfo(memberInfo)
+        .member(member)
+        .build();
+
+    socialLoginIdRepository.save(loginId);
+  }
 }

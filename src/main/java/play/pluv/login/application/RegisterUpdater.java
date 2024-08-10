@@ -8,6 +8,7 @@ import play.pluv.login.domain.SocialLoginIdRepository;
 import play.pluv.member.application.NickNameGenerator;
 import play.pluv.member.domain.Member;
 import play.pluv.member.domain.NickName;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 
 @Component
@@ -17,6 +18,7 @@ public class RegisterUpdater {
 
   private final SocialLoginIdRepository socialLoginIdRepository;
   private final NickNameGenerator nickNameGenerator;
+  private final MemberRepository memberRepository;
 
   public Member registerNewMember(final OAuthMemberInfo memberInfo) {
     final NickName nickName = nickNameGenerator.generateNickName();
@@ -28,6 +30,6 @@ public class RegisterUpdater {
         .build();
     socialLoginIdRepository.save(loginId);
 
-    return member;
+    return memberRepository.save(member);
   }
 }

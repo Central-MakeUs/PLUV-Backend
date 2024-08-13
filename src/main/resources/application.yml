@@ -21,6 +21,12 @@ google:
   client-id: local-id
   client-secret: local-secret
   redirectUri: http://localhost:8080
+apple:
+  key-id: local
+  client-id: local
+  private-key: local
+  redirect-uri: local
+  team-id: local
 restClient:
   logging: true
 jwt:
@@ -32,3 +38,10 @@ spring:
     import: classpath:secret/application-prod.yml
     activate:
       on-profile: prod
+
+---
+spring:
+  config:
+    import: classpath:secret/application-dev.yml
+    activate:
+      on-profile: dev

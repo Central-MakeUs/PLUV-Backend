@@ -4,6 +4,8 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
@@ -35,6 +37,9 @@ public class MemberApiTest extends ApiTest {
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("update-nickname",
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
             requestFields(
                 fieldWithPath("nickName").type(STRING).description("변경할 새로운 닉네임")
             ),
@@ -58,6 +63,9 @@ public class MemberApiTest extends ApiTest {
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("unregister",
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
             responseFields(
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),

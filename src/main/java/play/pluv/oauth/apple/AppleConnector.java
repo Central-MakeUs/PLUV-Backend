@@ -1,11 +1,14 @@
 package play.pluv.oauth.apple;
 
+import static io.jsonwebtoken.io.Decoders.BASE64;
 import static java.lang.System.currentTimeMillis;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static play.pluv.login.exception.LoginExceptionType.GENERATE_APPLE_CLIENT_SECRET_ERROR;
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -32,18 +35,32 @@ public class AppleConnector implements SocialLoginClient {
   private static final String AUDIENCE = "https://appleid.apple.com";
   private static final Long EXP = MILLISECONDS.convert(30, MINUTES);
 
+  private final ObjectMapper objectMapper;
   private final AppleApiClient appleApiClient;
   private final AppleConfigProperty appleConfigProperty;
 
   @Override
-  public OAuthMemberInfo fetchMember(final String authCode) {
-    final AppleTokenResponse appleToken = geTokens(authCode);
-    return null;
+  public OAuthMemberInfo fetchMember(final String idToken) {
+    final String userIdentifier = extractSub(idToken);
+    return new OAuthMemberInfo(userIdentifier, APPLE);
   }
 
   public AppleTokenResponse geTokens(final String authCode) {
     final MultiValueMap<String, String> param = createRequestParamForAccessToken(authCode);
     return appleApiClient.fetchToken(param);
+  }
+
+  private String extractSub(final String idToken) {
+    try {
+      final String claimsBase64 = idToken.substring(idToken.indexOf('.') + 1,
+          idToken.lastIndexOf('.'));
+      final var decode = BASE64.decode(claimsBase64);
+      final Map<String, Object> claims = objectMapper.readValue(decode, new TypeReference<>() {
+      });
+      return (String) claims.get("sub");
+    } catch (final Exception exception) {
+      throw new IllegalArgumentException("토큰이 유효하지 않습니다.");
+    }
   }
 
   @Override

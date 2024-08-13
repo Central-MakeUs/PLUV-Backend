@@ -4,6 +4,8 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -120,6 +122,9 @@ public class LoginApiTest extends ApiTest {
         .andDo(document("google-login-add",
             preprocessRequest(prettyPrint()),
             preprocessResponse(prettyPrint()),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
             requestFields(
                 fieldWithPath("idToken").type(STRING).description("구글의 idToken")
             ),
@@ -148,6 +153,9 @@ public class LoginApiTest extends ApiTest {
         .andDo(document("spotify-login-add",
             preprocessRequest(prettyPrint()),
             preprocessResponse(prettyPrint()),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
             requestFields(
                 fieldWithPath("accessToken").type(STRING).description("스포티파이의 accessToken")
             ),
@@ -176,6 +184,9 @@ public class LoginApiTest extends ApiTest {
         .andDo(document("apple-login-add",
             preprocessRequest(prettyPrint()),
             preprocessResponse(prettyPrint()),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
             requestFields(
                 fieldWithPath("idToken").type(STRING).description("apple의 idToken")
             ),

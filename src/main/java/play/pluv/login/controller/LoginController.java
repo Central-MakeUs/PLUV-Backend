@@ -1,5 +1,6 @@
 package play.pluv.login.controller;
 
+import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
 import play.pluv.login.application.JwtProvider;
 import play.pluv.login.application.LoginService;
+import play.pluv.login.application.dto.AppleLoginRequest;
 import play.pluv.login.application.dto.GoogleLoginRequest;
 import play.pluv.login.application.dto.JwtMemberId;
 import play.pluv.login.application.dto.LoginResponse;
@@ -54,6 +56,23 @@ public class LoginController {
       @Valid @RequestBody final SpotifyLoginRequest loginRequest, final JwtMemberId jwtMemberId
   ) {
     loginService.addOtherLoginWay(SPOTIFY, jwtMemberId.memberId(), loginRequest.accessToken());
+    return BaseResponse.ok("");
+  }
+
+  @PostMapping("/login/apple")
+  public BaseResponse<LoginResponse> loginApple(
+      @Valid @RequestBody final AppleLoginRequest loginRequest
+  ) {
+    final var memberId = loginService.createToken(APPLE, loginRequest.idToken());
+    final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
+    return BaseResponse.ok(loginResponse);
+  }
+
+  @PostMapping("/login/apple/add")
+  public BaseResponse<String> addAppleLoginWay(
+      @Valid @RequestBody final AppleLoginRequest loginRequest, final JwtMemberId jwtMemberId
+  ) {
+    loginService.addOtherLoginWay(APPLE, jwtMemberId.memberId(), loginRequest.idToken());
     return BaseResponse.ok("");
   }
 }

@@ -27,6 +27,7 @@ apple:
   private-key: local
   redirect-uri: local
   team-id: local
+  developer-token: local
 restClient:
   logging: true
 jwt:

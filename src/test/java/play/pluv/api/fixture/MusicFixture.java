@@ -24,7 +24,7 @@ public class MusicFixture {
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1")
             )
         ),
-        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
+        new MusicSearchResponse(false, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
             List.of(new DestinationMusicResponse("uo890df1", "SPOT!", "제니,지코",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
         new MusicSearchResponse(false, false,
@@ -40,7 +40,23 @@ public class MusicFixture {
             List.of(new DestinationMusicResponse("124nkd3fh", "Good Day - MV", "",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"))
         ),
-        new MusicSearchResponse(true, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
+        new MusicSearchResponse(false, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
+            List.of(new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
+                "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
+        new MusicSearchResponse(false, false,
+            new SourceMusicResponse("세상에 존재하지 않는 음악", "세상에 존재하지 않는 가수", "imageUrl"), List.of()
+        )
+    );
+  }
+
+  public static List<MusicSearchResponse> 애플_음악_검색_결과() {
+    return List.of(
+        new MusicSearchResponse(
+            true, true, new SourceMusicResponse("좋은 날", "아이유", "imageUrl"),
+            List.of(new DestinationMusicResponse("534dfdf.dfe", "좋은 날", "아이유",
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"))
+        ),
+        new MusicSearchResponse(false, true, new SourceMusicResponse("ㅈㅣㅂ", "hanro", "imageUrl"),
             List.of(new DestinationMusicResponse("uo890df1", "SPOT! - MV (제니,지코)", "",
                 "https://i.scdn.co/image/ab67616d00001e024930dc9d8cdc7f5f33282538"))),
         new MusicSearchResponse(false, false,

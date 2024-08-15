@@ -1,5 +1,6 @@
 package play.pluv.music.controller;
 
+import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
@@ -36,6 +37,14 @@ public class MusicController {
       @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
     final var responses = musicService.searchMusics(YOUTUBE, musicSearchRequest);
+    return BaseResponse.ok(responses);
+  }
+
+  @PostMapping("/apple/search")
+  public BaseResponse<List<MusicSearchResponse>> searchAppleMusics(
+      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+  ) {
+    final var responses = musicService.searchMusics(APPLE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 

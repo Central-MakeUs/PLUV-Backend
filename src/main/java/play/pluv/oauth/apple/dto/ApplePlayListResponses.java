@@ -24,7 +24,7 @@ public record ApplePlayListResponses(
       return PlayList.builder()
           .playListId(new PlayListId(id, APPLE))
           .name(attributes.name)
-          .thumbNailUrl(attributes.artwork.url)
+          .thumbNailUrl(attributes.artwork.url())
           .build();
     }
 
@@ -32,11 +32,7 @@ public record ApplePlayListResponses(
         Artwork artwork, String name
     ) {
 
-      private record Artwork(
-          String url
-      ) {
-
-      }
     }
+
   }
 }

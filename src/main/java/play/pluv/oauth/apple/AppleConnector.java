@@ -81,12 +81,15 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector {
   }
 
   @Override
-  public List<PlayListMusic> getMusics(final String playListId, final String accessToken) {
-    return List.of();
+  public List<PlayListMusic> getMusics(final String playListId, final String musicUserToken) {
+    return appleApiClient.getMusics(
+        CREATE_AUTH_HEADER.apply(appleConfigProperty.developerToken())
+        , musicUserToken, playListId
+    ).toPlayListMusics();
   }
 
   @Override
-  public PlayListId createPlayList(final String accessToken, final String name) {
+  public PlayListId createPlayList(final String musicUserToken, final String name) {
     return null;
   }
 

@@ -101,12 +101,17 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
 
   @Override
   public DestinationMusics searchMusic(final String musicUserToken, final PlayListMusic source) {
+    return source.getIsrcCode()
+        .map(isrc -> appleApiClient.searchMusicByIsrc(developerAuthorization, isrc)
+            .toDestinationMusics()
+        )
+        .orElseGet(() -> searchByNameAndArtists(source));
+  }
+
+  private DestinationMusics searchByNameAndArtists(final PlayListMusic source) {
     final String term = source.getTitle() + source.getArtistNames();
-//    source.getIsrcCode()
-//        .map()
-//        .orElseGet(() ->)
-    return appleApiClient.searchMusic(developerAuthorization, term)
-        .toDestinationMusic();
+    return appleApiClient.searchMusicByNameAndArtists(developerAuthorization, term)
+        .toDestinationMusics();
   }
 
   @Override

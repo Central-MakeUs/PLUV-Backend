@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
+import play.pluv.oauth.apple.dto.AppleMusicSongs;
 import play.pluv.oauth.apple.dto.ApplePlayListMusicResponses;
 import play.pluv.oauth.apple.dto.ApplePlayListResponses;
 import play.pluv.oauth.apple.dto.AppleSearchMusicResponses;
@@ -32,8 +33,14 @@ public interface AppleApiClient {
   );
 
   @GetExchange("https://api.music.apple.com/v1/catalog/kr/search?types=songs&l=ko")
-  AppleSearchMusicResponses searchMusic(
+  AppleSearchMusicResponses searchMusicByNameAndArtists(
       @RequestHeader("Authorization") final String developerToken,
       @RequestParam final String term
+  );
+
+  @GetExchange("https://api.music.apple.com/v1/catalog/kr/songs")
+  AppleMusicSongs searchMusicByIsrc(
+      @RequestHeader("Authorization") final String developerToken,
+      @RequestParam("filter[isrc]") final String isrc
   );
 }

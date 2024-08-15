@@ -8,7 +8,8 @@ public record AppleConfigProperty(
     String teamId,
     String clientId,
     String redirectUri,
-    String privateKey
+    String privateKey,
+    String developerToken
 ) {
 
 }

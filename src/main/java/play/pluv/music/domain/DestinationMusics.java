@@ -3,10 +3,12 @@ package play.pluv.music.domain;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Getter
 @RequiredArgsConstructor
+@ToString
 public class DestinationMusics {
 
   private final List<DestinationMusic> destinationMusics;

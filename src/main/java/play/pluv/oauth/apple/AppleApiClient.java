@@ -10,6 +10,7 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import play.pluv.oauth.apple.dto.ApplePlayListMusicResponses;
 import play.pluv.oauth.apple.dto.ApplePlayListResponses;
+import play.pluv.oauth.apple.dto.AppleSearchMusicResponses;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 
 public interface AppleApiClient {
@@ -28,5 +29,11 @@ public interface AppleApiClient {
       @RequestHeader("Authorization") final String developerToken,
       @RequestHeader("Music-User-Token") final String musicUserToken,
       @PathVariable final String id
+  );
+
+  @GetExchange("https://api.music.apple.com/v1/catalog/kr/search?types=songs&l=ko")
+  AppleSearchMusicResponses searchMusic(
+      @RequestHeader("Authorization") final String developerToken,
+      @RequestParam final String term
   );
 }

@@ -14,12 +14,15 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.FieldDescriptor;
+import play.pluv.playlist.application.dto.ApplePlayListMusicReadRequest;
+import play.pluv.playlist.application.dto.ApplePlayListReadRequest;
 import play.pluv.playlist.application.dto.PlayListMusicReadRequest;
 import play.pluv.playlist.application.dto.PlayListReadRequest;
 import play.pluv.playlist.domain.PlayList;
@@ -113,15 +116,49 @@ public class PlayListApiTest extends ApiTest {
   }
 
   @Test
+  void 애플뮤직_플레이리스트를_읽어서_반환해준다() throws Exception {
+    final List<PlayList> playLists =
+        List.of(
+            new PlayList(
+                new PlayListId("id1", APPLE),
+                "테스트용 플레이리스트",
+                "https://testImage.com/testImage.png", null
+            ),
+            new PlayList(
+                new PlayListId("id2", APPLE),
+                "테스트용 플레이리스트",
+                "https://testImage.com/testImage.png", null
+            )
+        );
+
+    final ApplePlayListReadRequest request = new ApplePlayListReadRequest("music-user-token");
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    when(playListService.getPlayLists(any(), any())).thenReturn(playLists);
+
+    mockMvc.perform(post("/playlist/apple/read")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("read-playList-apple",
+            requestFields(
+                fieldWithPath("musicUserToken").type(STRING)
+                    .description("apple Music의 music user token")
+            ),
+            responseFields(PLAY_LIST_RESPONSE)
+        ));
+  }
+
+  @Test
   void 스포티파이_플레이리스트의_음악을_읽어서_반환해준다() throws Exception {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
-                "좋은 날", List.of(), null,
+                "좋은 날", List.of(), "KR1215932",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
             ),
             new PlayListMusic(
-                "ㅈㅣㅂ", List.of(), null,
+                "ㅈㅣㅂ", List.of(), "KR12163",
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
             )
         );
@@ -154,11 +191,11 @@ public class PlayListApiTest extends ApiTest {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
-                "좋은 날", List.of("아이유"), "KRA381001057",
+                "좋은 날", List.of("아이유"), null,
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
             ),
             new PlayListMusic(
-                "ㅈㅣㅂ", List.of("hanroro"), "KRA381001234",
+                "ㅈㅣㅂ", List.of("hanroro"), null,
                 "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
             )
         );
@@ -179,6 +216,43 @@ public class PlayListApiTest extends ApiTest {
             requestFields(
                 fieldWithPath("accessToken").type(STRING)
                     .description("플레이리스트 제공자의 oauth accessToken")
+            ),
+            responseFields(
+                MUSIC_RESPONSE
+            )
+        ));
+  }
+
+  @Test
+  void 애플_플레이리스트의_음악을_읽어서_반환해준다() throws Exception {
+    final List<PlayListMusic> playListMusics =
+        List.of(
+            new PlayListMusic(
+                "Supernatural", List.of("뉴진스"), null,
+                "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ab/ce/d6/abced6f6-2b90-c230-eb4b-e146734a3a22/196922907821_Cover.jpg/{w}x{h}bb.jpg"
+            ),
+            new PlayListMusic(
+                "Flex", List.of("기리보이, 키드밀리, NO:EL & 스윙스"), null,
+                "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/96/7a/8a/967a8a1e-8630-5b3e-13be-aca62500d91b/cover-_Kid_Milli_NOEL_DS.jpg/{w}x{h}bb.jpg"
+            )
+        );
+
+    final ApplePlayListMusicReadRequest request = new ApplePlayListMusicReadRequest("accessToken");
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    when(playListService.getPlayListMusics(any(), any(), any())).thenReturn(playListMusics);
+
+    mockMvc.perform(post("/playlist/apple/{id}/read", "playListId")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("read-playList-apple-musics",
+            pathParameters(
+                parameterWithName("id").description("플레이리스트의 식별자")
+            ),
+            requestFields(
+                fieldWithPath("musicUserToken").type(STRING)
+                    .description("apple Music의 music user token")
             ),
             responseFields(
                 MUSIC_RESPONSE

@@ -14,6 +14,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static play.pluv.api.fixture.MusicFixture.스포티파이_음악_검색_결과;
+import static play.pluv.api.fixture.MusicFixture.애플_음악_검색_결과;
 import static play.pluv.api.fixture.MusicFixture.유튜브_음악_검색_결과;
 import static play.pluv.api.fixture.MusicFixture.음악_검색_요청;
 import static play.pluv.api.fixture.MusicFixture.음악_추가_요청;
@@ -31,7 +32,7 @@ public class MusicApiTest extends ApiTest {
   private static final Snippet[] MUSIC_SEARCH_SNIPPETS = {
       requestFields(
           fieldWithPath("destinationAccessToken").type(STRING)
-              .description("플레이리스트 제공자의 accessToken"),
+              .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
           fieldWithPath("musics[].title").type(STRING).description("음악 이름"),
           fieldWithPath("musics[].artistName").type(STRING).description("가수 이름들"),
           fieldWithPath("musics[].imageUrl").type(STRING).description("음악 image url"),
@@ -100,6 +101,24 @@ public class MusicApiTest extends ApiTest {
             .content(requestBody))
         .andExpect(status().isOk())
         .andDo(document("search-youtube-music",
+            MUSIC_SEARCH_SNIPPETS
+        ));
+  }
+
+  @Test
+  void 애플뮤직_음악을_읽어서_반환해준다() throws Exception {
+    final MusicSearchRequest 검색_요청 = 음악_검색_요청();
+    final List<MusicSearchResponse> 검색_결과 = 애플_음악_검색_결과();
+
+    final String requestBody = objectMapper.writeValueAsString(검색_요청);
+
+    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+
+    mockMvc.perform(post("/music/apple/search")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("search-apple-music",
             MUSIC_SEARCH_SNIPPETS
         ));
   }

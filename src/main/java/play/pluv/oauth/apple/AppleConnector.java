@@ -19,12 +19,13 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import play.pluv.login.exception.LoginException;
+import play.pluv.music.application.MusicExplorer;
+import play.pluv.music.domain.DestinationMusics;
+import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -35,18 +36,25 @@ import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
-@RequiredArgsConstructor
-public class AppleConnector implements SocialLoginClient, PlayListConnector {
+public class AppleConnector implements SocialLoginClient, PlayListConnector, MusicExplorer {
 
   private static final String AUDIENCE = "https://appleid.apple.com";
   private static final Long EXP = MILLISECONDS.convert(30, MINUTES);
-  private static final String AUTHORIZATION_FORMAT = "Bearer %s";
-  private static final Function<String, String> CREATE_AUTH_HEADER
-      = (token) -> String.format(AUTHORIZATION_FORMAT, token);
 
+  private final String developerAuthorization;
   private final ObjectMapper objectMapper;
   private final AppleApiClient appleApiClient;
   private final AppleConfigProperty appleConfigProperty;
+
+  public AppleConnector(
+      final ObjectMapper objectMapper, final AppleApiClient appleApiClient,
+      final AppleConfigProperty appleConfigProperty
+  ) {
+    this.objectMapper = objectMapper;
+    this.appleApiClient = appleApiClient;
+    this.appleConfigProperty = appleConfigProperty;
+    this.developerAuthorization = String.format("Bearer %s", appleConfigProperty.developerToken());
+  }
 
   @Override
   public OAuthMemberInfo fetchMember(final String idToken) {
@@ -75,22 +83,41 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector {
   @Override
   public List<PlayList> getPlayList(final String musicUserToken) {
     return appleApiClient.getPlayList(
-        CREATE_AUTH_HEADER.apply(appleConfigProperty.developerToken())
-        , musicUserToken
+        developerAuthorization, musicUserToken
     ).toPlayLists();
   }
 
   @Override
   public List<PlayListMusic> getMusics(final String playListId, final String musicUserToken) {
     return appleApiClient.getMusics(
-        CREATE_AUTH_HEADER.apply(appleConfigProperty.developerToken())
-        , musicUserToken, playListId
+        developerAuthorization, musicUserToken, playListId
     ).toPlayListMusics();
   }
 
   @Override
   public PlayListId createPlayList(final String musicUserToken, final String name) {
     return null;
+  }
+
+  @Override
+  public DestinationMusics searchMusic(final String musicUserToken, final PlayListMusic source) {
+    return source.getIsrcCode()
+        .map(isrc -> appleApiClient.searchMusicByIsrc(developerAuthorization, isrc)
+            .toDestinationMusics()
+        )
+        .orElseGet(() -> searchByNameAndArtists(source));
+  }
+
+  private DestinationMusics searchByNameAndArtists(final PlayListMusic source) {
+    final String term = source.getTitle() + source.getArtistNames();
+    return appleApiClient.searchMusicByNameAndArtists(developerAuthorization, term)
+        .toDestinationMusics();
+  }
+
+  @Override
+  public void transferMusics(
+      final String accessToken, final List<MusicId> musicIds, final String playlistName
+  ) {
   }
 
   @Override

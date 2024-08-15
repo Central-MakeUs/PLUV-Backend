@@ -4,7 +4,7 @@ import static io.jsonwebtoken.io.Decoders.BASE64;
 import static java.lang.System.currentTimeMillis;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
-import static play.pluv.login.exception.LoginExceptionType.GENERATE_APPLE_CLIENT_SECRET_ERROR;
+import static play.pluv.oauth.exception.OAuthExceptionType.GENERATE_APPLE_CLIENT_SECRET_ERROR;
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,13 +22,13 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import play.pluv.login.exception.LoginException;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
+import play.pluv.oauth.exception.OAuthException;
 import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
@@ -159,7 +159,7 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
       final KeyFactory keyFactory = KeyFactory.getInstance("EC");
       return (ECPrivateKey) keyFactory.generatePrivate(keySpec);
     } catch (final NoSuchAlgorithmException | InvalidKeySpecException e) {
-      throw new LoginException(GENERATE_APPLE_CLIENT_SECRET_ERROR);
+      throw new OAuthException(GENERATE_APPLE_CLIENT_SECRET_ERROR);
     }
   }
 }

@@ -17,7 +17,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,14 +28,21 @@ import play.pluv.login.exception.LoginException;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
+import play.pluv.playlist.application.PlayListConnector;
 import play.pluv.playlist.domain.MusicStreaming;
+import play.pluv.playlist.domain.PlayList;
+import play.pluv.playlist.domain.PlayListId;
+import play.pluv.playlist.domain.PlayListMusic;
 
 @Component
 @RequiredArgsConstructor
-public class AppleConnector implements SocialLoginClient {
+public class AppleConnector implements SocialLoginClient, PlayListConnector {
 
   private static final String AUDIENCE = "https://appleid.apple.com";
   private static final Long EXP = MILLISECONDS.convert(30, MINUTES);
+  private static final String AUTHORIZATION_FORMAT = "Bearer %s";
+  private static final Function<String, String> CREATE_AUTH_HEADER
+      = (token) -> String.format(AUTHORIZATION_FORMAT, token);
 
   private final ObjectMapper objectMapper;
   private final AppleApiClient appleApiClient;
@@ -61,6 +70,24 @@ public class AppleConnector implements SocialLoginClient {
     } catch (final Exception exception) {
       throw new IllegalArgumentException("토큰이 유효하지 않습니다.");
     }
+  }
+
+  @Override
+  public List<PlayList> getPlayList(final String musicUserToken) {
+    return appleApiClient.getPlayList(
+        CREATE_AUTH_HEADER.apply(appleConfigProperty.developerToken())
+        , musicUserToken
+    ).toPlayLists();
+  }
+
+  @Override
+  public List<PlayListMusic> getMusics(final String playListId, final String accessToken) {
+    return List.of();
+  }
+
+  @Override
+  public PlayListId createPlayList(final String accessToken, final String name) {
+    return null;
   }
 
   @Override

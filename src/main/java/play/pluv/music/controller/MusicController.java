@@ -63,4 +63,12 @@ public class MusicController {
     musicService.transferMusics(request, YOUTUBE);
     return BaseResponse.created();
   }
+
+  @PostMapping("/apple/add")
+  public BaseResponse<String> transferAppleMusics(
+      @Valid @RequestBody final MusicAddRequest request
+  ) {
+    musicService.transferMusics(request, APPLE);
+    return BaseResponse.created();
+  }
 }

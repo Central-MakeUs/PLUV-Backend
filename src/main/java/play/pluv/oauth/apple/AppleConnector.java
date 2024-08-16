@@ -25,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
+import play.pluv.oauth.apple.dto.AppleCreatePlayListRequest;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -96,7 +97,9 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
 
   @Override
   public PlayListId createPlayList(final String musicUserToken, final String name) {
-    return null;
+    final AppleCreatePlayListRequest request = AppleCreatePlayListRequest.from(name);
+    return appleApiClient.createPlayList(developerAuthorization, musicUserToken, request)
+        .getId();
   }
 
   @Override
@@ -116,8 +119,9 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
 
   @Override
   public void transferMusics(
-      final String accessToken, final List<MusicId> musicIds, final String playlistName
+      final String musicUserToken, final List<MusicId> musicIds, final String playlistName
   ) {
+
   }
 
   @Override

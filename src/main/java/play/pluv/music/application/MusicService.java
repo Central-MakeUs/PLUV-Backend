@@ -9,6 +9,7 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
+import play.pluv.music.domain.repository.MusicTransferContextRepository;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayListMusic;
 
@@ -17,14 +18,19 @@ import play.pluv.playlist.domain.PlayListMusic;
 public class MusicService {
 
   private final MusicExplorerComposite musicExplorerComposite;
+  private final MusicTransferContextRepository musicTransferContextRepository;
 
   public List<MusicSearchResponse> searchMusics(
-      final MusicStreaming musicStreaming, final MusicSearchRequest request
+      final Long memberId, final MusicStreaming musicStreaming, final MusicSearchRequest request
   ) {
     final String accessToken = request.destinationAccessToken();
 
-    return request.musics().parallelStream()
+    final List<PlayListMusic> playlistMusics = request.musics().parallelStream()
         .map(MusicQuery::toDomain)
+        .toList();
+    musicTransferContextRepository.setSearchMusics(memberId, playlistMusics);
+
+    return playlistMusics.stream()
         .map(playListMusic -> searchMusic(musicStreaming, playListMusic, accessToken))
         .toList();
   }

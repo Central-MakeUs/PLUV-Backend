@@ -3,6 +3,7 @@ package play.pluv.api;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
@@ -29,6 +30,8 @@ import play.pluv.support.ApiTest;
 
 public class MusicApiTest extends ApiTest {
 
+  private static final String token = "access Token";
+  private static final Long memberId = 10L;
   private static final Snippet[] MUSIC_SEARCH_SNIPPETS = {
       requestFields(
           fieldWithPath("destinationAccessToken").type(STRING)
@@ -76,11 +79,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/spotify/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-spotify-music",
             MUSIC_SEARCH_SNIPPETS
@@ -94,11 +99,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/youtube/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-youtube-music",
             MUSIC_SEARCH_SNIPPETS
@@ -112,11 +119,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/apple/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-apple-music",
             MUSIC_SEARCH_SNIPPETS
@@ -129,9 +138,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/spotify/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-spotify-music",
             TRANSFER_MUSIC_SNIPPET
@@ -144,9 +156,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/youtube/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-youtube-music",
             TRANSFER_MUSIC_SNIPPET
@@ -159,9 +174,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/apple/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-apple-music",
             TRANSFER_MUSIC_SNIPPET

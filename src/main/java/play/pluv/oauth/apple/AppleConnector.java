@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.ECPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.springframework.util.MultiValueMap;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
+import play.pluv.oauth.apple.dto.AppleAddMusicRequest;
 import play.pluv.oauth.apple.dto.AppleCreatePlayListRequest;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
@@ -39,6 +41,7 @@ import play.pluv.playlist.domain.PlayListMusic;
 @Component
 public class AppleConnector implements SocialLoginClient, PlayListConnector, MusicExplorer {
 
+  private static final Integer MUSIC_ID_MAX_SIZE = 100;
   private static final String AUDIENCE = "https://appleid.apple.com";
   private static final Long EXP = MILLISECONDS.convert(30, MINUTES);
 
@@ -121,7 +124,28 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
   public void transferMusics(
       final String musicUserToken, final List<MusicId> musicIds, final String playlistName
   ) {
+    final PlayListId playListId = createPlayList(musicUserToken, playlistName);
 
+    final List<AppleAddMusicRequest> requests = splitMusicIds(musicIds);
+
+    requests.parallelStream()
+        .forEach(
+            request -> appleApiClient.addMusics(
+                developerAuthorization, musicUserToken, playListId.id(), request
+            )
+        );
+  }
+
+  private List<AppleAddMusicRequest> splitMusicIds(final List<MusicId> musicIds) {
+    final List<List<MusicId>> partitionedMusicIds = new ArrayList<>();
+    for (int i = 0; i < musicIds.size(); i += MUSIC_ID_MAX_SIZE) {
+      partitionedMusicIds.add(
+          musicIds.subList(i, Math.min(i + MUSIC_ID_MAX_SIZE, musicIds.size()))
+      );
+    }
+    return partitionedMusicIds.stream()
+        .map(AppleAddMusicRequest::of)
+        .toList();
   }
 
   @Override

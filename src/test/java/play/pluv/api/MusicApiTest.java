@@ -59,7 +59,7 @@ public class MusicApiTest extends ApiTest {
       )};
   private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {requestFields(
       fieldWithPath("destinationAccessToken").type(STRING)
-          .description("플레이리스트 제공자의 accessToken"),
+          .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
       fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
       fieldWithPath("playListName").type(STRING).description("플레이리스트 이름들")
   ),
@@ -149,6 +149,21 @@ public class MusicApiTest extends ApiTest {
             .content(requestBody))
         .andExpect(status().isOk())
         .andDo(document("add-youtube-music",
+            TRANSFER_MUSIC_SNIPPET
+        ));
+  }
+
+  @Test
+  void 음악들을_애플뮤직의_새로운_플리에_추가한다() throws Exception {
+    final MusicAddRequest 음악_추가_요청 = 음악_추가_요청();
+
+    final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
+
+    mockMvc.perform(post("/music/apple/add")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("add-apple-music",
             TRANSFER_MUSIC_SNIPPET
         ));
   }

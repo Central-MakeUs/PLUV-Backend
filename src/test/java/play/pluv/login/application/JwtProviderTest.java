@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+import play.pluv.security.JwtProvider;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class JwtProviderTest {

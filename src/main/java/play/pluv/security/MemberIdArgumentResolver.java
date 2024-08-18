@@ -1,4 +1,4 @@
-package play.pluv.login.application;
+package play.pluv.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import play.pluv.login.application.dto.JwtMemberId;
 
 @Component
 @RequiredArgsConstructor

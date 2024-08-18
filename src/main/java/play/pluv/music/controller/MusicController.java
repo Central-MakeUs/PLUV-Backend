@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
-import play.pluv.login.application.dto.JwtMemberId;
+import play.pluv.security.JwtMemberId;
 import play.pluv.music.application.MusicService;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;

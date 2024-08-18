@@ -1,4 +1,4 @@
-package play.pluv.login.application;
+package play.pluv.security;
 
 import static io.jsonwebtoken.io.Decoders.BASE64;
 

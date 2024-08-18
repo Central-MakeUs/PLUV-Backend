@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
-import play.pluv.login.application.JwtProvider;
+import play.pluv.security.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.login.application.dto.AppleLoginRequest;
 import play.pluv.login.application.dto.GoogleLoginRequest;
-import play.pluv.login.application.dto.JwtMemberId;
+import play.pluv.security.JwtMemberId;
 import play.pluv.login.application.dto.LoginResponse;
 import play.pluv.login.application.dto.SpotifyLoginRequest;
 

@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import play.pluv.base.LocalDateTimeProvider;
-import play.pluv.login.application.JwtProvider;
+import play.pluv.security.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.member.application.MemberService;
 import play.pluv.music.application.MusicService;

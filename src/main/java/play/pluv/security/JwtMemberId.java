@@ -1,4 +1,4 @@
-package play.pluv.login.application.dto;
+package play.pluv.security;
 
 public record JwtMemberId(Long memberId) {
 

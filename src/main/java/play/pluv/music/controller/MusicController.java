@@ -56,7 +56,7 @@ public class MusicController {
   public BaseResponse<String> transferSpotifyMusics(
       final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, SPOTIFY);
+    musicService.transferMusics(jwtMemberId.memberId(), request, SPOTIFY);
     return BaseResponse.created();
   }
 
@@ -64,7 +64,7 @@ public class MusicController {
   public BaseResponse<String> transferYoutubeMusics(
       final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, YOUTUBE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, YOUTUBE);
     return BaseResponse.created();
   }
 
@@ -72,7 +72,7 @@ public class MusicController {
   public BaseResponse<String> transferAppleMusics(
       final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, APPLE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, APPLE);
     return BaseResponse.created();
   }
 }

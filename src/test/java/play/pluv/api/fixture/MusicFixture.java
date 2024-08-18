@@ -4,6 +4,7 @@ import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import play.pluv.music.application.dto.MusicAddRequest;
+import play.pluv.music.application.dto.MusicAddRequest.TransferFailMusicRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
@@ -77,7 +78,11 @@ public class MusicFixture {
 
   public static MusicAddRequest 음악_추가_요청() {
     return new MusicAddRequest("추가할 playlistName", "accessToken",
-        List.of("musicId1", "musicId2", "musicId3", "musicId4")
+        List.of("musicId1", "musicId2", "musicId3", "musicId4"),
+        List.of(
+            new TransferFailMusicRequest("조회되지 못한 음악", "조회되지 못한 아티스트", "imageUrl"),
+            new TransferFailMusicRequest("유사하지만 선택하지 않은 음악", "아티스트", "imageUrl")
+        )
     );
   }
 

@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
@@ -60,19 +62,23 @@ public class MusicApiTest extends ApiTest {
           fieldWithPath("data[].destinationMusics[].imageUrl").type(STRING)
               .description("조회된 음악의 커버 이미지 url")
       )};
-  private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {requestFields(
-      fieldWithPath("destinationAccessToken").type(STRING)
-          .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
-      fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
-      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름"),
-      fieldWithPath("thumbNailUrl").type(STRING).description("플레이리스트 섬네일"),
-      fieldWithPath("source").type(STRING)
-          .description("이전하려던 음악 스트리밍 서비스(ex: 유튜브 -> 스포티파이인 경우 유튜브)"),
-      fieldWithPath("transferFailMusics[]").type(ARRAY).description("이전하지 못한 음악들"),
-      fieldWithPath("transferFailMusics[].title").type(STRING).description("음악 이름"),
-      fieldWithPath("transferFailMusics[].artistName").type(STRING).description("가수 이름들"),
-      fieldWithPath("transferFailMusics[].imageUrl").type(STRING).description("음악 image url")
-  ),
+  private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {
+      requestHeaders(
+          headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
+      ),
+      requestFields(
+          fieldWithPath("destinationAccessToken").type(STRING)
+              .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
+          fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
+          fieldWithPath("playListName").type(STRING).description("플레이리스트 이름"),
+          fieldWithPath("thumbNailUrl").type(STRING).description("플레이리스트 섬네일"),
+          fieldWithPath("source").type(STRING)
+              .description("이전하려던 음악 스트리밍 서비스(ex: 유튜브 -> 스포티파이인 경우 유튜브)"),
+          fieldWithPath("transferFailMusics[]").type(ARRAY).description("이전하지 못한 음악들"),
+          fieldWithPath("transferFailMusics[].title").type(STRING).description("음악 이름"),
+          fieldWithPath("transferFailMusics[].artistName").type(STRING).description("가수 이름들"),
+          fieldWithPath("transferFailMusics[].imageUrl").type(STRING).description("음악 image url")
+      ),
       responseFields(
           fieldWithPath("code").type(NUMBER).description("상태 코드"),
           fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
@@ -87,7 +93,6 @@ public class MusicApiTest extends ApiTest {
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
     when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
-    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/spotify/search")
             .contentType(APPLICATION_JSON_VALUE)
@@ -106,7 +111,6 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    setAccessToken(token, memberId);
     when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/youtube/search")
@@ -127,7 +131,6 @@ public class MusicApiTest extends ApiTest {
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
     when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
-    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/apple/search")
             .contentType(APPLICATION_JSON_VALUE)

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
@@ -92,7 +93,10 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
     spotifyApiClient.addMusics(
         CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
     );
-    musicTransferContextManager.addTransferredMusics(memberId, musicIds);
+    final var historyMusicIds = musicIds.stream()
+        .map(subMusicId -> new HistoryMusicId(subMusicId.musicStreaming(), subMusicId.id()))
+        .toList();
+    musicTransferContextManager.addTransferredMusics(memberId, historyMusicIds);
   }
 
   private List<List<MusicId>> splitMusicIds(final List<MusicId> musicIds) {

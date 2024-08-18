@@ -23,6 +23,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
@@ -146,7 +147,10 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
     appleApiClient.addMusics(
         developerAuthorization, musicUserToken, playlistId.id(), request
     );
-    musicTransferContextManager.addTransferredMusics(memberId, musicIds);
+    final var historyMusicIds = musicIds.stream()
+        .map(subMusicId -> new HistoryMusicId(subMusicId.musicStreaming(), subMusicId.id()))
+        .toList();
+    musicTransferContextManager.addTransferredMusics(memberId, historyMusicIds);
   }
 
   private List<List<MusicId>> splitMusicIds(final List<MusicId> musicIds) {

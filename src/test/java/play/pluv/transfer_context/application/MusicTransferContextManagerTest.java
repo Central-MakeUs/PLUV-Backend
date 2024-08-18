@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.pluv.history.domain.History;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
-import play.pluv.music.domain.MusicId;
 import play.pluv.support.ApplicationTest;
 import play.pluv.transfer_context.domain.MusicTransferContext;
 import play.pluv.transfer_context.domain.TransferFailMusicInContext;
@@ -60,7 +60,7 @@ class MusicTransferContextManagerTest extends ApplicationTest {
     manager.putDestMusic(transferredMusics);
     manager.initContext(transferContext);
     manager.addTransferredMusics(memberId,
-        List.of(new MusicId(APPLE, "a"), new MusicId(APPLE, "b"))
+        List.of(new HistoryMusicId(APPLE, "a"), new HistoryMusicId(APPLE, "b"))
     );
 
     final TransferProgress progress = manager.getCurrentProgress(memberId);
@@ -85,8 +85,8 @@ class MusicTransferContextManagerTest extends ApplicationTest {
       manager.initContext(transferContext);
       manager.addTransferredMusics(memberId,
           List.of(
-              new MusicId(APPLE, "a"), new MusicId(APPLE, "b"), new MusicId(APPLE, "c"),
-              new MusicId(APPLE, "d")
+              new HistoryMusicId(APPLE, "a"), new HistoryMusicId(APPLE, "b"),
+              new HistoryMusicId(APPLE, "c"), new HistoryMusicId(APPLE, "d")
           )
       );
     }

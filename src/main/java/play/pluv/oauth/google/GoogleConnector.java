@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.music.application.MusicExplorer;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
@@ -102,7 +103,8 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
     final YoutubeAddMusicRequest request = YoutubeAddMusicRequest.of(playListId
         .id(), musicId);
     googleApiClient.addMusic(authorization, request);
-    musicTransferContextManager.addTransferredMusics(memberId, List.of(musicId));
+    final HistoryMusicId historyId = new HistoryMusicId(musicId.musicStreaming(), musicId.id());
+    musicTransferContextManager.addTransferredMusics(memberId, List.of(historyId));
   }
 
   @Override

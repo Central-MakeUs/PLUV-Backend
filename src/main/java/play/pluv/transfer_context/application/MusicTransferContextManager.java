@@ -13,7 +13,7 @@ import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
-import play.pluv.music.domain.MusicId;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.transfer_context.domain.MusicTransferContext;
 import play.pluv.transfer_context.domain.TransferProgress;
 import play.pluv.transfer_context.domain.TransferredMusicInContext;
@@ -22,7 +22,7 @@ import play.pluv.transfer_context.domain.TransferredMusicInContext;
 @RequiredArgsConstructor
 public class MusicTransferContextManager {
 
-  private final Map<MusicId, TransferredMusicInContext> destMusicMap = new HashMap<>();
+  private final Map<HistoryMusicId, TransferredMusicInContext> destMusicMap = new HashMap<>();
   private final Map<Long, MusicTransferContext> musicTransferContextMap = new HashMap<>();
   private final HistoryRepository historyRepository;
   private final TransferFailMusicRepository transferFailMusicRepository;
@@ -47,7 +47,7 @@ public class MusicTransferContextManager {
     return musicTransferContextMap.get(memberId);
   }
 
-  public void addTransferredMusics(final Long memberId, final List<MusicId> musicIds) {
+  public void addTransferredMusics(final Long memberId, final List<HistoryMusicId> musicIds) {
     final List<TransferredMusicInContext> transferredMusicInContexts = musicIds.stream()
         .map(destMusicMap::get)
         .filter(Objects::nonNull)

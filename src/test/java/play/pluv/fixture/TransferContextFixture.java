@@ -4,7 +4,7 @@ import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
-import play.pluv.music.domain.MusicId;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.transfer_context.domain.MusicTransferContext;
 import play.pluv.transfer_context.domain.TransferFailMusicInContext;
 import play.pluv.transfer_context.domain.TransferredMusicInContext;
@@ -35,13 +35,13 @@ public class TransferContextFixture {
 
   public static List<TransferredMusicInContext> 이전한_음악_목록() {
     return List.of(
-        new TransferredMusicInContext(new MusicId(APPLE, "a"), "사랑하게 될거야", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "a"), "사랑하게 될거야", "한로로", "imageUrl",
             "isrc"),
-        new TransferredMusicInContext(new MusicId(APPLE, "b"), "자처", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "b"), "자처", "한로로", "imageUrl",
             "abcd"),
-        new TransferredMusicInContext(new MusicId(APPLE, "c"), "ㅈㅣㅂ", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "c"), "ㅈㅣㅂ", "한로로", "imageUrl",
             null),
-        new TransferredMusicInContext(new MusicId(APPLE, "d"), "금붕어", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "d"), "금붕어", "한로로", "imageUrl",
             null)
     );
   }

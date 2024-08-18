@@ -7,8 +7,9 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import play.pluv.transfer_context.domain.TransferredMusicInContext;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.playlist.domain.PlayListMusic;
+import play.pluv.transfer_context.domain.TransferredMusicInContext;
 
 @ToString
 @Getter
@@ -39,7 +40,9 @@ public class DestinationMusic {
   }
 
   public TransferredMusicInContext toTransferredMusic() {
-    return new TransferredMusicInContext(musicId, title, String.join(",", artistNames), imageUrl,
-        isrcCode);
+    final var historyMusicId = new HistoryMusicId(musicId.musicStreaming(), musicId.id());
+    return new TransferredMusicInContext(
+        historyMusicId, title, String.join(",", artistNames), imageUrl, isrcCode
+    );
   }
 }

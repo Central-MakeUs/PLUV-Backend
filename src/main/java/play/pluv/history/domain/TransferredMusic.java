@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import play.pluv.base.BaseEntity;
-import play.pluv.music.domain.MusicId;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
@@ -26,12 +25,12 @@ public class TransferredMusic extends BaseEntity {
   private String imageUrl;
   private String artistNames;
   @Embedded
-  private MusicId musicId;
+  private HistoryMusicId musicId;
 
   @Builder
   public TransferredMusic(final Long historyId, final String title, final String imageUrl,
       final String artistNames,
-      final MusicId musicId) {
+      final HistoryMusicId musicId) {
     this.historyId = historyId;
     this.title = title;
     this.imageUrl = imageUrl;

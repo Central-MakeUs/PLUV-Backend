@@ -3,13 +3,13 @@ package play.pluv.transfer_context.domain;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import play.pluv.history.domain.TransferredMusic;
-import play.pluv.music.domain.MusicId;
+import play.pluv.history.domain.HistoryMusicId;
 
 @Getter
 @RequiredArgsConstructor
 public class TransferredMusicInContext {
 
-  private final MusicId musicId;
+  private final HistoryMusicId musicId;
   private final String title;
   private final String artistNames;
   private final String imageUrl;

@@ -2,23 +2,24 @@ package play.pluv.transfer_context.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import play.pluv.history.domain.History;
+import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.playlist.domain.MusicStreaming;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class MusicTransferContext {
 
   private final Long memberId;
   private final List<TransferFailMusicInContext> transferFailMusics;
   private final Integer willTransferMusicCount;
-  private List<TransferredMusicInContext> transferredMusics = new ArrayList<>();
-  private MusicStreaming source;
-  private MusicStreaming destination;
-  private String thumbNailUrl;
-  private String title;
+  private final String thumbNailUrl;
+  private final String title;
+  private final MusicStreaming source;
+  private final MusicStreaming destination;
+  private final List<TransferredMusicInContext> transferredMusics = new ArrayList<>();
 
   public History toHistory() {
     return History.builder()
@@ -27,9 +28,13 @@ public class MusicTransferContext {
         .thumbNailUrl(thumbNailUrl)
         .source(source)
         .destination(destination)
-        .title("title")
+        .title(title)
         .memberId(memberId)
         .build();
+  }
+
+  public List<TransferFailMusic> extractTransferFailMusics(final Long historyId) {
+    return null;
   }
 
   public TransferProgress currentProgress() {

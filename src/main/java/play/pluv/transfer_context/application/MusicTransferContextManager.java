@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
-import play.pluv.history.application.HistoryUpdater;
+import org.springframework.transaction.annotation.Transactional;
+import play.pluv.history.domain.History;
+import play.pluv.history.domain.repository.HistoryRepository;
+import play.pluv.history.domain.repository.TransferFailMusicRepository;
+import play.pluv.history.domain.repository.TransferredMusicRepository;
 import play.pluv.music.domain.MusicId;
 import play.pluv.transfer_context.domain.MusicTransferContext;
-import play.pluv.transfer_context.domain.TransferFailMusicInContext;
 import play.pluv.transfer_context.domain.TransferProgress;
 import play.pluv.transfer_context.domain.TransferredMusicInContext;
 
@@ -17,10 +20,16 @@ public class MusicTransferContextManager {
 
   private final Map<MusicId, TransferredMusicInContext> destMusicMap = new HashMap<>();
   private final Map<Long, MusicTransferContext> musicTransferContextMap = new HashMap<>();
-  private final HistoryUpdater historyUpdater;
+  private final HistoryRepository historyRepository;
+  private final TransferFailMusicRepository transferFailMusicRepository;
+  private final TransferredMusicRepository transferredMusicRepository;
 
-  public MusicTransferContextManager(final HistoryUpdater historyUpdater) {
-    this.historyUpdater = historyUpdater;
+  public MusicTransferContextManager(final HistoryRepository historyRepository,
+      final TransferFailMusicRepository transferFailMusicRepository,
+      final TransferredMusicRepository transferredMusicRepository) {
+    this.historyRepository = historyRepository;
+    this.transferFailMusicRepository = transferFailMusicRepository;
+    this.transferredMusicRepository = transferredMusicRepository;
   }
 
   public void putDestMusic(final List<TransferredMusicInContext> transferredMusics) {
@@ -29,12 +38,8 @@ public class MusicTransferContextManager {
     );
   }
 
-  public void initContext(
-      final Long memberId, final List<TransferFailMusicInContext> transferFailMusic,
-      final Integer willTransferMusicCount
-  ) {
-    final MusicTransferContext context
-        = new MusicTransferContext(memberId, transferFailMusic, willTransferMusicCount);
+  public void initContext(final MusicTransferContext context) {
+    final Long memberId = context.getMemberId();
     musicTransferContextMap.put(memberId, context);
   }
 
@@ -52,9 +57,5 @@ public class MusicTransferContextManager {
         .filter(Objects::nonNull)
         .toList();
     musicTransferContextMap.get(memberId).addTransferredMusics(transferredMusicInContexts);
-  }
-
-  public void saveTransferHistory(final Long memberId) {
-
   }
 }

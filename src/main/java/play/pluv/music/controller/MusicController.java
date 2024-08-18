@@ -27,28 +27,28 @@ public class MusicController {
 
   @PostMapping("/spotify/search")
   public BaseResponse<List<MusicSearchResponse>> searchSpotifyMusics(
-      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
     final var responses = musicService
-        .searchMusics(jwtMemberId.memberId(), SPOTIFY, musicSearchRequest);
+        .searchMusics(SPOTIFY, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
   @PostMapping("/youtube/search")
   public BaseResponse<List<MusicSearchResponse>> searchYoutubeMusics(
-      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
     final var responses = musicService
-        .searchMusics(jwtMemberId.memberId(), YOUTUBE, musicSearchRequest);
+        .searchMusics(YOUTUBE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
   @PostMapping("/apple/search")
   public BaseResponse<List<MusicSearchResponse>> searchAppleMusics(
-      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
     final var responses = musicService
-        .searchMusics(jwtMemberId.memberId(), APPLE, musicSearchRequest);
+        .searchMusics(APPLE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 

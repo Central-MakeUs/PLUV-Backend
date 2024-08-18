@@ -34,7 +34,9 @@ public class MusicTransferContext {
   }
 
   public List<TransferFailMusic> extractTransferFailMusics(final Long historyId) {
-    return null;
+    return transferFailMusics.stream()
+        .map(music -> music.toTransferFailMusic(historyId))
+        .toList();
   }
 
   public TransferProgress currentProgress() {

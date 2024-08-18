@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import play.pluv.history.domain.History;
+import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
@@ -16,6 +18,7 @@ import play.pluv.transfer_context.domain.TransferProgress;
 import play.pluv.transfer_context.domain.TransferredMusicInContext;
 
 @Component
+@RequiredArgsConstructor
 public class MusicTransferContextManager {
 
   private final Map<MusicId, TransferredMusicInContext> destMusicMap = new HashMap<>();
@@ -23,14 +26,6 @@ public class MusicTransferContextManager {
   private final HistoryRepository historyRepository;
   private final TransferFailMusicRepository transferFailMusicRepository;
   private final TransferredMusicRepository transferredMusicRepository;
-
-  public MusicTransferContextManager(final HistoryRepository historyRepository,
-      final TransferFailMusicRepository transferFailMusicRepository,
-      final TransferredMusicRepository transferredMusicRepository) {
-    this.historyRepository = historyRepository;
-    this.transferFailMusicRepository = transferFailMusicRepository;
-    this.transferredMusicRepository = transferredMusicRepository;
-  }
 
   public void putDestMusic(final List<TransferredMusicInContext> transferredMusics) {
     transferredMusics.forEach(
@@ -60,8 +55,13 @@ public class MusicTransferContextManager {
   }
 
   @Transactional
-  public void saveTransferHistory(final Long memberId) {
+  public Long saveTransferHistory(final Long memberId) {
     final MusicTransferContext context = musicTransferContextMap.get(memberId);
     final History history = historyRepository.save(context.toHistory());
+
+    final List<TransferFailMusic> transferFailMusics = context.extractTransferFailMusics(history.getId());
+    transferFailMusicRepository.saveAll(transferFailMusics);
+
+    return history.getId();
   }
 }

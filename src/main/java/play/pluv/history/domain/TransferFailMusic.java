@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import play.pluv.base.BaseEntity;
-import play.pluv.playlist.domain.PlayListMusic;
 
 @Entity
 @ToString
@@ -33,12 +32,5 @@ public class TransferFailMusic extends BaseEntity {
     this.title = title;
     this.imageUrl = imageUrl;
     this.artistNames = artistNames;
-  }
-
-  public static TransferFailMusic of(final Long historyId, final PlayListMusic playListMusic) {
-    final String artistNames = String.join(",", playListMusic.getArtistNames());
-    return new TransferFailMusic(
-        historyId, playListMusic.getTitle(), playListMusic.getImageUrl(), artistNames
-    );
   }
 }

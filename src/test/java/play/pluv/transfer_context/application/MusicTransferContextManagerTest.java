@@ -59,4 +59,30 @@ class MusicTransferContextManagerTest extends ApplicationTest {
         .usingRecursiveComparison()
         .isEqualTo(expected);
   }
+
+  @Nested
+  class context를_히스토리로_저장한다 {
+
+    @Test
+    void 히스토리를_생성한다() {
+      final var transferFailMusics = 이전실패_음악_목록();
+      final var transferredMusics = 이전한_음악_목록();
+      final var transferContext = musicTransferContext(10, memberId, transferFailMusics);
+
+      manager.putDestMusic(transferredMusics);
+      manager.initContext(transferContext);
+      manager.addTransferredMusics(memberId,
+          List.of(
+              new MusicId(APPLE, "a"), new MusicId(APPLE, "b"), new MusicId(APPLE, "c"),
+              new MusicId(APPLE, "b")
+          )
+      );
+
+      manager.saveTransferHistory(memberId);
+
+      final History history = historyRepository.readByMemberId(memberId);
+      assertThat(history)
+          .isNotNull();
+    }
+  }
 }

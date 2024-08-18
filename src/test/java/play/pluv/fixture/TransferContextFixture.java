@@ -1,11 +1,13 @@
 package play.pluv.fixture;
 
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
+import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
+import play.pluv.music.domain.MusicId;
+import play.pluv.transfer_context.domain.MusicTransferContext;
 import play.pluv.transfer_context.domain.TransferFailMusicInContext;
 import play.pluv.transfer_context.domain.TransferredMusicInContext;
-import play.pluv.music.domain.MusicId;
 
 public class TransferContextFixture {
 
@@ -14,6 +16,21 @@ public class TransferContextFixture {
         new TransferFailMusicInContext("조회되지 못한 음악", "imageUrl", "조회되지 못한 아티스트"),
         new TransferFailMusicInContext("유사하지만 선택하지 않은 음악", "imageUrl", "아티스트")
     );
+  }
+
+  public static MusicTransferContext musicTransferContext(
+      final Integer willTransferMusicCount, final Long memberId,
+      final List<TransferFailMusicInContext> transferFailMusics
+  ) {
+    return MusicTransferContext.builder()
+        .transferFailMusics(transferFailMusics)
+        .title("이전한 플레이리스트")
+        .willTransferMusicCount(willTransferMusicCount)
+        .destination(SPOTIFY)
+        .source(SPOTIFY)
+        .memberId(memberId)
+        .thumbNailUrl("thumbNailUrl")
+        .build();
   }
 
   public static List<TransferredMusicInContext> 이전한_음악_목록() {

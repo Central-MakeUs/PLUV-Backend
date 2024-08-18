@@ -58,4 +58,10 @@ public class MusicTransferContextManager {
         .toList();
     musicTransferContextMap.get(memberId).addTransferredMusics(transferredMusicInContexts);
   }
+
+  @Transactional
+  public void saveTransferHistory(final Long memberId) {
+    final MusicTransferContext context = musicTransferContextMap.get(memberId);
+    final History history = historyRepository.save(context.toHistory());
+  }
 }

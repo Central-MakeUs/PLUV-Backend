@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import play.pluv.transfer_context.domain.TransferredMusicInContext;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Getter
@@ -22,5 +23,11 @@ public class DestinationMusics {
 
   public Boolean isEmpty() {
     return destinationMusics.isEmpty();
+  }
+
+  public List<TransferredMusicInContext> toTransferredMusics() {
+    return destinationMusics.stream()
+        .map(DestinationMusic::toTransferredMusic)
+        .toList();
   }
 }

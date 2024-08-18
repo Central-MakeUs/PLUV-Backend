@@ -25,6 +25,7 @@ import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
+import play.pluv.transfer_context.application.MusicTransferContextManager;
 
 @Component
 @RequiredArgsConstructor
@@ -39,6 +40,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
 
   private final SpotifyApiClient spotifyApiClient;
   private final SpotifyConfigProperty spotifyConfigProperty;
+  private final MusicTransferContextManager musicTransferContextManager;
 
   @Override
   public List<PlayList> getPlayList(final String accessToken) {
@@ -70,30 +72,37 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
 
   @Override
   public void transferMusics(
-      final String accessToken, final List<MusicId> musicIds, final String playlistName
+      final Long memberId, final String accessToken, final List<MusicId> musicIds,
+      final String playlistName
   ) {
     final PlayListId playlistId = createPlayList(accessToken, playlistName);
 
-    final List<SpotifyAddMusicRequest> requests = splitMusicIds(musicIds);
+    final List<List<MusicId>> requests = splitMusicIds(musicIds);
 
     requests.parallelStream()
-        .forEach(
-            request -> spotifyApiClient.addMusics(
-                CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
-            )
-        );
+        .forEach(request -> addMusics(memberId, accessToken, request, playlistId));
+    musicTransferContextManager.saveTransferHistory(memberId);
   }
 
-  private List<SpotifyAddMusicRequest> splitMusicIds(final List<MusicId> musicIds) {
+  private void addMusics(
+      final Long memberId, final String accessToken, final List<MusicId> musicIds,
+      final PlayListId playlistId
+  ) {
+    final SpotifyAddMusicRequest request = SpotifyAddMusicRequest.from(musicIds);
+    spotifyApiClient.addMusics(
+        CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
+    );
+    musicTransferContextManager.addTransferredMusics(memberId, musicIds);
+  }
+
+  private List<List<MusicId>> splitMusicIds(final List<MusicId> musicIds) {
     final List<List<MusicId>> partitionedMusicIds = new ArrayList<>();
     for (int i = 0; i < musicIds.size(); i += MUSIC_ID_MAX_SIZE) {
       partitionedMusicIds.add(
           musicIds.subList(i, Math.min(i + MUSIC_ID_MAX_SIZE, musicIds.size()))
       );
     }
-    return partitionedMusicIds.stream()
-        .map(SpotifyAddMusicRequest::from)
-        .toList();
+    return partitionedMusicIds;
   }
 
   public String getAccessToken(final String authCode) {

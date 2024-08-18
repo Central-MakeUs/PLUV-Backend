@@ -3,6 +3,7 @@ package play.pluv.api;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
@@ -29,6 +30,8 @@ import play.pluv.support.ApiTest;
 
 public class MusicApiTest extends ApiTest {
 
+  private static final String token = "access Token";
+  private static final Long memberId = 10L;
   private static final Snippet[] MUSIC_SEARCH_SNIPPETS = {
       requestFields(
           fieldWithPath("destinationAccessToken").type(STRING)
@@ -61,7 +64,14 @@ public class MusicApiTest extends ApiTest {
       fieldWithPath("destinationAccessToken").type(STRING)
           .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
       fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
-      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름들")
+      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름"),
+      fieldWithPath("thumbNailUrl").type(STRING).description("플레이리스트 섬네일"),
+      fieldWithPath("source").type(STRING)
+          .description("이전하려던 음악 스트리밍 서비스(ex: 유튜브 -> 스포티파이인 경우 유튜브)"),
+      fieldWithPath("transferFailMusics[]").type(ARRAY).description("이전하지 못한 음악들"),
+      fieldWithPath("transferFailMusics[].title").type(STRING).description("음악 이름"),
+      fieldWithPath("transferFailMusics[].artistName").type(STRING).description("가수 이름들"),
+      fieldWithPath("transferFailMusics[].imageUrl").type(STRING).description("음악 image url")
   ),
       responseFields(
           fieldWithPath("code").type(NUMBER).description("상태 코드"),
@@ -76,11 +86,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/spotify/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-spotify-music",
             MUSIC_SEARCH_SNIPPETS
@@ -94,11 +106,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/youtube/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-youtube-music",
             MUSIC_SEARCH_SNIPPETS
@@ -112,11 +126,13 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    setAccessToken(token, memberId);
 
     mockMvc.perform(post("/music/apple/search")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("search-apple-music",
             MUSIC_SEARCH_SNIPPETS
@@ -129,9 +145,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/spotify/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-spotify-music",
             TRANSFER_MUSIC_SNIPPET
@@ -144,9 +163,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/youtube/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-youtube-music",
             TRANSFER_MUSIC_SNIPPET
@@ -159,9 +181,12 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(음악_추가_요청);
 
+    setAccessToken(token, memberId);
+
     mockMvc.perform(post("/music/apple/add")
             .contentType(APPLICATION_JSON_VALUE)
-            .content(requestBody))
+            .content(requestBody).content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("add-apple-music",
             TRANSFER_MUSIC_SNIPPET

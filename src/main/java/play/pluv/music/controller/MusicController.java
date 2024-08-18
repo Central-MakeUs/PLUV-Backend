@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
+import play.pluv.login.application.dto.JwtMemberId;
 import play.pluv.music.application.MusicService;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
@@ -26,49 +27,52 @@ public class MusicController {
 
   @PostMapping("/spotify/search")
   public BaseResponse<List<MusicSearchResponse>> searchSpotifyMusics(
-      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService.searchMusics(SPOTIFY, musicSearchRequest);
+    final var responses = musicService
+        .searchMusics(jwtMemberId.memberId(), SPOTIFY, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
   @PostMapping("/youtube/search")
   public BaseResponse<List<MusicSearchResponse>> searchYoutubeMusics(
-      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService.searchMusics(YOUTUBE, musicSearchRequest);
+    final var responses = musicService
+        .searchMusics(jwtMemberId.memberId(), YOUTUBE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
   @PostMapping("/apple/search")
   public BaseResponse<List<MusicSearchResponse>> searchAppleMusics(
-      @Valid @RequestBody final MusicSearchRequest musicSearchRequest
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService.searchMusics(APPLE, musicSearchRequest);
+    final var responses = musicService
+        .searchMusics(jwtMemberId.memberId(), APPLE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
   @PostMapping("/spotify/add")
   public BaseResponse<String> transferSpotifyMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, SPOTIFY);
+    musicService.transferMusics(jwtMemberId.memberId(), request, SPOTIFY);
     return BaseResponse.created();
   }
 
   @PostMapping("/youtube/add")
   public BaseResponse<String> transferYoutubeMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, YOUTUBE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, YOUTUBE);
     return BaseResponse.created();
   }
 
   @PostMapping("/apple/add")
   public BaseResponse<String> transferAppleMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(request, APPLE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, APPLE);
     return BaseResponse.created();
   }
 }

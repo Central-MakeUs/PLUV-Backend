@@ -23,6 +23,7 @@ import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
+import play.pluv.transfer_context.application.MusicTransferContextManager;
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
 
   private final GoogleApiClient googleApiClient;
   private final GoogleConfigProperty googleConfigProperty;
+  private final MusicTransferContextManager musicTransferContextManager;
 
   @Override
   public OAuthMemberInfo fetchMember(final String idToken) {
@@ -82,13 +84,25 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
   @Override
   //todo : webflux로 전환, parrllelStream 쓰면 오류나는 이유 찾기
   public void transferMusics(
-      final String accessToken, final List<MusicId> musicIds, final String playListName
+      final Long memberId, final String accessToken, final List<MusicId> musicIds,
+      final String playListName
   ) {
     final PlayListId playListId = createPlayList(accessToken, playListName);
     final String authorization = CREATE_AUTH_HEADER.apply(accessToken);
-    musicIds.stream()
-        .map(musicId -> YoutubeAddMusicRequest.of(playListId.id(), musicId))
-        .forEach(request -> googleApiClient.addMusic(authorization, request));
+
+    musicIds.forEach(musicId -> addMusic(playListId, musicId, authorization, memberId));
+
+    musicTransferContextManager.saveTransferHistory(memberId);
+  }
+
+  private void addMusic(
+      final PlayListId playListId, final MusicId musicId,
+      final String authorization, final Long memberId
+  ) {
+    final YoutubeAddMusicRequest request = YoutubeAddMusicRequest.of(playListId
+        .id(), musicId);
+    googleApiClient.addMusic(authorization, request);
+    musicTransferContextManager.addTransferredMusics(memberId, List.of(musicId));
   }
 
   @Override

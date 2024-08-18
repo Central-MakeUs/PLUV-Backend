@@ -12,6 +12,12 @@ public record MusicSearchRequest(
     @NotNull @Valid List<MusicQuery> musics
 ) {
 
+  public List<PlayListMusic> toPlayListMusics() {
+    return musics.parallelStream()
+        .map(MusicQuery::toDomain)
+        .toList();
+  }
+
   public record MusicQuery(
       @NotBlank String title, @NotNull String artistName, String isrcCode, @NotNull String imageUrl
   ) {

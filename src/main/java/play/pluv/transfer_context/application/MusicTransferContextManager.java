@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.TransferFailMusic;
+import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
@@ -59,8 +60,13 @@ public class MusicTransferContextManager {
     final MusicTransferContext context = musicTransferContextMap.get(memberId);
     final History history = historyRepository.save(context.toHistory());
 
-    final List<TransferFailMusic> transferFailMusics = context.extractTransferFailMusics(history.getId());
+    final List<TransferFailMusic> transferFailMusics = context.extractTransferFailMusics(
+        history.getId());
     transferFailMusicRepository.saveAll(transferFailMusics);
+
+    final List<TransferredMusic> transferredMusics = context.extractTransferredMusics(
+        history.getId());
+    transferredMusicRepository.saveAll(transferredMusics);
 
     return history.getId();
   }

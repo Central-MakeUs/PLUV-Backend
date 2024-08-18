@@ -13,8 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.TransferFailMusic;
+import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
+import play.pluv.history.domain.repository.TransferredMusicRepository;
 import play.pluv.music.domain.MusicId;
 import play.pluv.support.ApplicationTest;
 import play.pluv.transfer_context.domain.MusicTransferContext;
@@ -30,6 +32,8 @@ class MusicTransferContextManagerTest extends ApplicationTest {
   private HistoryRepository historyRepository;
   @Autowired
   private TransferFailMusicRepository transferFailMusicRepository;
+  @Autowired
+  private TransferredMusicRepository transferredMusicRepository;
 
   private final Long memberId = 10L;
 
@@ -82,7 +86,7 @@ class MusicTransferContextManagerTest extends ApplicationTest {
       manager.addTransferredMusics(memberId,
           List.of(
               new MusicId(APPLE, "a"), new MusicId(APPLE, "b"), new MusicId(APPLE, "c"),
-              new MusicId(APPLE, "b")
+              new MusicId(APPLE, "d")
           )
       );
     }
@@ -91,7 +95,7 @@ class MusicTransferContextManagerTest extends ApplicationTest {
     void 히스토리를_생성한다() {
       final Long historyId = manager.saveTransferHistory(memberId);
 
-      final History history = historyRepository.readById(memberId);
+      final History history = historyRepository.readById(historyId);
       assertThat(history)
           .isNotNull();
     }
@@ -107,6 +111,27 @@ class MusicTransferContextManagerTest extends ApplicationTest {
       assertThat(actual)
           .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id", "createdAt", "updatedAt")
           .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void 이전한_음악들을_저장한다() {
+      final Long historyId = manager.saveTransferHistory(memberId);
+
+      final List<TransferredMusic> actual = transferredMusicRepository.findByHistoryId(historyId);
+      final List<TransferredMusic> expected
+          = expectedTransferredMusics(transferredMusics, historyId);
+
+      assertThat(actual)
+          .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id", "createdAt", "updatedAt")
+          .containsExactlyElementsOf(expected);
+    }
+
+    private List<TransferredMusic> expectedTransferredMusics(
+        final List<TransferredMusicInContext> transferredMusics, final Long historyId
+    ) {
+      return transferredMusics.stream()
+          .map(tfm -> tfm.toTransferredMusic(historyId))
+          .toList();
     }
 
     public static List<TransferFailMusic> expectedTransferFailMusics(

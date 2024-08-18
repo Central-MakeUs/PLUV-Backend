@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.TransferFailMusic;
+import play.pluv.history.domain.TransferredMusic;
 import play.pluv.playlist.domain.MusicStreaming;
 
 @Getter
@@ -36,6 +37,12 @@ public class MusicTransferContext {
   public List<TransferFailMusic> extractTransferFailMusics(final Long historyId) {
     return transferFailMusics.stream()
         .map(music -> music.toTransferFailMusic(historyId))
+        .toList();
+  }
+
+  public List<TransferredMusic> extractTransferredMusics(final Long historyId) {
+    return transferredMusics.stream()
+        .map(music -> music.toTransferredMusic(historyId))
         .toList();
   }
 

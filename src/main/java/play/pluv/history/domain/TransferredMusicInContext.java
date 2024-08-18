@@ -1,8 +1,10 @@
 package play.pluv.history.domain;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import play.pluv.music.domain.MusicId;
 
+@Getter
 @RequiredArgsConstructor
 public class TransferredMusicInContext {
 

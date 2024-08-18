@@ -3,11 +3,14 @@ package play.pluv.history.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.HistoryFixture.이전실패_음악_목록;
 import static play.pluv.fixture.HistoryFixture.이전한_음악_목록;
+import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import play.pluv.history.application.MusicTransferContextManager;
 import play.pluv.history.domain.MusicTransferContext;
 import play.pluv.history.domain.TransferProgress;
+import play.pluv.music.domain.MusicId;
 
 class MusicTransferContextManagerTest {
 
@@ -34,11 +37,14 @@ class MusicTransferContextManagerTest {
     final var transferFailMusics = 이전실패_음악_목록();
     final var transferredMusics = 이전한_음악_목록();
 
+    manager.putDestMusic(transferredMusics);
     manager.initContext(memberId, transferFailMusics, 10);
-    manager.addTransferredMusics(memberId, transferredMusics);
+    manager.addTransferredMusics(memberId,
+        List.of(new MusicId(APPLE, "a"), new MusicId(APPLE, "b"))
+    );
 
     final TransferProgress progress = manager.getCurrentProgress(memberId);
-    final TransferProgress expected = new TransferProgress(10, transferredMusics.size());
+    final TransferProgress expected = new TransferProgress(10, 2);
 
     assertThat(progress)
         .usingRecursiveComparison()

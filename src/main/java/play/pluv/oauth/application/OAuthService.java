@@ -12,7 +12,7 @@ public class OAuthService {
 
   private final GoogleConnector googleConnector;
 
-  public GoogleAccessToken getAccessToken(final String authCode){
+  public GoogleAccessToken getAccessToken(final String authCode) {
     final GoogleOAuthResponse tokenResponse = googleConnector.getAccessToken(authCode);
     return new GoogleAccessToken(tokenResponse.accessToken());
   }

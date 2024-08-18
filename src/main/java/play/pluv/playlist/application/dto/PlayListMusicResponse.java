@@ -15,10 +15,10 @@ public record PlayListMusicResponse(
         .toList();
   }
 
-  private static PlayListMusicResponse from(final PlayListMusic playListMusic){
+  private static PlayListMusicResponse from(final PlayListMusic playListMusic) {
     return PlayListMusicResponse.builder()
         .title(playListMusic.getTitle())
-        .artistNames(String.join(",",playListMusic.getArtistNames()))
+        .artistNames(String.join(",", playListMusic.getArtistNames()))
         .imageUrl(playListMusic.getImageUrl())
         .isrcCode(playListMusic.getIsrcCode().orElse(null))
         .build();

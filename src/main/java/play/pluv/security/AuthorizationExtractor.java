@@ -5,7 +5,6 @@ import static play.pluv.security.exception.SecurityExceptionType.INVALID_ACCESS_
 import static play.pluv.security.exception.SecurityExceptionType.NOT_FOUND_AUTHORIZATION_TOKEN;
 
 import jakarta.servlet.http.HttpServletRequest;
-import play.pluv.login.exception.LoginException;
 import play.pluv.security.exception.SecurityException;
 
 public class AuthorizationExtractor {

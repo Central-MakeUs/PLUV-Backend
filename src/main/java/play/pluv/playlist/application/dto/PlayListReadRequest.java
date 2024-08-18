@@ -5,4 +5,5 @@ import jakarta.validation.constraints.NotBlank;
 public record PlayListReadRequest(
     @NotBlank String accessToken
 ) {
+
 }

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
-import play.pluv.security.JwtMemberId;
 import play.pluv.member.application.MemberService;
 import play.pluv.member.application.dto.UpdateNickNameRequest;
+import play.pluv.security.JwtMemberId;
 
 @RequiredArgsConstructor
 @RestController

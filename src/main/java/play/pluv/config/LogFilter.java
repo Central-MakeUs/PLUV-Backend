@@ -33,6 +33,8 @@ public class LogFilter implements Filter {
   private static void loggingRequest(final ContentCachingRequestWrapper httpServletRequest) {
     final String uri = httpServletRequest.getRequestURI();
 
+    httpServletRequest.getContentAsByteArray();
+
     //request 내용 확인
     final String reqContent = new String(httpServletRequest.getContentAsByteArray());
     MDC.put("uri", uri);

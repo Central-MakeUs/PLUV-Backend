@@ -11,7 +11,8 @@ public interface MusicExplorer {
   DestinationMusics searchMusic(final String accessToken, final PlayListMusic source);
 
   void transferMusics(
-      final String accessToken, final List<MusicId> musicIds, final String playlistName
+      final Long memberId, final String accessToken, final List<MusicId> musicIds,
+      final String playlistName
   );
 
   MusicStreaming supportedType();

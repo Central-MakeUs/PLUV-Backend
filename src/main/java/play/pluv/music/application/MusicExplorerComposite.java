@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
@@ -31,11 +32,12 @@ public class MusicExplorerComposite {
     return getClient(musicStreaming).searchMusic(accessToken, source);
   }
 
+  @Async
   public void transferMusics(
-      final MusicStreaming destination, final String accessToken, final List<MusicId> musicIds,
-      final String playListName
+      final Long memberId, final MusicStreaming destination, final String accessToken,
+      final List<MusicId> musicIds, final String playListName
   ) {
-    getClient(destination).transferMusics(accessToken, musicIds, playListName);
+    getClient(destination).transferMusics(memberId, accessToken, musicIds, playListName);
   }
 
   private MusicExplorer getClient(final MusicStreaming serverType) {

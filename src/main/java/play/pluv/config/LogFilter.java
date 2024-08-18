@@ -8,6 +8,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -25,18 +26,20 @@ public class LogFilter implements Filter {
     final ContentCachingResponseWrapper httpServletResponse
         = new ContentCachingResponseWrapper((HttpServletResponse) response);
 
-    loggingRequest(httpServletRequest);
     filterChain.doFilter(httpServletRequest, httpServletResponse);
+    loggingRequest(httpServletRequest);
     loggingResponse(httpServletResponse);
   }
 
-  private static void loggingRequest(final ContentCachingRequestWrapper httpServletRequest) {
+  private static void loggingRequest(final ContentCachingRequestWrapper httpServletRequest)
+      throws UnsupportedEncodingException {
     final String uri = httpServletRequest.getRequestURI();
 
-    httpServletRequest.getContentAsByteArray();
-
     //request 내용 확인
-    final String reqContent = new String(httpServletRequest.getContentAsByteArray());
+    final String reqContent = new String(
+        httpServletRequest.getContentAsByteArray(),
+        httpServletRequest.getCharacterEncoding()
+    );
     MDC.put("uri", uri);
     MDC.put("contentBody", reqContent);
     log.info("request logging");

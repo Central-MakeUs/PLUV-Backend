@@ -3,6 +3,7 @@ package play.pluv.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 @Configuration
 public class FilterConfiguration {
@@ -15,7 +16,7 @@ public class FilterConfiguration {
     registration.addUrlPatterns(
         "/music/*", "/oauth/*", "/login/*", "/playlist/*"
     );
-    registration.setOrder(1); // 필터 순서 지정 (optional)
+    registration.setOrder(Ordered.HIGHEST_PRECEDENCE); // 필터 순서 지정 (optional)
     return registration;
   }
 }

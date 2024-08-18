@@ -82,7 +82,7 @@ public class MusicFixture {
         List.of(
             new TransferFailMusicRequest("조회되지 못한 음악", "조회되지 못한 아티스트", "imageUrl"),
             new TransferFailMusicRequest("유사하지만 선택하지 않은 음악", "아티스트", "imageUrl")
-        )
+        ), "thumbNailUrl", "spotify"
     );
   }
 

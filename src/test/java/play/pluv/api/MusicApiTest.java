@@ -64,7 +64,10 @@ public class MusicApiTest extends ApiTest {
       fieldWithPath("destinationAccessToken").type(STRING)
           .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),
       fieldWithPath("musicIds[]").type(ARRAY).description("음악 id들"),
-      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름들"),
+      fieldWithPath("playListName").type(STRING).description("플레이리스트 이름"),
+      fieldWithPath("thumbNailUrl").type(STRING).description("플레이리스트 섬네일"),
+      fieldWithPath("source").type(STRING)
+          .description("이전하려던 음악 스트리밍 서비스(ex: 유튜브 -> 스포티파이인 경우 유튜브)"),
       fieldWithPath("transferFailMusics[]").type(ARRAY).description("이전하지 못한 음악들"),
       fieldWithPath("transferFailMusics[].title").type(STRING).description("음악 이름"),
       fieldWithPath("transferFailMusics[].artistName").type(STRING).description("가수 이름들"),

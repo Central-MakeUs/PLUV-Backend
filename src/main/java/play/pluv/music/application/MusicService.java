@@ -47,11 +47,11 @@ public class MusicService {
       final Integer willTransferMusicCount
   ) {
     final MusicTransferContext context = MusicTransferContext.builder()
-        .transferFailMusics(request.getTransferFailMusics())
+        .transferFailMusics(request.toTransferFailMusics())
         .title(request.playListName())
         .willTransferMusicCount(willTransferMusicCount)
         .destination(destination)
-        .source(request.getSource())
+        .source(request.toSource())
         .memberId(memberId)
         .thumbNailUrl(request.thumbNailUrl())
         .build();

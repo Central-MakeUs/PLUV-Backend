@@ -11,16 +11,15 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
-import play.pluv.music.domain.repository.MusicTransferContextRepository;
-import play.pluv.playlist.domain.PlayListMusic;
 import play.pluv.support.ApplicationTest;
+import play.pluv.transfer_context.application.MusicTransferContextManager;
 
 class MusicServiceTest extends ApplicationTest {
 
   @Autowired
   private MusicService musicService;
   @Autowired
-  private MusicTransferContextRepository musicTransferContextRepository;
+  private MusicTransferContextManager musicTransferContextManager;
 
   @Test
   void 음악을_조회한다() {
@@ -35,25 +34,6 @@ class MusicServiceTest extends ApplicationTest {
             List.of(new DestinationMusicResponse("goodDayId", "Good Day", "IU", "href"))
         )
     );
-
-    assertThat(actual)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsExactlyInAnyOrderElementsOf(expected);
-  }
-
-  @Test
-  void 음악을_조회한후에_Context에_저장한다() {
-    final MusicSearchRequest request = new MusicSearchRequest("accessToken",
-        List.of(new MusicQuery("좋은 날", "아이유", "KRA381001057", "imageUrl"))
-    );
-    final List<PlayListMusic> expected = List.of(
-        new PlayListMusic("좋은 날", List.of("아이유"), "KRA381001057", "imageUrl")
-    );
-    final Long memberId = 3L;
-
-    musicService.searchMusics(memberId, SPOTIFY, request);
-    final List<PlayListMusic> actual =
-        musicTransferContextRepository.getContext(memberId).getPlayListMusics();
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()

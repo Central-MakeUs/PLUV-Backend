@@ -17,11 +17,11 @@ public record MusicAddRequest(
     @NotBlank String source
 ) {
 
-  public MusicStreaming getSource() {
+  public MusicStreaming toSource() {
     return MusicStreaming.from(source);
   }
 
-  public List<TransferFailMusicInContext> getTransferFailMusics() {
+  public List<TransferFailMusicInContext> toTransferFailMusics() {
     return transferFailMusics.stream()
         .map(TransferFailMusicRequest::toTransferFailMusic)
         .toList();

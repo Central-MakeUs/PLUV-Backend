@@ -1,20 +1,23 @@
-package play.pluv.history.domain.repository;
+package play.pluv.transfer_context.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static play.pluv.fixture.HistoryFixture.이전실패_음악_목록;
-import static play.pluv.fixture.HistoryFixture.이전한_음악_목록;
+import static play.pluv.fixture.TransferContextFixture.이전실패_음악_목록;
+import static play.pluv.fixture.TransferContextFixture.이전한_음악_목록;
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import play.pluv.history.application.MusicTransferContextManager;
-import play.pluv.history.domain.MusicTransferContext;
-import play.pluv.history.domain.TransferProgress;
+import org.springframework.beans.factory.annotation.Autowired;
+import play.pluv.transfer_context.domain.MusicTransferContext;
+import play.pluv.transfer_context.domain.TransferProgress;
 import play.pluv.music.domain.MusicId;
+import play.pluv.support.ApplicationTest;
 
-class MusicTransferContextManagerTest {
+class MusicTransferContextManagerTest extends ApplicationTest {
 
-  private final MusicTransferContextManager manager = new MusicTransferContextManager();
+  @Autowired
+  private MusicTransferContextManager manager;
+
   private final Long memberId = 10L;
 
   @Test

@@ -3,11 +3,11 @@ package play.pluv.fixture;
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 
 import java.util.List;
-import play.pluv.history.domain.TransferFailMusicInContext;
-import play.pluv.history.domain.TransferredMusicInContext;
+import play.pluv.transfer_context.domain.TransferFailMusicInContext;
+import play.pluv.transfer_context.domain.TransferredMusicInContext;
 import play.pluv.music.domain.MusicId;
 
-public class HistoryFixture {
+public class TransferContextFixture {
 
   public static List<TransferFailMusicInContext> 이전실패_음악_목록() {
     return List.of(

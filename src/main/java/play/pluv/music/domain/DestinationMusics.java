@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import play.pluv.history.domain.TransferredMusicInContext;
+import play.pluv.transfer_context.domain.TransferredMusicInContext;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @Getter

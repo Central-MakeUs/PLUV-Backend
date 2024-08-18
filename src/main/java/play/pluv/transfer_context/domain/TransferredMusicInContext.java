@@ -1,4 +1,4 @@
-package play.pluv.history.domain;
+package play.pluv.transfer_context.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

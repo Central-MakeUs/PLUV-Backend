@@ -1,9 +1,10 @@
-package play.pluv.history.domain;
+package play.pluv.transfer_context.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import play.pluv.history.domain.History;
 import play.pluv.playlist.domain.MusicStreaming;
 
 @Getter

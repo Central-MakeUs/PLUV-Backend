@@ -47,7 +47,7 @@ public interface SpotifyApiClient {
       @RequestParam final MultiValueMap<String, String> params
   );
 
-  @GetExchange(url = "https://api.spotify.com/v1/search")
+  @GetExchange(url = "https://api.spotify.com/v1/search?limit=5")
   SpotifySearchMusicResponse searchMusic(
       @RequestHeader("Authorization") final String accessToken,
       @RequestParam final MultiValueMap<String, String> params

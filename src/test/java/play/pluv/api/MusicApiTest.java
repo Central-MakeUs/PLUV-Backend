@@ -92,7 +92,7 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/spotify/search")
             .contentType(APPLICATION_JSON_VALUE)
@@ -111,7 +111,7 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/youtube/search")
             .contentType(APPLICATION_JSON_VALUE)
@@ -130,7 +130,7 @@ public class MusicApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(검색_요청);
 
-    when(musicService.searchMusics(any(), any(), any())).thenReturn(검색_결과);
+    when(musicService.searchMusics(any(), any())).thenReturn(검색_결과);
 
     mockMvc.perform(post("/music/apple/search")
             .contentType(APPLICATION_JSON_VALUE)

@@ -7,6 +7,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import play.pluv.history.domain.TransferredMusicInContext;
 import play.pluv.playlist.domain.PlayListMusic;
 
 @ToString
@@ -35,5 +36,10 @@ public class DestinationMusic {
     final Set<String> set2 = new HashSet<>(playListMusic.getArtistNames());
 
     return Objects.equals(playListMusic.getTitle(), title) && set1.equals(set2);
+  }
+
+  public TransferredMusicInContext toTransferredMusic() {
+    return new TransferredMusicInContext(musicId, title, String.join(",", artistNames), imageUrl,
+        isrcCode);
   }
 }

@@ -20,9 +20,8 @@ public class MusicService {
   private final MusicExplorerComposite musicExplorerComposite;
   private final MusicTransferContextManager musicTransferContextManager;
 
-  //TODO : 추후 필요없는 파라미터 삭제
   public List<MusicSearchResponse> searchMusics(
-      final Long memberId, final MusicStreaming musicStreaming, final MusicSearchRequest request
+      final MusicStreaming musicStreaming, final MusicSearchRequest request
   ) {
     final String accessToken = request.destinationAccessToken();
     final List<PlayListMusic> playListMusics = request.toPlayListMusics();

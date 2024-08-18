@@ -5,13 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import play.pluv.history.application.HistoryUpdater;
+import play.pluv.history.domain.repository.MusicTransferContextRepository;
 import play.pluv.music.application.dto.MusicAddRequest;
 import play.pluv.music.application.dto.MusicSearchRequest;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
-import play.pluv.music.domain.MusicTransferContext;
-import play.pluv.music.domain.repository.MusicTransferContextRepository;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayListMusic;
 
@@ -23,25 +22,16 @@ public class MusicService {
   private final MusicTransferContextRepository musicTransferContextRepository;
   private final HistoryUpdater historyUpdater;
 
+  //TODO : 추후 필요없는 파라미터 삭제
   public List<MusicSearchResponse> searchMusics(
       final Long memberId, final MusicStreaming musicStreaming, final MusicSearchRequest request
   ) {
     final String accessToken = request.destinationAccessToken();
     final List<PlayListMusic> playListMusics = request.toPlayListMusics();
 
-    musicTransferContextRepository.setSearchMusics(memberId, playListMusics);
-
     return playListMusics.stream()
         .map(playListMusic -> searchMusic(musicStreaming, playListMusic, accessToken))
         .toList();
-  }
-
-  public void transferMusics(final MusicAddRequest request, final MusicStreaming destination) {
-    final List<MusicId> musicIds = request.extractMusicIds(destination);
-
-    musicExplorerComposite.transferMusics(
-        destination, request.destinationAccessToken(), musicIds, request.playListName()
-    );
   }
 
   @Transactional
@@ -50,10 +40,10 @@ public class MusicService {
   ) {
     final List<MusicId> musicIds = request.extractMusicIds(destination);
 
-    final MusicTransferContext context = musicTransferContextRepository.getContext(memberId);
+    musicTransferContextRepository.initContext(memberId, request.getTransferFailMusics());
 
     musicExplorerComposite.transferMusics(
-        destination, request.destinationAccessToken(), musicIds, request.playListName()
+        memberId, destination, request.destinationAccessToken(), musicIds, request.playListName()
     );
   }
 

@@ -37,6 +37,7 @@ import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
+import play.pluv.transfer_context.application.MusicTransferContextManager;
 
 @Component
 public class AppleConnector implements SocialLoginClient, PlayListConnector, MusicExplorer {
@@ -49,15 +50,18 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
   private final ObjectMapper objectMapper;
   private final AppleApiClient appleApiClient;
   private final AppleConfigProperty appleConfigProperty;
+  private final MusicTransferContextManager musicTransferContextManager;
 
   public AppleConnector(
-      final ObjectMapper objectMapper, final AppleApiClient appleApiClient,
-      final AppleConfigProperty appleConfigProperty
+      final AppleConfigProperty appleConfigProperty, final AppleApiClient appleApiClient,
+      final MusicTransferContextManager musicTransferContextManager,
+      final ObjectMapper objectMapper
   ) {
     this.objectMapper = objectMapper;
     this.appleApiClient = appleApiClient;
     this.appleConfigProperty = appleConfigProperty;
     this.developerAuthorization = String.format("Bearer %s", appleConfigProperty.developerToken());
+    this.musicTransferContextManager = musicTransferContextManager;
   }
 
   @Override
@@ -122,30 +126,37 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
 
   @Override
   public void transferMusics(
-      final String musicUserToken, final List<MusicId> musicIds, final String playlistName
+      final Long memberId, final String musicUserToken, final List<MusicId> musicIds,
+      final String playlistName
   ) {
     final PlayListId playListId = createPlayList(musicUserToken, playlistName);
 
-    final List<AppleAddMusicRequest> requests = splitMusicIds(musicIds);
+    final List<List<MusicId>> requests = splitMusicIds(musicIds);
 
     requests.parallelStream()
-        .forEach(
-            request -> appleApiClient.addMusics(
-                developerAuthorization, musicUserToken, playListId.id(), request
-            )
-        );
+        .forEach(request -> addMusics(memberId, musicUserToken, request, playListId));
+    musicTransferContextManager.saveTransferHistory(memberId);
   }
 
-  private List<AppleAddMusicRequest> splitMusicIds(final List<MusicId> musicIds) {
+  private void addMusics(
+      final Long memberId, final String musicUserToken, final List<MusicId> musicIds,
+      final PlayListId playlistId
+  ) {
+    final AppleAddMusicRequest request = AppleAddMusicRequest.of(musicIds);
+    appleApiClient.addMusics(
+        developerAuthorization, musicUserToken, playlistId.id(), request
+    );
+    musicTransferContextManager.addTransferredMusics(memberId, musicIds);
+  }
+
+  private List<List<MusicId>> splitMusicIds(final List<MusicId> musicIds) {
     final List<List<MusicId>> partitionedMusicIds = new ArrayList<>();
     for (int i = 0; i < musicIds.size(); i += MUSIC_ID_MAX_SIZE) {
       partitionedMusicIds.add(
           musicIds.subList(i, Math.min(i + MUSIC_ID_MAX_SIZE, musicIds.size()))
       );
     }
-    return partitionedMusicIds.stream()
-        .map(AppleAddMusicRequest::of)
-        .toList();
+    return partitionedMusicIds;
   }
 
   @Override

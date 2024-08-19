@@ -22,6 +22,7 @@ public class PlayListMusic {
   private final String imageUrl;
 
   public Optional<String> getIsrcCode() {
-    return Optional.ofNullable(isrcCode);
+    return Optional.ofNullable(isrcCode)
+        .filter(isrcCode -> !isrcCode.isBlank());
   }
 }

@@ -30,6 +30,7 @@ import play.pluv.music.application.MusicService;
 import play.pluv.oauth.application.OAuthService;
 import play.pluv.playlist.application.PlayListService;
 import play.pluv.support.ApiTest.RestDocsResultConfig;
+import play.pluv.transfer_context.application.ProgressService;
 
 @WebMvcTest
 @Import({JwtProvider.class, RestDocsResultConfig.class})
@@ -52,6 +53,8 @@ public abstract class ApiTest {
   protected OAuthService oAuthService;
   @MockBean
   protected MemberService memberService;
+  @MockBean
+  protected ProgressService progressService;
   @MockBean
   protected JwtProvider jwtProvider;
 

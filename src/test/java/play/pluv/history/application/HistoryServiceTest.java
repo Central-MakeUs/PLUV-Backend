@@ -29,10 +29,22 @@ class HistoryServiceTest extends ApplicationTest {
     final History history1 = 히스토리_1(historyRepository, member.getId());
     final History history2 = 히스토리_2(historyRepository, member.getId());
 
-    final List<History> actual = historyService.getHistories(member.getId());
+    final List<History> actual = historyService.findHistories(member.getId());
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrder(history1, history2);
+  }
+
+  @Test
+  void 히스토리를_하나_조회한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final History history = 히스토리_1(historyRepository, member.getId());
+
+    final History actual = historyService.findHistory(history.getId());
+
+    assertThat(actual)
+        .usingRecursiveComparison()
+        .isEqualTo(history);
   }
 }

@@ -13,7 +13,12 @@ public class HistoryService {
   private final HistoryReader historyReader;
 
   @Transactional(readOnly = true)
-  public List<History> getHistories(final Long memberId) {
+  public List<History> findHistories(final Long memberId) {
     return historyReader.readByMemberId(memberId);
+  }
+
+  @Transactional(readOnly = true)
+  public History findHistory(final Long historyId) {
+    return historyReader.readById(historyId);
   }
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,8 @@ import play.pluv.base.BaseEntity;
 import play.pluv.playlist.domain.MusicStreaming;
 
 @Entity
-@NoArgsConstructor(access = PROTECTED)
 @Getter
+@NoArgsConstructor(access = PROTECTED)
 public class History extends BaseEntity {
 
   @Id
@@ -31,6 +32,22 @@ public class History extends BaseEntity {
   private MusicStreaming source;
   @Enumerated(EnumType.STRING)
   private MusicStreaming destination;
+
+  public History(final Long id, final String title, final String thumbNailUrl,
+      final Integer transferredSongCount,
+      final Integer totalSongCount, final Long memberId, final MusicStreaming source,
+      final MusicStreaming destination, final LocalDateTime createdAt) {
+    this.id = id;
+    this.title = title;
+    this.thumbNailUrl = thumbNailUrl;
+    this.transferredSongCount = transferredSongCount;
+    this.totalSongCount = totalSongCount;
+    this.memberId = memberId;
+    this.source = source;
+    this.destination = destination;
+    this.createdAt = createdAt;
+    this.updatedAt = createdAt;
+  }
 
   @Builder
   public History(final String title, final String thumbNailUrl, final Integer transferredSongCount,

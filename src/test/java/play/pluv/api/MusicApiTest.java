@@ -63,9 +63,9 @@ public class MusicApiTest extends ApiTest {
               .description("조회된 음악의 커버 이미지 url")
       )};
   private static final Snippet[] TRANSFER_MUSIC_SNIPPET = {
-      requestHeaders(
-          headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
-      ),
+//      requestHeaders(
+//          headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
+//      ),
       requestFields(
           fieldWithPath("destinationAccessToken").type(STRING)
               .description("플레이리스트 제공자의 accessToken(애플의 경우엔 musicUserToken)"),

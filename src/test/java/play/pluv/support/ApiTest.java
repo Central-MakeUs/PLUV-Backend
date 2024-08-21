@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import play.pluv.base.LocalDateTimeProvider;
+import play.pluv.history.application.HistoryService;
 import play.pluv.security.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.member.application.MemberService;
@@ -55,6 +56,8 @@ public abstract class ApiTest {
   protected MemberService memberService;
   @MockBean
   protected ProgressService progressService;
+  @MockBean
+  protected HistoryService historyService;
   @MockBean
   protected JwtProvider jwtProvider;
 

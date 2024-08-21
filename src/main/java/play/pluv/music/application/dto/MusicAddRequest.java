@@ -35,8 +35,8 @@ public record MusicAddRequest(
 
   public record TransferFailMusicRequest(
       @NotBlank String title,
-      @NotBlank String artistName,
-      @NotBlank String imageUrl
+      String artistName,
+      String imageUrl
   ) {
 
     private TransferFailMusicInContext toTransferFailMusic() {

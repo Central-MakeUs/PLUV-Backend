@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import play.pluv.feed.domain.Feed;
+import play.pluv.feed.domain.FeedBookmark;
+import play.pluv.feed.domain.repository.FeedBookmarkRepository;
 import play.pluv.feed.domain.repository.FeedRepository;
 
 @Component
@@ -15,10 +17,17 @@ import play.pluv.feed.domain.repository.FeedRepository;
 public class FeedReader {
 
   private final FeedRepository feedRepository;
+  private final FeedBookmarkRepository feedBookmarkRepository;
 
   public List<Feed> findAll() {
     return feedRepository.findAll().stream()
         .sorted(comparing(Feed::getCreatedAt).reversed())
+        .toList();
+  }
+
+  public List<Feed> findBookmarkedFeeds(final Long memberId) {
+    return feedBookmarkRepository.findByMemberIdWithJoin(memberId).stream()
+        .map(FeedBookmark::getFeed)
         .toList();
   }
 }

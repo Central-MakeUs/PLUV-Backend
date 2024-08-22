@@ -1,6 +1,7 @@
 package play.pluv.progress.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
 import static play.pluv.fixture.TransferContextFixture.musicTransferContext;
 import static play.pluv.fixture.TransferContextFixture.이전실패_음악_목록;
 import static play.pluv.fixture.TransferContextFixture.이전한_음악_목록;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.pluv.feed.domain.repository.FeedRepository;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
@@ -18,11 +20,12 @@ import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
-import play.pluv.support.ApplicationTest;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.progress.domain.MusicTransferContext;
 import play.pluv.progress.domain.TransferFailMusicInContext;
 import play.pluv.progress.domain.TransferProgress;
 import play.pluv.progress.domain.TransferredMusicInContext;
+import play.pluv.support.ApplicationTest;
 
 class MusicTransferContextManagerTest extends ApplicationTest {
 
@@ -34,6 +37,10 @@ class MusicTransferContextManagerTest extends ApplicationTest {
   private TransferFailMusicRepository transferFailMusicRepository;
   @Autowired
   private TransferredMusicRepository transferredMusicRepository;
+  @Autowired
+  private FeedRepository feedRepository;
+  @Autowired
+  private MemberRepository memberRepository;
 
   private final Long memberId = 10L;
 
@@ -76,9 +83,11 @@ class MusicTransferContextManagerTest extends ApplicationTest {
 
     private final List<TransferFailMusicInContext> transferFailMusics = 이전실패_음악_목록();
     private final List<TransferredMusicInContext> transferredMusics = 이전한_음악_목록();
+    private Long memberId;
 
     @BeforeEach
     void setUp() {
+      memberId = 멤버_홍혁준(memberRepository).getId();
       final var transferContext = musicTransferContext(10, memberId, transferFailMusics);
 
       manager.putDestMusic(transferredMusics);
@@ -124,6 +133,14 @@ class MusicTransferContextManagerTest extends ApplicationTest {
       assertThat(actual)
           .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id", "createdAt", "updatedAt")
           .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void 히스토리를_만들경우_feed도_저장된다() {
+      final Long historyId = manager.saveTransferHistory(memberId);
+
+      assertThat(feedRepository.findByHistoryId(historyId))
+          .isNotEmpty();
     }
 
     private List<TransferredMusic> expectedTransferredMusics(

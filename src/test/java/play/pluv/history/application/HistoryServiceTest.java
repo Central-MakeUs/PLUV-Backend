@@ -1,15 +1,18 @@
 package play.pluv.history.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static play.pluv.fixture.HistoryFixture.히스토리_1;
 import static play.pluv.fixture.HistoryFixture.히스토리_2;
 import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
+import static play.pluv.history.exception.HistoryExceptionType.HISTORY_NOT_OWNER;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.repository.HistoryRepository;
+import play.pluv.history.exception.HistoryException;
 import play.pluv.member.domain.Member;
 import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.support.ApplicationTest;
@@ -41,10 +44,21 @@ class HistoryServiceTest extends ApplicationTest {
     final Member member = 멤버_홍혁준(memberRepository);
     final History history = 히스토리_1(historyRepository, member.getId());
 
-    final History actual = historyService.findHistory(history.getId());
+    final History actual = historyService.findHistory(history.getId(), member.getId());
 
     assertThat(actual)
         .usingRecursiveComparison()
         .isEqualTo(history);
+  }
+
+  @Test
+  void 히스토리를_하나_조회하는_대상이_소유자가_아니면_예외를_던진다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final Long invalidMemberId = member.getId() + 1;
+    final History history = 히스토리_1(historyRepository, member.getId());
+
+    assertThatThrownBy(() -> historyService.findHistory(history.getId(), invalidMemberId))
+        .isInstanceOf(HistoryException.class)
+        .hasMessage(HISTORY_NOT_OWNER.getMessage());
   }
 }

@@ -2,6 +2,7 @@ package play.pluv.history.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
+import static play.pluv.history.exception.HistoryExceptionType.HISTORY_NOT_OWNER;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,10 +10,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import play.pluv.base.BaseEntity;
+import play.pluv.history.exception.HistoryException;
 import play.pluv.playlist.domain.MusicStreaming;
 
 @Entity
@@ -60,5 +63,11 @@ public class History extends BaseEntity {
     this.memberId = memberId;
     this.source = source;
     this.destination = destination;
+  }
+
+  public void validateOwner(final Long memberId) {
+    if (!Objects.equals(memberId, this.memberId)) {
+      throw new HistoryException(HISTORY_NOT_OWNER);
+    }
   }
 }

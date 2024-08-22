@@ -18,7 +18,9 @@ public class HistoryService {
   }
 
   @Transactional(readOnly = true)
-  public History findHistory(final Long historyId) {
-    return historyReader.readById(historyId);
+  public History findHistory(final Long historyId, final Long memberId) {
+    final History history = historyReader.readById(historyId);
+    history.validateOwner(memberId);
+    return history;
   }
 }

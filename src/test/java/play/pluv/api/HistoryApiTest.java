@@ -65,7 +65,7 @@ public class HistoryApiTest extends ApiTest {
     final var history = 히스토리_1(memberId);
 
     setAccessToken(token, memberId);
-    when(historyService.findHistory(historyId)).thenReturn(history);
+    when(historyService.findHistory(historyId, memberId)).thenReturn(history);
 
     mockMvc.perform(get("/history/{id}", historyId)
             .header(AUTHORIZATION, "Bearer " + token))

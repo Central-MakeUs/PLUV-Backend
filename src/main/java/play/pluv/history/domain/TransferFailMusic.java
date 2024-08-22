@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import play.pluv.base.BaseEntity;
@@ -20,8 +21,11 @@ public class TransferFailMusic extends BaseEntity {
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
   private Long historyId;
+  @Getter
   private String title;
+  @Getter
   private String imageUrl;
+  @Getter
   private String artistNames;
 
   @Builder

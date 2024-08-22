@@ -29,8 +29,7 @@ public class MusicController {
   public BaseResponse<List<MusicSearchResponse>> searchSpotifyMusics(
       @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService
-        .searchMusics(SPOTIFY, musicSearchRequest);
+    final var responses = musicService.searchMusics(SPOTIFY, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
@@ -38,8 +37,7 @@ public class MusicController {
   public BaseResponse<List<MusicSearchResponse>> searchYoutubeMusics(
       @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService
-        .searchMusics(YOUTUBE, musicSearchRequest);
+    final var responses = musicService.searchMusics(YOUTUBE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 
@@ -47,8 +45,7 @@ public class MusicController {
   public BaseResponse<List<MusicSearchResponse>> searchAppleMusics(
       @Valid @RequestBody final MusicSearchRequest musicSearchRequest
   ) {
-    final var responses = musicService
-        .searchMusics(APPLE, musicSearchRequest);
+    final var responses = musicService.searchMusics(APPLE, musicSearchRequest);
     return BaseResponse.ok(responses);
   }
 

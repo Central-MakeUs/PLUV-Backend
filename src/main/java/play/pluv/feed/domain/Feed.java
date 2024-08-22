@@ -6,12 +6,16 @@ import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import play.pluv.base.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor
+@Getter
 public class Feed extends BaseEntity {
 
   @Id

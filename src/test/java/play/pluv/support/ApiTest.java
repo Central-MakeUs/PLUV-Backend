@@ -23,15 +23,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import play.pluv.base.LocalDateTimeProvider;
+import play.pluv.feed.application.FeedService;
 import play.pluv.history.application.HistoryService;
-import play.pluv.security.JwtProvider;
 import play.pluv.login.application.LoginService;
 import play.pluv.member.application.MemberService;
 import play.pluv.music.application.MusicService;
 import play.pluv.oauth.application.OAuthService;
 import play.pluv.playlist.application.PlayListService;
-import play.pluv.support.ApiTest.RestDocsResultConfig;
 import play.pluv.progress.application.ProgressService;
+import play.pluv.security.JwtProvider;
+import play.pluv.support.ApiTest.RestDocsResultConfig;
 
 @WebMvcTest
 @Import({JwtProvider.class, RestDocsResultConfig.class})
@@ -58,6 +59,8 @@ public abstract class ApiTest {
   protected ProgressService progressService;
   @MockBean
   protected HistoryService historyService;
+  @MockBean
+  protected FeedService feedService;
   @MockBean
   protected JwtProvider jwtProvider;
 

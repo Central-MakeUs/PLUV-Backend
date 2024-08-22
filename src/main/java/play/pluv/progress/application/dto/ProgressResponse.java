@@ -1,6 +1,6 @@
-package play.pluv.transfer_context.application.dto;
+package play.pluv.progress.application.dto;
 
-import play.pluv.transfer_context.domain.TransferProgress;
+import play.pluv.progress.domain.TransferProgress;
 
 public record ProgressResponse(
     Integer willTransferMusicCount,

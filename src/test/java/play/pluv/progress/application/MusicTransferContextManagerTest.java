@@ -1,4 +1,4 @@
-package play.pluv.transfer_context.application;
+package play.pluv.progress.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.TransferContextFixture.musicTransferContext;
@@ -19,10 +19,10 @@ import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
 import play.pluv.support.ApplicationTest;
-import play.pluv.transfer_context.domain.MusicTransferContext;
-import play.pluv.transfer_context.domain.TransferFailMusicInContext;
-import play.pluv.transfer_context.domain.TransferProgress;
-import play.pluv.transfer_context.domain.TransferredMusicInContext;
+import play.pluv.progress.domain.MusicTransferContext;
+import play.pluv.progress.domain.TransferFailMusicInContext;
+import play.pluv.progress.domain.TransferProgress;
+import play.pluv.progress.domain.TransferredMusicInContext;
 
 class MusicTransferContextManagerTest extends ApplicationTest {
 

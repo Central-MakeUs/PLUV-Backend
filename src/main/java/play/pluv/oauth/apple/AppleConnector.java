@@ -38,7 +38,7 @@ import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 import play.pluv.playlist.domain.PlayListMusic;
-import play.pluv.transfer_context.application.MusicTransferContextManager;
+import play.pluv.progress.application.MusicTransferContextManager;
 
 @Component
 public class AppleConnector implements SocialLoginClient, PlayListConnector, MusicExplorer {

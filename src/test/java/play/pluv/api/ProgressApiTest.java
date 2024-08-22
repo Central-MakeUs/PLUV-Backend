@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import play.pluv.support.ApiTest;
-import play.pluv.transfer_context.domain.TransferProgress;
+import play.pluv.progress.domain.TransferProgress;
 
 public class ProgressApiTest extends ApiTest {
 

@@ -1,4 +1,4 @@
-package play.pluv.transfer_context.domain;
+package play.pluv.progress.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

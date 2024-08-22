@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.ToString;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.playlist.domain.PlayListMusic;
-import play.pluv.transfer_context.domain.TransferredMusicInContext;
+import play.pluv.progress.domain.TransferredMusicInContext;
 
 @ToString
 @Getter

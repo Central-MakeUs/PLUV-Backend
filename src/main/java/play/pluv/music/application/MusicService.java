@@ -10,8 +10,8 @@ import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.playlist.domain.PlayListMusic;
-import play.pluv.transfer_context.application.MusicTransferContextManager;
-import play.pluv.transfer_context.domain.MusicTransferContext;
+import play.pluv.progress.application.MusicTransferContextManager;
+import play.pluv.progress.domain.MusicTransferContext;
 
 @Service
 @RequiredArgsConstructor

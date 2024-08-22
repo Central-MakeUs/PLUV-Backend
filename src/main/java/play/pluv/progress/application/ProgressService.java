@@ -1,8 +1,8 @@
-package play.pluv.transfer_context.application;
+package play.pluv.progress.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import play.pluv.transfer_context.domain.TransferProgress;
+import play.pluv.progress.domain.TransferProgress;
 
 @RequiredArgsConstructor
 @Service

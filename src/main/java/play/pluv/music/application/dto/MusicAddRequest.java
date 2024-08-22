@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import play.pluv.music.domain.MusicId;
 import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.transfer_context.domain.TransferFailMusicInContext;
+import play.pluv.progress.domain.TransferFailMusicInContext;
 
 public record MusicAddRequest(
     @NotBlank String playListName,

@@ -31,7 +31,7 @@ import play.pluv.music.application.MusicService;
 import play.pluv.oauth.application.OAuthService;
 import play.pluv.playlist.application.PlayListService;
 import play.pluv.support.ApiTest.RestDocsResultConfig;
-import play.pluv.transfer_context.application.ProgressService;
+import play.pluv.progress.application.ProgressService;
 
 @WebMvcTest
 @Import({JwtProvider.class, RestDocsResultConfig.class})

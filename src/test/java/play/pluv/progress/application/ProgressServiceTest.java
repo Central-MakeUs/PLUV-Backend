@@ -1,4 +1,4 @@
-package play.pluv.transfer_context.application;
+package play.pluv.progress.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
@@ -13,8 +13,8 @@ import play.pluv.member.domain.Member;
 import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.support.ApplicationTest;
-import play.pluv.transfer_context.domain.MusicTransferContext;
-import play.pluv.transfer_context.domain.TransferProgress;
+import play.pluv.progress.domain.MusicTransferContext;
+import play.pluv.progress.domain.TransferProgress;
 
 class ProgressServiceTest extends ApplicationTest {
 

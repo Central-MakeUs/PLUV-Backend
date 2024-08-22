@@ -5,9 +5,9 @@ import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
 import play.pluv.history.domain.HistoryMusicId;
-import play.pluv.transfer_context.domain.MusicTransferContext;
-import play.pluv.transfer_context.domain.TransferFailMusicInContext;
-import play.pluv.transfer_context.domain.TransferredMusicInContext;
+import play.pluv.progress.domain.MusicTransferContext;
+import play.pluv.progress.domain.TransferFailMusicInContext;
+import play.pluv.progress.domain.TransferredMusicInContext;
 
 public class TransferContextFixture {
 

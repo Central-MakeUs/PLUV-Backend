@@ -6,9 +6,12 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.util.List;
 import play.pluv.history.domain.History;
+import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
+import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
+import play.pluv.history.domain.repository.TransferredMusicRepository;
 
 public class HistoryFixture {
 
@@ -44,7 +47,7 @@ public class HistoryFixture {
     return historyRepository.save(저장된_히스토리_2(memberId));
   }
 
-  public static TransferFailMusic 이전실패한_음악1(
+  public static TransferFailMusic 저장된_이전실패한_음악1(
       final TransferFailMusicRepository repository, final Long historyId
   ) {
     return repository.save(
@@ -57,7 +60,21 @@ public class HistoryFixture {
     );
   }
 
-  public static TransferFailMusic 이전실패한_음악2(
+  public static TransferredMusic 저장된_이전한_음악1(
+      final TransferredMusicRepository repository, final Long historyId
+  ) {
+    return repository.save(
+        TransferredMusic.builder()
+            .title("이전한 음악_1")
+            .historyId(historyId)
+            .artistNames("이전가수")
+            .imageUrl("imageUrl")
+            .musicId(new HistoryMusicId(SPOTIFY, "ab"))
+            .build()
+    );
+  }
+
+  public static TransferFailMusic 저장된_이전실패한_음악2(
       final TransferFailMusicRepository repository, final Long historyId
   ) {
     return repository.save(
@@ -70,9 +87,29 @@ public class HistoryFixture {
     );
   }
 
+  public static TransferredMusic 저장된_이전한_음악2(
+      final TransferredMusicRepository repository, final Long historyId
+  ) {
+    return repository.save(
+        TransferredMusic.builder()
+            .title("이전한 음악 2")
+            .historyId(historyId)
+            .artistNames("이전한 음악 가수 2")
+            .imageUrl("imageUrl")
+            .musicId(new HistoryMusicId(SPOTIFY, "cd"))
+            .build()
+    );
+  }
+
   public static List<TransferFailMusic> 저장된_이전실패한_음악들(
       final TransferFailMusicRepository repository, final Long historyId
   ) {
-    return List.of(이전실패한_음악1(repository, historyId), 이전실패한_음악2(repository, historyId));
+    return List.of(저장된_이전실패한_음악1(repository, historyId), 저장된_이전실패한_음악2(repository, historyId));
+  }
+
+  public static List<TransferredMusic> 저장된_이전한_음악들(
+      final TransferredMusicRepository repository, final Long historyId
+  ) {
+    return List.of(저장된_이전한_음악1(repository, historyId), 저장된_이전한_음악2(repository, historyId));
   }
 }

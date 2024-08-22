@@ -3,6 +3,7 @@ package play.pluv.history.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static play.pluv.fixture.HistoryFixture.저장된_이전실패한_음악들;
+import static play.pluv.fixture.HistoryFixture.저장된_이전한_음악들;
 import static play.pluv.fixture.HistoryFixture.저장된_히스토리_1;
 import static play.pluv.fixture.HistoryFixture.저장된_히스토리_2;
 import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
@@ -13,8 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.TransferFailMusic;
+import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
+import play.pluv.history.domain.repository.TransferredMusicRepository;
 import play.pluv.history.exception.HistoryException;
 import play.pluv.member.domain.Member;
 import play.pluv.member.domain.repository.MemberRepository;
@@ -30,6 +33,8 @@ class HistoryServiceTest extends ApplicationTest {
   private HistoryRepository historyRepository;
   @Autowired
   private TransferFailMusicRepository transferFailMusicRepository;
+  @Autowired
+  private TransferredMusicRepository transferredMusicRepository;
 
   @Test
   void 히스토리_목록을_조회한다() {
@@ -77,6 +82,24 @@ class HistoryServiceTest extends ApplicationTest {
     );
 
     final List<TransferFailMusic> actual = historyService.findTransferFailMusics(
+        history.getId(), member.getId()
+    );
+
+    assertThat(actual)
+        .usingRecursiveFieldByFieldElementComparator()
+        .isEqualTo(transferFailMusics);
+  }
+
+  @Test
+  void 이전한_음악들을_반환한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final History history = 저장된_히스토리_1(historyRepository, member.getId());
+    final List<TransferredMusic> transferFailMusics = 저장된_이전한_음악들(
+        transferredMusicRepository,
+        history.getId()
+    );
+
+    final List<TransferredMusic> actual = historyService.findTransferredMusics(
         history.getId(), member.getId()
     );
 

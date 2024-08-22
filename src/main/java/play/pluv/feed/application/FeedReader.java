@@ -10,6 +10,7 @@ import play.pluv.feed.domain.Feed;
 import play.pluv.feed.domain.FeedBookmark;
 import play.pluv.feed.domain.repository.FeedBookmarkRepository;
 import play.pluv.feed.domain.repository.FeedRepository;
+import play.pluv.member.domain.Member;
 
 @Component
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class FeedReader {
         .toList();
   }
 
-  public List<Feed> findBookmarkedFeeds(final Long memberId) {
-    return feedBookmarkRepository.findByMemberIdWithJoin(memberId).stream()
+  public List<Feed> findBookmarkedFeeds(final Member member) {
+    return feedBookmarkRepository.findByMemberIdWithJoin(member.getId()).stream()
         .map(FeedBookmark::getFeed)
         .toList();
   }

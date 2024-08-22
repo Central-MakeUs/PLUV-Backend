@@ -33,7 +33,7 @@ class FeedUpdaterTest extends ApplicationTest {
 
     feedUpdater.bookmarkFeed(member, feed1.getId());
 
-    final List<Feed> actual = feedReader.findBookmarkedFeeds(member.getId());
+    final List<Feed> actual = feedReader.findBookmarkedFeeds(member);
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrder(feed1);

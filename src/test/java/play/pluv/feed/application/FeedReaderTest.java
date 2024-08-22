@@ -32,7 +32,7 @@ class FeedReaderTest extends ApplicationTest {
     저장된_피드_2(feedRepository);
     feedUpdater.bookmarkFeed(member, feed1.getId());
 
-    final List<Feed> actual = feedReader.findBookmarkedFeeds(member.getId());
+    final List<Feed> actual = feedReader.findBookmarkedFeeds(member);
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()

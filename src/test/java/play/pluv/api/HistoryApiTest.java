@@ -18,6 +18,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static play.pluv.fixture.HistoryEntityFixture.이전실패한_음악들;
+import static play.pluv.fixture.HistoryEntityFixture.이전한_음악들;
 import static play.pluv.fixture.HistoryEntityFixture.히스토리_1;
 import static play.pluv.fixture.HistoryEntityFixture.히스토리들;
 
@@ -89,6 +91,72 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("data.imageUrl").type(STRING).description("이미지 url"),
                 fieldWithPath("data.source").type(STRING).description("이전하려했던 플레이리스트 출처"),
                 fieldWithPath("data.destination").type(STRING).description("이전한 플레이리스트 목적지")
+            )
+        ));
+  }
+
+  @Test
+  void 이전_실패한_음악을_조회한다() throws Exception {
+    final Long memberId = 10L;
+    final Long historyId = 3L;
+    final String token = "access Token";
+    final var transferFailMusics = 이전실패한_음악들(historyId);
+
+    setAccessToken(token, memberId);
+    when(historyService.findTransferFailMusics(historyId, memberId)).thenReturn(transferFailMusics);
+
+    mockMvc.perform(get("/history/{id}/music/fail", historyId)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("history-transfer-fail",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            pathParameters(
+                parameterWithName("id").description("히스토리의 식별자")
+            ),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data[]").type(ARRAY).description("이전하지 못한 음악들"),
+                fieldWithPath("data[].title").type(STRING).description("음악 이름"),
+                fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
+                fieldWithPath("data[].artistNames").type(STRING).description("가수들")
+            )
+        ));
+  }
+
+  @Test
+  void 이전_성공한_음악을_조회한다() throws Exception {
+    final Long memberId = 10L;
+    final Long historyId = 3L;
+    final String token = "access Token";
+    final var transferredMusics = 이전한_음악들(historyId);
+
+    setAccessToken(token, memberId);
+    when(historyService.findTransferredMusics(historyId, memberId)).thenReturn(transferredMusics);
+
+    mockMvc.perform(get("/history/{id}/music/success", historyId)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("history-transfer-success",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            pathParameters(
+                parameterWithName("id").description("히스토리의 식별자")
+            ),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data[]").type(ARRAY).description("이전한 음악들"),
+                fieldWithPath("data[].title").type(STRING).description("음악 이름"),
+                fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
+                fieldWithPath("data[].artistNames").type(STRING).description("가수들")
             )
         ));
   }

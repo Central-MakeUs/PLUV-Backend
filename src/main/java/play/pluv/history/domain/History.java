@@ -1,6 +1,7 @@
 package play.pluv.history.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.util.stream.Collectors.joining;
 import static lombok.AccessLevel.PROTECTED;
 import static play.pluv.history.exception.HistoryExceptionType.HISTORY_NOT_OWNER;
 
@@ -10,11 +11,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import play.pluv.base.BaseEntity;
+import play.pluv.feed.domain.Feed;
 import play.pluv.history.exception.HistoryException;
 import play.pluv.playlist.domain.MusicStreaming;
 
@@ -69,5 +72,27 @@ public class History extends BaseEntity {
     if (!Objects.equals(memberId, this.memberId)) {
       throw new HistoryException(HISTORY_NOT_OWNER);
     }
+  }
+
+  public Feed createFeed(
+      final String creatorName, final List<TransferredMusic> transferredMusics
+  ) {
+    final String artistNames = extractArtistNames(transferredMusics);
+
+    return Feed.builder()
+        .viewable(true)
+        .historyId(id)
+        .memberId(memberId)
+        .title(title)
+        .creatorName(creatorName)
+        .artistNames(artistNames)
+        .thumbNailUrl(thumbNailUrl)
+        .build();
+  }
+
+  private String extractArtistNames(final List<TransferredMusic> transferredMusics) {
+    return transferredMusics.stream()
+        .map(TransferredMusic::getArtistNames)
+        .collect(joining(","));
   }
 }

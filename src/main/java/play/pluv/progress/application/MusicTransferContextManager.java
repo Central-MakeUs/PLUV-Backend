@@ -7,6 +7,8 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import play.pluv.feed.domain.Feed;
+import play.pluv.feed.domain.repository.FeedRepository;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
@@ -14,6 +16,8 @@ import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
+import play.pluv.member.domain.Member;
+import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.progress.domain.MusicTransferContext;
 import play.pluv.progress.domain.TransferProgress;
 import play.pluv.progress.domain.TransferredMusicInContext;
@@ -27,6 +31,8 @@ public class MusicTransferContextManager {
   private final HistoryRepository historyRepository;
   private final TransferFailMusicRepository transferFailMusicRepository;
   private final TransferredMusicRepository transferredMusicRepository;
+  private final FeedRepository feedRepository;
+  private final MemberRepository memberRepository;
 
   public void putDestMusic(final List<TransferredMusicInContext> transferredMusics) {
     transferredMusics.forEach(
@@ -57,6 +63,7 @@ public class MusicTransferContextManager {
 
   @Transactional
   public Long saveTransferHistory(final Long memberId) {
+    final Member member = memberRepository.readById(memberId);
     final MusicTransferContext context = musicTransferContextMap.get(memberId);
     final History history = historyRepository.save(context.toHistory());
 
@@ -67,6 +74,9 @@ public class MusicTransferContextManager {
     final List<TransferredMusic> transferredMusics = context.extractTransferredMusics(
         history.getId());
     transferredMusicRepository.saveAll(transferredMusics);
+
+    final Feed feed = history.createFeed(member.getNickName().getNickName(), transferredMusics);
+    feedRepository.save(feed);
 
     return history.getId();
   }

@@ -1,5 +1,7 @@
 package play.pluv.feed.application;
 
+import static java.util.Comparator.comparing;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,8 @@ public class FeedReader {
   private final FeedRepository feedRepository;
 
   public List<Feed> findAll() {
-    return feedRepository.findAll();
+    return feedRepository.findAll().stream()
+        .sorted(comparing(Feed::getCreatedAt).reversed())
+        .toList();
   }
 }

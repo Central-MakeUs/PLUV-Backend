@@ -33,4 +33,11 @@ public class FeedController {
     feedService.bookmarkFeed(jwtMemberId.memberId(), id);
     return BaseResponse.ok("");
   }
+
+  @GetMapping("/save")
+  public BaseResponse<List<FeedListResponse>> getBookmarkFeeds(final JwtMemberId jwtMemberId) {
+    final var feeds = feedService.findBookmarkedFeeds(jwtMemberId.memberId());
+    final List<FeedListResponse> responses = FeedListResponse.createList(feeds);
+    return BaseResponse.ok(responses);
+  }
 }

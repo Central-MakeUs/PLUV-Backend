@@ -68,4 +68,20 @@ public class FeedApiTest extends ApiTest {
 
     verify(feedService).bookmarkFeed(memberId, feedId);
   }
+
+  @Test
+  void 북마크된_피드를_조회한다() throws Exception {
+    setAccessToken(token, memberId);
+    when(feedService.findBookmarkedFeeds(memberId)).thenReturn(피드목록());
+
+    mockMvc.perform(get("/feed/save")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("bookmark-feed-list",
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
+            ),
+            FEED_LIST_SNIPPET
+        ));
+  }
 }

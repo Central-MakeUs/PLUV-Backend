@@ -31,7 +31,7 @@ class FeedUpdaterTest extends ApplicationTest {
     final Feed feed1 = 저장된_피드_1(feedRepository);
     저장된_피드_2(feedRepository);
 
-    feedUpdater.bookmarkFeed(member.getId(), feed1.getId());
+    feedUpdater.bookmarkFeed(member, feed1.getId());
 
     final List<Feed> actual = feedReader.findBookmarkedFeeds(member.getId());
     assertThat(actual)

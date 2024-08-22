@@ -29,6 +29,7 @@ public class FeedService {
 
   @Transactional(readOnly = true)
   public List<Feed> findBookmarkedFeeds(final Long memberId) {
-    return null;
+    final Member member = memberReader.readById(memberId);
+    return feedReader.findBookmarkedFeeds(member);
   }
 }

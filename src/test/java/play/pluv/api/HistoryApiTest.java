@@ -84,6 +84,7 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data.id").type(NUMBER).description("히스토리의 Id"),
                 fieldWithPath("data.totalSongCount").type(NUMBER).description("이전하려 했던 곡수"),
+                fieldWithPath("data.transferredSongCount").type(NUMBER).description("이전한 곡수"),
                 fieldWithPath("data.title").type(STRING).description("이전한 음악 타이틀"),
                 fieldWithPath("data.imageUrl").type(STRING).description("이미지 url"),
                 fieldWithPath("data.source").type(STRING).description("이전하려했던 플레이리스트 출처"),

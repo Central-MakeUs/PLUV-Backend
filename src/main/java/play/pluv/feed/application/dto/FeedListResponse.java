@@ -1,5 +1,6 @@
 package play.pluv.feed.application.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 import play.pluv.feed.domain.Feed;
 
@@ -8,13 +9,14 @@ public record FeedListResponse(
     String title,
     String thumbNailUrl,
     String artistNames,
-    String creatorName
+    String creatorName,
+    LocalDate transferredAt
 ) {
 
   private static FeedListResponse from(final Feed feed) {
     return new FeedListResponse(
         feed.getId(), feed.getTitle(), feed.getThumbNailUrl(), feed.getArtistNames(),
-        feed.getCreatorName()
+        feed.getCreatorName(), feed.getCreatedAt().toLocalDate()
     );
   }
 

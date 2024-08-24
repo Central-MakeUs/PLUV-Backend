@@ -22,41 +22,41 @@ public class Feed extends BaseEntity {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  private Long historyId;
   private Long memberId;
   private String title;
   private String creatorName;
   private String artistNames;
   private String thumbNailUrl;
   private Boolean viewable;
+  private Integer songCount;
 
   @Builder
-  public Feed(final Long historyId, final Long memberId, final String title,
+  public Feed(final Long memberId, final String title,
       final String creatorName, final String artistNames,
-      final String thumbNailUrl, final Boolean viewable) {
-    this.historyId = historyId;
-    this.memberId = memberId;
-    this.title = title;
-    this.creatorName = creatorName;
-    this.artistNames = artistNames;
-    this.thumbNailUrl = thumbNailUrl;
-    this.viewable = viewable;
-    this.createdAt = LocalDateTime.now();
-    this.updatedAt = LocalDateTime.now();
-  }
-
-  public Feed(
-      final Long id, final Long historyId, final Long memberId, final String title,
-      final String creatorName, final String artistNames, final String thumbNailUrl
-  ) {
-    this.id = id;
-    this.historyId = historyId;
+      final String thumbNailUrl, final Integer songCount) {
     this.memberId = memberId;
     this.title = title;
     this.creatorName = creatorName;
     this.artistNames = artistNames;
     this.thumbNailUrl = thumbNailUrl;
     this.viewable = true;
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+    this.songCount = songCount;
+  }
+
+  public Feed(
+      final Long id, final Long memberId, final String title, final String creatorName,
+      final String artistNames, final String thumbNailUrl, final Integer songCount
+  ) {
+    this.id = id;
+    this.memberId = memberId;
+    this.title = title;
+    this.creatorName = creatorName;
+    this.artistNames = artistNames;
+    this.thumbNailUrl = thumbNailUrl;
+    this.viewable = true;
+    this.songCount = songCount;
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
   }

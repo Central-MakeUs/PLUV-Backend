@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
 import play.pluv.feed.application.FeedService;
+import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.feed.application.dto.FeedListResponse;
 import play.pluv.security.JwtMemberId;
 
@@ -24,6 +25,14 @@ public class FeedController {
     final var feeds = feedService.findAll();
     final List<FeedListResponse> responses = FeedListResponse.createList(feeds);
     return BaseResponse.ok(responses);
+  }
+
+  @GetMapping("/{id}")
+  public BaseResponse<FeedDetailResponse> getFeed(
+      @PathVariable final Long id, final JwtMemberId jwtMemberIdq
+  ) {
+    final FeedDetailResponse feedResponse = feedService.findFeed(id, jwtMemberIdq.memberId());
+    return BaseResponse.ok(feedResponse);
   }
 
   @PostMapping("/{id}/save")

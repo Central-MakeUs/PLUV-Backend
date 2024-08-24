@@ -20,6 +20,7 @@ import play.pluv.base.BaseEntity;
 import play.pluv.feed.domain.Feed;
 import play.pluv.history.exception.HistoryException;
 import play.pluv.playlist.domain.MusicStreaming;
+import play.pluv.progress.domain.TransferredMusicInContext;
 
 @Entity
 @Getter
@@ -34,6 +35,7 @@ public class History extends BaseEntity {
   private Integer transferredSongCount;
   private Integer totalSongCount;
   private Long memberId;
+  private Long feedId;
   @Enumerated(EnumType.STRING)
   private MusicStreaming source;
   @Enumerated(EnumType.STRING)
@@ -42,13 +44,14 @@ public class History extends BaseEntity {
   public History(final Long id, final String title, final String thumbNailUrl,
       final Integer transferredSongCount,
       final Integer totalSongCount, final Long memberId, final MusicStreaming source,
-      final MusicStreaming destination, final LocalDateTime createdAt) {
+      final MusicStreaming destination, final LocalDateTime createdAt, final Long feedId) {
     this.id = id;
     this.title = title;
     this.thumbNailUrl = thumbNailUrl;
     this.transferredSongCount = transferredSongCount;
     this.totalSongCount = totalSongCount;
     this.memberId = memberId;
+    this.feedId = feedId;
     this.source = source;
     this.destination = destination;
     this.createdAt = createdAt;
@@ -58,7 +61,7 @@ public class History extends BaseEntity {
   @Builder
   public History(final String title, final String thumbNailUrl, final Integer transferredSongCount,
       final Integer totalSongCount, final Long memberId, final MusicStreaming source,
-      final MusicStreaming destination) {
+      final MusicStreaming destination, final Long feedId) {
     this.title = title;
     this.thumbNailUrl = thumbNailUrl;
     this.transferredSongCount = transferredSongCount;
@@ -66,33 +69,12 @@ public class History extends BaseEntity {
     this.memberId = memberId;
     this.source = source;
     this.destination = destination;
+    this.feedId = feedId;
   }
 
   public void validateOwner(final Long memberId) {
     if (!Objects.equals(memberId, this.memberId)) {
       throw new HistoryException(HISTORY_NOT_OWNER);
     }
-  }
-
-  public Feed createFeed(
-      final String creatorName, final List<TransferredMusic> transferredMusics
-  ) {
-    final String artistNames = extractArtistNames(transferredMusics);
-
-    return Feed.builder()
-        .viewable(true)
-        .historyId(id)
-        .memberId(memberId)
-        .title(title)
-        .creatorName(creatorName)
-        .artistNames(artistNames)
-        .thumbNailUrl(thumbNailUrl)
-        .build();
-  }
-
-  private String extractArtistNames(final List<TransferredMusic> transferredMusics) {
-    return transferredMusics.stream()
-        .map(TransferredMusic::getArtistNames)
-        .collect(joining(","));
   }
 }

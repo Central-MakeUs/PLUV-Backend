@@ -65,18 +65,21 @@ public class MusicTransferContextManager {
   public Long saveTransferHistory(final Long memberId) {
     final Member member = memberRepository.readById(memberId);
     final MusicTransferContext context = musicTransferContextMap.get(memberId);
-    final History history = historyRepository.save(context.toHistory());
+
+    final Feed feed = context.createFeed(member.getNickName().getNickName());
+    feedRepository.save(feed);
+
+    final History history = historyRepository.save(context.toHistory(feed.getId()));
 
     final List<TransferFailMusic> transferFailMusics = context.extractTransferFailMusics(
-        history.getId());
+        history.getId()
+    );
     transferFailMusicRepository.saveAll(transferFailMusics);
 
     final List<TransferredMusic> transferredMusics = context.extractTransferredMusics(
-        history.getId());
+        history.getId()
+    );
     transferredMusicRepository.saveAll(transferredMusics);
-
-    final Feed feed = history.createFeed(member.getNickName().getNickName(), transferredMusics);
-    feedRepository.save(feed);
 
     return history.getId();
   }

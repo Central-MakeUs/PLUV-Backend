@@ -9,7 +9,7 @@ import play.pluv.base.BaseResponse;
 import play.pluv.history.application.HistoryService;
 import play.pluv.history.application.dto.HistoryDetailResponse;
 import play.pluv.history.application.dto.HistoryListResponse;
-import play.pluv.history.application.dto.HistoryMusicResponse;
+import play.pluv.history.application.dto.MusicResponse;
 import play.pluv.security.JwtMemberId;
 
 @RestController
@@ -36,23 +36,23 @@ public class HistoryController {
   }
 
   @GetMapping("/history/{id}/music/fail")
-  public BaseResponse<List<HistoryMusicResponse>> getTransferFailMusics(
+  public BaseResponse<List<MusicResponse>> getTransferFailMusics(
       final JwtMemberId jwtMemberId, @PathVariable final Long id
   ) {
     final var transferFailMusics = historyService.findTransferFailMusics(
         id, jwtMemberId.memberId()
     );
-    final List<HistoryMusicResponse> responses = HistoryMusicResponse
+    final List<MusicResponse> responses = MusicResponse
         .createListFromTransferFail(transferFailMusics);
     return BaseResponse.ok(responses);
   }
 
   @GetMapping("/history/{id}/music/success")
-  public BaseResponse<List<HistoryMusicResponse>> getTransferredMusics(
+  public BaseResponse<List<MusicResponse>> getTransferredMusics(
       final JwtMemberId jwtMemberId, @PathVariable final Long id
   ) {
     final var transferredMusics = historyService.findTransferredMusics(id, jwtMemberId.memberId());
-    final List<HistoryMusicResponse> responses = HistoryMusicResponse
+    final List<MusicResponse> responses = MusicResponse
         .createListFromTransferred(transferredMusics);
     return BaseResponse.ok(responses);
   }

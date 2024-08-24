@@ -6,6 +6,7 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
@@ -15,13 +16,13 @@ public class HistoryEntityFixture {
 
   public static History 히스토리_1(final Long memberId) {
     return new History(
-        1L, "히스토리 1", "thumbNailurl", 7, 10, memberId, SPOTIFY, YOUTUBE, LocalDateTime.now()
+        1L, "히스토리 1", "thumbNailurl", 7, 10, memberId, SPOTIFY, YOUTUBE, LocalDateTime.now(), 3L
     );
   }
 
   public static History 히스토리_2(final Long memberId) {
     return new History(
-        1L, "히스토리 2", "thumbNailurl", 10, 10, memberId, APPLE, SPOTIFY, LocalDateTime.now()
+        1L, "히스토리 2", "thumbNailurl", 10, 10, memberId, APPLE, SPOTIFY, LocalDateTime.now(), 3L
     );
   }
 
@@ -44,4 +45,5 @@ public class HistoryEntityFixture {
             new HistoryMusicId(SPOTIFY, "cd"))
     );
   }
+
 }

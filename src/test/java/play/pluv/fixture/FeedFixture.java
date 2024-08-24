@@ -1,5 +1,6 @@
 package play.pluv.fixture;
 
+import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.feed.domain.Feed;
 import play.pluv.feed.domain.repository.FeedRepository;
 
@@ -14,7 +15,7 @@ public class FeedFixture {
 
   public static Feed 저장된_피드_2(final FeedRepository feedRepository) {
     final Feed feed = new Feed(
-        3L, "여유로운 오후", "홍실", "가수 이름, 가수 이름, 가수 이름", "imageUrl" ,10
+        3L, "여유로운 오후", "홍실", "가수 이름, 가수 이름, 가수 이름", "imageUrl", 10
     );
     return feedRepository.save(feed);
   }

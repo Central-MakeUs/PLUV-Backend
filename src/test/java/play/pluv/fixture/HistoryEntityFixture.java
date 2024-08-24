@@ -6,6 +6,7 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
@@ -44,4 +45,5 @@ public class HistoryEntityFixture {
             new HistoryMusicId(SPOTIFY, "cd"))
     );
   }
+
 }

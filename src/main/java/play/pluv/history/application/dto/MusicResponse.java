@@ -4,39 +4,39 @@ import java.util.List;
 import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.history.domain.TransferredMusic;
 
-public record HistoryMusicResponse(
+public record MusicResponse(
     String title,
     String imageUrl,
     String artistNames
 ) {
 
-  public static HistoryMusicResponse from(final TransferredMusic transferredMusic) {
-    return new HistoryMusicResponse(
+  public static MusicResponse from(final TransferredMusic transferredMusic) {
+    return new MusicResponse(
         transferredMusic.getTitle(), transferredMusic.getImageUrl(),
         transferredMusic.getArtistNames()
     );
   }
 
-  public static HistoryMusicResponse from(final TransferFailMusic transferFailMusic) {
-    return new HistoryMusicResponse(
+  public static MusicResponse from(final TransferFailMusic transferFailMusic) {
+    return new MusicResponse(
         transferFailMusic.getTitle(), transferFailMusic.getImageUrl(),
         transferFailMusic.getArtistNames()
     );
   }
 
-  public static List<HistoryMusicResponse> createListFromTransferFail(
+  public static List<MusicResponse> createListFromTransferFail(
       final List<TransferFailMusic> transferFailMusics
   ) {
     return transferFailMusics.stream()
-        .map(HistoryMusicResponse::from)
+        .map(MusicResponse::from)
         .toList();
   }
 
-  public static List<HistoryMusicResponse> createListFromTransferred(
+  public static List<MusicResponse> createListFromTransferred(
       final List<TransferredMusic> transferredMusics
   ) {
     return transferredMusics.stream()
-        .map(HistoryMusicResponse::from)
+        .map(MusicResponse::from)
         .toList();
   }
 }

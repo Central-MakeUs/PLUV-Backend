@@ -8,6 +8,7 @@ import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.feed.domain.Feed;
 import play.pluv.feed.domain.repository.FeedRepository;
 import play.pluv.member.domain.Member;
@@ -37,6 +38,21 @@ class FeedServiceTest extends ApplicationTest {
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrder(savedFeed1, savedFeed2);
+  }
+
+  @Test
+  void 피드를_단건_조회한다() {
+    final Feed feed = 저장된_피드_1(feedRepository);
+
+    final FeedDetailResponse actual = feedService.findFeed(feed.getId(), 1L);
+    final FeedDetailResponse expected = new FeedDetailResponse(
+        feed.getId(), feed.getSongCount(), feed.getTitle(), feed.getThumbNailUrl(),
+        feed.getCreatorName(), false, feed.getCreatedAt().toLocalDate()
+    );
+
+    assertThat(actual)
+        .usingRecursiveComparison()
+        .isEqualTo(expected);
   }
 
   @Test

@@ -31,4 +31,12 @@ public class FeedReader {
         .map(FeedBookmark::getFeed)
         .toList();
   }
+
+  public Feed findFeed(final Long feedId) {
+    return feedRepository.readById(feedId);
+  }
+
+  public Boolean isBookMarked(final Feed feed, final Long memberId) {
+    return feedBookmarkRepository.existsByMemberIdAndFeed(memberId, feed);
+  }
 }

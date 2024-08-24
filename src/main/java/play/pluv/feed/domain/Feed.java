@@ -22,7 +22,6 @@ public class Feed extends BaseEntity {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  private Long historyId;
   private Long memberId;
   private String title;
   private String creatorName;
@@ -31,10 +30,9 @@ public class Feed extends BaseEntity {
   private Boolean viewable;
 
   @Builder
-  public Feed(final Long historyId, final Long memberId, final String title,
+  public Feed(final Long memberId, final String title,
       final String creatorName, final String artistNames,
       final String thumbNailUrl, final Boolean viewable) {
-    this.historyId = historyId;
     this.memberId = memberId;
     this.title = title;
     this.creatorName = creatorName;
@@ -46,11 +44,10 @@ public class Feed extends BaseEntity {
   }
 
   public Feed(
-      final Long id, final Long historyId, final Long memberId, final String title,
+      final Long id, final Long memberId, final String title,
       final String creatorName, final String artistNames, final String thumbNailUrl
   ) {
     this.id = id;
-    this.historyId = historyId;
     this.memberId = memberId;
     this.title = title;
     this.creatorName = creatorName;

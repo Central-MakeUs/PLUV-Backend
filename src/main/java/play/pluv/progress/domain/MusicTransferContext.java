@@ -1,9 +1,12 @@
 package play.pluv.progress.domain;
 
+import static java.util.stream.Collectors.joining;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import play.pluv.feed.domain.Feed;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.TransferFailMusic;
 import play.pluv.history.domain.TransferredMusic;
@@ -22,7 +25,7 @@ public class MusicTransferContext {
   private final MusicStreaming destination;
   private final List<TransferredMusicInContext> transferredMusics = new ArrayList<>();
 
-  public History toHistory() {
+  public History toHistory(final Long feedId) {
     return History.builder()
         .totalSongCount(transferFailMusics.size() + transferredMusics.size())
         .transferredSongCount(transferredMusics.size())
@@ -31,6 +34,7 @@ public class MusicTransferContext {
         .destination(destination)
         .title(title)
         .memberId(memberId)
+        .feedId(feedId)
         .build();
   }
 
@@ -52,5 +56,24 @@ public class MusicTransferContext {
 
   public void addTransferredMusics(final List<TransferredMusicInContext> transferredMusics) {
     this.transferredMusics.addAll(transferredMusics);
+  }
+
+  public Feed createFeed(final String creatorName) {
+    final String artistNames = extractArtistNames(transferredMusics);
+
+    return Feed.builder()
+        .viewable(true)
+        .memberId(memberId)
+        .title(title)
+        .creatorName(creatorName)
+        .artistNames(artistNames)
+        .thumbNailUrl(thumbNailUrl)
+        .build();
+  }
+
+  private String extractArtistNames(final List<TransferredMusicInContext> transferredMusics) {
+    return transferredMusics.stream()
+        .map(TransferredMusicInContext::getArtistNames)
+        .collect(joining(","));
   }
 }

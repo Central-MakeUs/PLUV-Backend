@@ -107,4 +107,19 @@ class HistoryServiceTest extends ApplicationTest {
         .usingRecursiveFieldByFieldElementComparator()
         .isEqualTo(transferFailMusics);
   }
+
+  @Test
+  void 피드의_id로_이전된_음악목록을_조회한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final History history = 저장된_히스토리_1(historyRepository, member.getId());
+    final List<TransferredMusic> transferFailMusics = 저장된_이전한_음악들(
+        transferredMusicRepository, history.getId()
+    );
+
+    final List<TransferredMusic> actual = historyService.findFeedMusics(history.getFeedId());
+
+    assertThat(actual)
+        .usingRecursiveFieldByFieldElementComparator()
+        .isEqualTo(transferFailMusics);
+  }
 }

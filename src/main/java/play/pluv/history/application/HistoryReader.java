@@ -35,4 +35,9 @@ public class HistoryReader {
   public List<TransferFailMusic> readTransferFailMusics(final Long historyId) {
     return transferFailMusicRepository.findByHistoryId(historyId);
   }
+
+  public List<TransferredMusic> readFeedMusics(final Long feedId) {
+    final History history = historyRepository.readByFeedId(feedId);
+    return transferredMusicRepository.findByHistoryId(history.getId());
+  }
 }

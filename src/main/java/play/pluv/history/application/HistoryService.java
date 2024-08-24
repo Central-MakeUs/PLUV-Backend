@@ -35,4 +35,8 @@ public class HistoryService {
   public List<TransferredMusic> findTransferredMusics(final Long historyId, final Long memberId) {
     return historyReader.readTransferredMusics(historyId);
   }
+
+  public List<TransferredMusic> findFeedMusics(final Long feedId) {
+    return historyReader.readFeedMusics(feedId);
+  }
 }

@@ -135,14 +135,6 @@ class MusicTransferContextManagerTest extends ApplicationTest {
           .containsExactlyElementsOf(expected);
     }
 
-    @Test
-    void 히스토리를_만들경우_feed도_저장된다() {
-      final Long historyId = manager.saveTransferHistory(memberId);
-
-      assertThat(feedRepository.findByHistoryId(historyId))
-          .isNotEmpty();
-    }
-
     private List<TransferredMusic> expectedTransferredMusics(
         final List<TransferredMusicInContext> transferredMusics, final Long historyId
     ) {

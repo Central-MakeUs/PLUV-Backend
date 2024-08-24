@@ -15,13 +15,13 @@ public class HistoryEntityFixture {
 
   public static History 히스토리_1(final Long memberId) {
     return new History(
-        1L, "히스토리 1", "thumbNailurl", 7, 10, memberId, SPOTIFY, YOUTUBE, LocalDateTime.now()
+        1L, "히스토리 1", "thumbNailurl", 7, 10, memberId, SPOTIFY, YOUTUBE, LocalDateTime.now(), 3L
     );
   }
 
   public static History 히스토리_2(final Long memberId) {
     return new History(
-        1L, "히스토리 2", "thumbNailurl", 10, 10, memberId, APPLE, SPOTIFY, LocalDateTime.now()
+        1L, "히스토리 2", "thumbNailurl", 10, 10, memberId, APPLE, SPOTIFY, LocalDateTime.now(), 3L
     );
   }
 

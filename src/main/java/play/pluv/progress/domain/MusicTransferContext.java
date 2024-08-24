@@ -62,7 +62,6 @@ public class MusicTransferContext {
     final String artistNames = extractArtistNames(transferredMusics);
 
     return Feed.builder()
-        .viewable(true)
         .memberId(memberId)
         .title(title)
         .creatorName(creatorName)

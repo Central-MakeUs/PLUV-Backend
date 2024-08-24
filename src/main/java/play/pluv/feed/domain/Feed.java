@@ -32,13 +32,13 @@ public class Feed extends BaseEntity {
   @Builder
   public Feed(final Long memberId, final String title,
       final String creatorName, final String artistNames,
-      final String thumbNailUrl, final Boolean viewable) {
+      final String thumbNailUrl) {
     this.memberId = memberId;
     this.title = title;
     this.creatorName = creatorName;
     this.artistNames = artistNames;
     this.thumbNailUrl = thumbNailUrl;
-    this.viewable = viewable;
+    this.viewable = true;
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
   }

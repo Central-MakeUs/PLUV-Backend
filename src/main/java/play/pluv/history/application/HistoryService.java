@@ -36,6 +36,7 @@ public class HistoryService {
     return historyReader.readTransferredMusics(historyId);
   }
 
+  @Transactional(readOnly = true)
   public List<TransferredMusic> findFeedMusics(final Long feedId) {
     return historyReader.readFeedMusics(feedId);
   }

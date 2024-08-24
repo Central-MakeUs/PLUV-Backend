@@ -17,6 +17,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static play.pluv.fixture.FeedEntityFixture.피드목록;
+import static play.pluv.fixture.HistoryEntityFixture.이전한_음악들;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
@@ -83,6 +84,30 @@ public class FeedApiTest extends ApiTest {
                 headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
             ),
             FEED_LIST_SNIPPET
+        ));
+  }
+
+  @Test
+  void 피드의_음악을_조회한다() throws Exception {
+    final Long feedId = 9L;
+    final Long historyId = 3L;
+    final var transferredMusics = 이전한_음악들(historyId);
+    when(historyService.findFeedMusics(feedId)).thenReturn(transferredMusics);
+
+    mockMvc.perform(get("/feed/{id}/music", feedId))
+        .andExpect(status().isOk())
+        .andDo(document("feed-music",
+            pathParameters(
+                parameterWithName("id").description("피드의 식별자")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data[]").type(ARRAY).description("이전한 음악들"),
+                fieldWithPath("data[].title").type(STRING).description("음악 이름"),
+                fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
+                fieldWithPath("data[].artistNames").type(STRING).description("가수들")
+            )
         ));
   }
 }

@@ -11,13 +11,13 @@ public class FeedEntityFixture {
 
   private static Feed 피드_1() {
     return new Feed(
-        1L, 2L, 3L, "여유로운 오후의 어쩌구 플레이리스트", "플러버", "가수 이름, 가수 이름, 가수 이름", "imageUrl", true
+        1L, 2L, 3L, "여유로운 오후의 어쩌구 플레이리스트", "플러버", "가수 이름, 가수 이름, 가수 이름", "imageUrl"
     );
   }
 
   private static Feed 피드_2() {
     return new Feed(
-        2L, 3L, 4L, "여유로운 오후", "홍실", "가수 이름, 가수 이름, 가수 이름", "imageUrl", true
+        2L, 3L, 4L, "여유로운 오후", "홍실", "가수 이름, 가수 이름, 가수 이름", "imageUrl"
     );
   }
 }

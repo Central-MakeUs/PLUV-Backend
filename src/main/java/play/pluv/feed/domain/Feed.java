@@ -6,7 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,6 @@ import play.pluv.base.BaseEntity;
 @ToString
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor
 @Getter
 public class Feed extends BaseEntity {
 
@@ -42,5 +41,23 @@ public class Feed extends BaseEntity {
     this.artistNames = artistNames;
     this.thumbNailUrl = thumbNailUrl;
     this.viewable = viewable;
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+  }
+
+  public Feed(
+      final Long id, final Long historyId, final Long memberId, final String title,
+      final String creatorName, final String artistNames, final String thumbNailUrl
+  ) {
+    this.id = id;
+    this.historyId = historyId;
+    this.memberId = memberId;
+    this.title = title;
+    this.creatorName = creatorName;
+    this.artistNames = artistNames;
+    this.thumbNailUrl = thumbNailUrl;
+    this.viewable = true;
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
   }
 }

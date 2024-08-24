@@ -28,11 +28,12 @@ public class Feed extends BaseEntity {
   private String artistNames;
   private String thumbNailUrl;
   private Boolean viewable;
+  private Integer songCount;
 
   @Builder
   public Feed(final Long memberId, final String title,
       final String creatorName, final String artistNames,
-      final String thumbNailUrl) {
+      final String thumbNailUrl, final Integer songCount) {
     this.memberId = memberId;
     this.title = title;
     this.creatorName = creatorName;
@@ -41,11 +42,12 @@ public class Feed extends BaseEntity {
     this.viewable = true;
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
+    this.songCount = songCount;
   }
 
   public Feed(
-      final Long id, final Long memberId, final String title,
-      final String creatorName, final String artistNames, final String thumbNailUrl
+      final Long id, final Long memberId, final String title, final String creatorName,
+      final String artistNames, final String thumbNailUrl, final Integer songCount
   ) {
     this.id = id;
     this.memberId = memberId;
@@ -54,6 +56,7 @@ public class Feed extends BaseEntity {
     this.artistNames = artistNames;
     this.thumbNailUrl = thumbNailUrl;
     this.viewable = true;
+    this.songCount = songCount;
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
   }

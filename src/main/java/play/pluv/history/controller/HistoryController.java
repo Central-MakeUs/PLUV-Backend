@@ -35,6 +35,13 @@ public class HistoryController {
     return BaseResponse.ok(response);
   }
 
+  @GetMapping("/history/recent")
+  public BaseResponse<HistoryDetailResponse> getRecentHistory(final JwtMemberId jwtMemberId) {
+    final var history = historyService.findRecentHistory(jwtMemberId.memberId());
+    final HistoryDetailResponse response = HistoryDetailResponse.from(history);
+    return BaseResponse.ok(response);
+  }
+
   @GetMapping("/history/{id}/music/fail")
   public BaseResponse<List<MusicResponse>> getTransferFailMusics(
       final JwtMemberId jwtMemberId, @PathVariable final Long id

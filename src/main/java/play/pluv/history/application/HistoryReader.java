@@ -24,6 +24,10 @@ public class HistoryReader {
     return historyRepository.findByMemberId(memberId);
   }
 
+  public History readRecentHistoryByMemberId(final Long memberId) {
+    return historyRepository.readRecentHistoryByMemberId(memberId);
+  }
+
   public History readById(final Long historyId) {
     return historyRepository.readById(historyId);
   }

@@ -40,4 +40,9 @@ public class HistoryService {
   public List<TransferredMusic> findFeedMusics(final Long feedId) {
     return historyReader.readFeedMusics(feedId);
   }
+
+  @Transactional(readOnly = true)
+  public History findRecentHistory(final Long memberId) {
+    return historyReader.readRecentHistoryByMemberId(memberId);
+  }
 }

@@ -23,6 +23,7 @@ public class HistoryFixture {
         .destination(APPLE)
         .transferredSongCount(10)
         .totalSongCount(15)
+        .feedId(5L)
         .thumbNailUrl("thumbNailUrl")
         .build();
   }
@@ -31,7 +32,7 @@ public class HistoryFixture {
     return historyRepository.save(히스토리_1(memberId));
   }
 
-  public static History 저장된_히스토리_2(final Long memberId) {
+  public static History 히스토리_2(final Long memberId) {
     return History.builder()
         .memberId(memberId)
         .title("히스토리 2")
@@ -39,12 +40,13 @@ public class HistoryFixture {
         .destination(SPOTIFY)
         .transferredSongCount(10)
         .totalSongCount(10)
+        .feedId(8L)
         .thumbNailUrl("thumbNailUrl")
         .build();
   }
 
   public static History 저장된_히스토리_2(final HistoryRepository historyRepository, final Long memberId) {
-    return historyRepository.save(저장된_히스토리_2(memberId));
+    return historyRepository.save(히스토리_2(memberId));
   }
 
   public static TransferFailMusic 저장된_이전실패한_음악1(

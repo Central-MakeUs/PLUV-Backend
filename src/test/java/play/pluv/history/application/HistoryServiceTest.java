@@ -122,4 +122,16 @@ class HistoryServiceTest extends ApplicationTest {
         .usingRecursiveFieldByFieldElementComparator()
         .isEqualTo(transferFailMusics);
   }
+
+  @Test
+  void 저장된_히스토리중_가장_최근의_히스토리를_조회한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final History history1 = 저장된_히스토리_1(historyRepository, member.getId());
+
+    final History actual = historyService.findRecentHistory(member.getId());
+
+    assertThat(actual)
+        .usingRecursiveComparison()
+        .isEqualTo(history1);
+  }
 }

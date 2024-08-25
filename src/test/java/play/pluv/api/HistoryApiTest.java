@@ -87,7 +87,7 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("data.id").type(NUMBER).description("히스토리의 Id"),
                 fieldWithPath("data.totalSongCount").type(NUMBER).description("이전하려 했던 곡수"),
                 fieldWithPath("data.transferredSongCount").type(NUMBER).description("이전한 곡수"),
-                fieldWithPath("data.title").type(STRING).description("이전한 음악 타이틀"),
+                fieldWithPath("data.title").type(STRING).description("이전한 플레이리스트 타이틀"),
                 fieldWithPath("data.imageUrl").type(STRING).description("이미지 url"),
                 fieldWithPath("data.source").type(STRING).description("이전하려했던 플레이리스트 출처"),
                 fieldWithPath("data.destination").type(STRING).description("이전한 플레이리스트 목적지")
@@ -157,6 +157,38 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("data[].title").type(STRING).description("음악 이름"),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
                 fieldWithPath("data[].artistNames").type(STRING).description("가수들")
+            )
+        ));
+  }
+
+  @Test
+  void 최근_이전한_히스토리_반환() throws Exception {
+    final Long memberId = 10L;
+    final String token = "access Token";
+    final var history = 히스토리_1(memberId);
+
+    setAccessToken(token, memberId);
+    when(historyService.findRecentHistory(memberId)).thenReturn(history);
+
+    mockMvc.perform(get("/history/recent")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("recent-history-detail",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data.id").type(NUMBER).description("히스토리의 Id"),
+                fieldWithPath("data.totalSongCount").type(NUMBER).description("이전하려 했던 곡수"),
+                fieldWithPath("data.transferredSongCount").type(NUMBER).description("이전한 곡수"),
+                fieldWithPath("data.title").type(STRING).description("이전한 플레이리스트 타이틀"),
+                fieldWithPath("data.imageUrl").type(STRING).description("이미지 url"),
+                fieldWithPath("data.source").type(STRING).description("이전하려했던 플레이리스트 출처"),
+                fieldWithPath("data.destination").type(STRING).description("이전한 플레이리스트 목적지")
             )
         ));
   }

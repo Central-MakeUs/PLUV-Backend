@@ -43,6 +43,14 @@ public class FeedController {
     return BaseResponse.ok("");
   }
 
+  @PostMapping("/{id}/cancel")
+  public BaseResponse<String> cancelBookmarkFeed(
+      final JwtMemberId jwtMemberId, @PathVariable final Long id
+  ) {
+    feedService.cancelBookmark(jwtMemberId.memberId(), id);
+    return BaseResponse.ok("");
+  }
+
   @GetMapping("/save")
   public BaseResponse<List<FeedListResponse>> getBookmarkFeeds(final JwtMemberId jwtMemberId) {
     final var feeds = feedService.findBookmarkedFeeds(jwtMemberId.memberId());

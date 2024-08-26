@@ -40,4 +40,9 @@ public class FeedService {
     final Boolean isBookmarked = feedReader.isBookMarked(feed, memberId);
     return FeedDetailResponse.from(feed, isBookmarked);
   }
+
+  @Transactional
+  public void cancelBookmark(final Long aLong, final Long id) {
+
+  }
 }

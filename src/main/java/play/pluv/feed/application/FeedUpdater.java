@@ -20,4 +20,8 @@ public class FeedUpdater {
 
     feedBookmarkRepository.save(new FeedBookmark(feed, member.getId()));
   }
+
+  public void cancelBookmarkFeed(final Member member, final Long feedId) {
+    feedBookmarkRepository.deleteByMemberIdAndFeedId(member.getId(), feedId);
+  }
 }

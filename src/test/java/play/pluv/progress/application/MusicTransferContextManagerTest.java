@@ -1,11 +1,13 @@
 package play.pluv.progress.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static play.pluv.fixture.MemberEntityFixture.멤버_홍혁준;
 import static play.pluv.fixture.TransferContextFixture.musicTransferContext;
 import static play.pluv.fixture.TransferContextFixture.이전실패_음악_목록;
 import static play.pluv.fixture.TransferContextFixture.이전한_음악_목록;
 import static play.pluv.playlist.domain.MusicStreaming.APPLE;
+import static play.pluv.progress.exception.ProgressExceptionType.NOT_FINISHED_TRANSFER_PROGRESS;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import play.pluv.progress.domain.MusicTransferContext;
 import play.pluv.progress.domain.TransferFailMusicInContext;
 import play.pluv.progress.domain.TransferProgress;
 import play.pluv.progress.domain.TransferredMusicInContext;
+import play.pluv.progress.exception.ProgressException;
 import play.pluv.support.ApplicationTest;
 
 class MusicTransferContextManagerTest extends ApplicationTest {
@@ -56,6 +59,18 @@ class MusicTransferContextManagerTest extends ApplicationTest {
     assertThat(actual)
         .usingRecursiveComparison()
         .isEqualTo(transferContext);
+  }
+
+  @Test
+  void 이전이_완료되지않은상태에서_동일한_멤버가_Init을_하면_예외처리한다() {
+    final var transferFailMusics = 이전실패_음악_목록();
+    final var transferContext = musicTransferContext(10, memberId, transferFailMusics);
+
+    manager.initContext(transferContext);
+
+    assertThatThrownBy(() -> manager.initContext(transferContext))
+        .isInstanceOf(ProgressException.class)
+        .hasMessage(NOT_FINISHED_TRANSFER_PROGRESS.getMessage());
   }
 
   @Test

@@ -80,6 +80,7 @@ public class MusicTransferContext {
   private String extractArtistNames(final List<TransferredMusicInContext> transferredMusics) {
     final Map<String, Long> artistCountMap = transferredMusics.stream()
         .map(TransferredMusicInContext::getArtistNames)
+        .filter(artistNames -> !artistNames.isBlank())
         .map(artistNames -> artistNames.split(","))
         .flatMap(Arrays::stream)
         .collect(groupingBy(identity(), counting()));

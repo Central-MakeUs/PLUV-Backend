@@ -1,10 +1,12 @@
 package play.pluv.oauth.spotify.dto;
 
+import static play.pluv.oauth.spotify.dto.ThumbNailResponse.IMAGE_NULL_RESPONSE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
+import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.MusicId;
 
@@ -28,8 +30,9 @@ public record SpotifyMusic(
   }
 
   public String getImageUrl() {
-    //TODO: 추후 로직 수정하기 images가 nullable함
-    return album.images().get(0).url();
+    return Optional.ofNullable(album.images())
+        .map(images -> images.get(0).url())
+        .orElse(IMAGE_NULL_RESPONSE);
   }
 
   public List<String> getArtistNames() {

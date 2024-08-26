@@ -1,8 +1,10 @@
 package play.pluv.oauth.spotify.dto;
 
+import static play.pluv.oauth.spotify.dto.ThumbNailResponse.IMAGE_NULL_RESPONSE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
 import java.util.List;
+import java.util.Optional;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
 
@@ -18,10 +20,13 @@ public record SpotifyPlayListResponses(
   ) {
 
     public PlayList toPlayList() {
+      final String thumbNailUrl = Optional.ofNullable(images())
+          .map(images -> images.get(0).url())
+          .orElse(IMAGE_NULL_RESPONSE);
+
       return PlayList.builder()
           .playListId(new PlayListId(id, SPOTIFY))
-          //TODO: 추후 로직 수정하기 images가 nullable함
-          .thumbNailUrl(images.get(0).url())
+          .thumbNailUrl(thumbNailUrl)
           .songCount(tracks.total())
           .name(name)
           .build();

@@ -10,13 +10,14 @@ public record FeedListResponse(
     String thumbNailUrl,
     String artistNames,
     String creatorName,
-    LocalDate transferredAt
+    LocalDate transferredAt,
+    Integer totalSongCount
 ) {
 
   private static FeedListResponse from(final Feed feed) {
     return new FeedListResponse(
         feed.getId(), feed.getTitle(), feed.getThumbNailUrl(), feed.getArtistNames(),
-        feed.getCreatorName(), feed.getCreatedAt().toLocalDate()
+        feed.getCreatorName(), feed.getCreatedAt().toLocalDate(), feed.getSongCount()
     );
   }
 

@@ -39,7 +39,8 @@ public class FeedApiTest extends ApiTest {
       fieldWithPath("data[].transferredAt").type(STRING).description("이전된 날짜"),
       fieldWithPath("data[].thumbNailUrl").type(STRING).description("피드 이미지 url"),
       fieldWithPath("data[].creatorName").type(STRING).description("피드 생성한 멤버 이름"),
-      fieldWithPath("data[].artistNames").type(STRING).description("가수들")
+      fieldWithPath("data[].artistNames").type(STRING).description("가수들"),
+      fieldWithPath("data[].totalSongCount").type(NUMBER).description("피드에 포함된 곡 수")
   );
 
   @Test

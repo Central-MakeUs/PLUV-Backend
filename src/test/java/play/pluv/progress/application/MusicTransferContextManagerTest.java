@@ -22,6 +22,7 @@ import play.pluv.history.domain.TransferredMusic;
 import play.pluv.history.domain.repository.HistoryRepository;
 import play.pluv.history.domain.repository.TransferFailMusicRepository;
 import play.pluv.history.domain.repository.TransferredMusicRepository;
+import play.pluv.member.domain.Member;
 import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.progress.domain.MusicTransferContext;
 import play.pluv.progress.domain.TransferFailMusicInContext;
@@ -71,6 +72,17 @@ class MusicTransferContextManagerTest extends ApplicationTest {
     assertThatThrownBy(() -> manager.initContext(transferContext))
         .isInstanceOf(ProgressException.class)
         .hasMessage(NOT_FINISHED_TRANSFER_PROGRESS.getMessage());
+  }
+
+  @Test
+  void 히스토리를_만들면_context에서_값을_제거한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+    final var transferFailMusics = 이전실패_음악_목록();
+    final var transferContext = musicTransferContext(10, member.getId(), transferFailMusics);
+    manager.initContext(transferContext);
+    manager.saveTransferHistory(member.getId());
+
+    manager.initContext(transferContext);
   }
 
   @Test

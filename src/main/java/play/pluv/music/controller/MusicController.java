@@ -51,25 +51,25 @@ public class MusicController {
 
   @PostMapping("/spotify/add")
   public BaseResponse<String> transferSpotifyMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(2L, request, SPOTIFY);
+    musicService.transferMusics(jwtMemberId.memberId(), request, SPOTIFY);
     return BaseResponse.created();
   }
 
   @PostMapping("/youtube/add")
   public BaseResponse<String> transferYoutubeMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(2L, request, YOUTUBE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, YOUTUBE);
     return BaseResponse.created();
   }
 
   @PostMapping("/apple/add")
   public BaseResponse<String> transferAppleMusics(
-      @Valid @RequestBody final MusicAddRequest request
+      final JwtMemberId jwtMemberId, @Valid @RequestBody final MusicAddRequest request
   ) {
-    musicService.transferMusics(2L, request, APPLE);
+    musicService.transferMusics(jwtMemberId.memberId(), request, APPLE);
     return BaseResponse.created();
   }
 }

@@ -25,7 +25,7 @@ public record YoutubeSearchMusicResponses(
 
     public DestinationMusic toDestinationMusic() {
       return DestinationMusic.builder()
-          .musicId(new MusicId(YOUTUBE, id.videoId()))
+          .musicId(new MusicId(YOUTUBE, getId()))
           .imageUrl(snippet().thumbnails().getUrl())
           .artistNames(List.of())
           .title(snippet().title())
@@ -35,13 +35,6 @@ public record YoutubeSearchMusicResponses(
 
     private String getId() {
       return id.videoId();
-    }
-
-    private record YoutubeMusicDetail(
-        String title,
-        ThumbnailUrls thumbnails
-    ) {
-
     }
 
     private record VideoId(

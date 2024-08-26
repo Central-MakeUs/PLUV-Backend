@@ -26,11 +26,5 @@ public record YoutubeMusicResponses(
           .artistNames(List.of())
           .build();
     }
-
-    private record YoutubeMusicDetail(
-        String title, ThumbnailUrls thumbnails
-    ) {
-
-    }
   }
 }

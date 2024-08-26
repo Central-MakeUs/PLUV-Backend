@@ -75,6 +75,27 @@ public class FeedApiTest extends ApiTest {
   }
 
   @Test
+  void 피드를_북마크를_취소한다() throws Exception {
+    final Long feedId = 3L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/feed/{id}/cancel", feedId)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("cancel-bookmark-feed",
+            pathParameters(
+                parameterWithName("id").description("피드의 식별자")
+            ),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("pluv에서 발급한 accessToken")
+            )
+        ));
+
+    verify(feedService).cancelBookmark(memberId, feedId);
+  }
+
+  @Test
   void 북마크된_피드를_조회한다() throws Exception {
     setAccessToken(token, memberId);
     when(feedService.findBookmarkedFeeds(memberId)).thenReturn(피드목록());

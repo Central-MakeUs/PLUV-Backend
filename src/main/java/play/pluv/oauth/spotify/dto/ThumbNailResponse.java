@@ -6,4 +6,5 @@ public record ThumbNailResponse(
     String url
 ) {
 
+  static final String IMAGE_NULL_RESPONSE = "";
 }

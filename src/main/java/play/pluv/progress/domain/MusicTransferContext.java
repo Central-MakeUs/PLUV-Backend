@@ -67,6 +67,7 @@ public class MusicTransferContext {
         .creatorName(creatorName)
         .artistNames(artistNames)
         .thumbNailUrl(thumbNailUrl)
+        .songCount(transferredMusics.size())
         .build();
   }
 

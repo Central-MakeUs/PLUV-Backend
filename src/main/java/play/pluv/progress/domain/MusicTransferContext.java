@@ -1,9 +1,15 @@
 package play.pluv.progress.domain;
 
-import static java.util.stream.Collectors.joining;
+import static java.util.Comparator.comparing;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import play.pluv.feed.domain.Feed;
@@ -67,12 +73,19 @@ public class MusicTransferContext {
         .creatorName(creatorName)
         .artistNames(artistNames)
         .thumbNailUrl(thumbNailUrl)
+        .songCount(transferredMusics.size())
         .build();
   }
 
   private String extractArtistNames(final List<TransferredMusicInContext> transferredMusics) {
-    return transferredMusics.stream()
+    final Map<String, Long> artistCountMap = transferredMusics.stream()
         .map(TransferredMusicInContext::getArtistNames)
-        .collect(joining(","));
+        .filter(artistNames -> !artistNames.isBlank())
+        .map(artistNames -> artistNames.split(","))
+        .flatMap(Arrays::stream)
+        .collect(groupingBy(identity(), counting()));
+    return artistCountMap.keySet().stream()
+        .sorted(comparing(artistCountMap::get).reversed())
+        .collect(Collectors.joining(","));
   }
 }

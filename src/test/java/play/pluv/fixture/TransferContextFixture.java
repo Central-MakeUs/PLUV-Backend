@@ -37,11 +37,11 @@ public class TransferContextFixture {
     return List.of(
         new TransferredMusicInContext(new HistoryMusicId(APPLE, "a"), "사랑하게 될거야", "한로로", "imageUrl",
             "isrc"),
-        new TransferredMusicInContext(new HistoryMusicId(APPLE, "b"), "자처", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "b"), "자처", "한로로,창모", "imageUrl",
             "abcd"),
-        new TransferredMusicInContext(new HistoryMusicId(APPLE, "c"), "ㅈㅣㅂ", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "c"), "ㅈㅣㅂ", "아이유", "imageUrl",
             null),
-        new TransferredMusicInContext(new HistoryMusicId(APPLE, "d"), "금붕어", "한로로", "imageUrl",
+        new TransferredMusicInContext(new HistoryMusicId(APPLE, "d"), "금붕어", "한로로,아이유", "imageUrl",
             null)
     );
   }

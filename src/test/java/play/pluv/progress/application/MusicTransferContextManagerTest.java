@@ -33,7 +33,7 @@ import play.pluv.support.ApplicationTest;
 
 class MusicTransferContextManagerTest extends ApplicationTest {
 
-  @Autowired
+  //TODO : 컨텍스트 캐싱될 때 동시 테스트 고려하기
   private MusicTransferContextManager manager;
   @Autowired
   private HistoryRepository historyRepository;
@@ -47,6 +47,14 @@ class MusicTransferContextManagerTest extends ApplicationTest {
   private MemberRepository memberRepository;
 
   private final Long memberId = 10L;
+
+  @BeforeEach
+  void setUp() {
+    manager = new MusicTransferContextManager(
+        historyRepository, transferFailMusicRepository, transferredMusicRepository, feedRepository,
+        memberRepository
+    );
+  }
 
   @Test
   void TransferContext를_저장한다() {

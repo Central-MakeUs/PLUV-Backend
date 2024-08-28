@@ -22,6 +22,7 @@ public class TransferredMusicInContext {
         .imageUrl(imageUrl)
         .title(title)
         .musicId(musicId)
+        .isrcCode(isrcCode)
         .build();
   }
 }

@@ -131,6 +131,8 @@ public class FeedApiTest extends ApiTest {
                 fieldWithPath("data[]").type(ARRAY).description("이전한 음악들"),
                 fieldWithPath("data[].title").type(STRING).description("음악 이름"),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
+                fieldWithPath("data[].isrcCode").type(STRING).description("음악의 isrc Code")
+                    .optional(),
                 fieldWithPath("data[].artistNames").type(STRING).description("가수들")
             )
         ));

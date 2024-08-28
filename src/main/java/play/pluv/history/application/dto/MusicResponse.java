@@ -7,20 +7,21 @@ import play.pluv.history.domain.TransferredMusic;
 public record MusicResponse(
     String title,
     String imageUrl,
-    String artistNames
+    String artistNames,
+    String isrcCode
 ) {
 
   public static MusicResponse from(final TransferredMusic transferredMusic) {
     return new MusicResponse(
         transferredMusic.getTitle(), transferredMusic.getImageUrl(),
-        transferredMusic.getArtistNames()
+        transferredMusic.getArtistNames(), transferredMusic.getIsrcCode()
     );
   }
 
   public static MusicResponse from(final TransferFailMusic transferFailMusic) {
     return new MusicResponse(
         transferFailMusic.getTitle(), transferFailMusic.getImageUrl(),
-        transferFailMusic.getArtistNames()
+        transferFailMusic.getArtistNames(), null
     );
   }
 

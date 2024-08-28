@@ -2,10 +2,12 @@ package play.pluv.api;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
@@ -50,6 +52,29 @@ public class MemberApiTest extends ApiTest {
             )
         ));
     verify(memberService).updateNickname(memberId, nickName);
+  }
+
+  @Test
+  void 멤버_닉네임_조회() throws Exception {
+    final String token = "access Token";
+    final Long memberId = 10L;
+
+    setAccessToken(token, memberId);
+    when(memberService.getNickName(memberId)).thenReturn("nickName");
+
+    mockMvc.perform(get("/member/nickname")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("get-nickname",
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data").type(STRING).description("nickname")
+            )
+        ));
   }
 
   @Test

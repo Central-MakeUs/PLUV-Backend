@@ -6,7 +6,6 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.history.domain.History;
 import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.history.domain.TransferFailMusic;
@@ -40,9 +39,9 @@ public class HistoryEntityFixture {
   public static List<TransferredMusic> 이전한_음악들(final Long historyId) {
     return List.of(
         new TransferredMusic(historyId, "다시 사랑한다 말할까", "imagerUrl", "김동률",
-            new HistoryMusicId(SPOTIFY, "ab")),
+            "isrc", new HistoryMusicId(SPOTIFY, "ab")),
         new TransferredMusic(historyId, "오래된 노래", "imagerUrl", "김동률",
-            new HistoryMusicId(SPOTIFY, "cd"))
+            "isrc", new HistoryMusicId(SPOTIFY, "cd"))
     );
   }
 

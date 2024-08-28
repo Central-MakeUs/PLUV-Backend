@@ -122,6 +122,7 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data[]").type(ARRAY).description("이전하지 못한 음악들"),
                 fieldWithPath("data[].title").type(STRING).description("음악 이름"),
+                fieldWithPath("data[].isrcCode").type(STRING).description("null값").optional(),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
                 fieldWithPath("data[].artistNames").type(STRING).description("가수들")
             )
@@ -155,6 +156,8 @@ public class HistoryApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data[]").type(ARRAY).description("이전한 음악들"),
                 fieldWithPath("data[].title").type(STRING).description("음악 이름"),
+                fieldWithPath("data[].isrcCode").type(STRING).description("음악의 isrc Code")
+                    .optional(),
                 fieldWithPath("data[].imageUrl").type(STRING).description("음악 이미지 url"),
                 fieldWithPath("data[].artistNames").type(STRING).description("가수들")
             )

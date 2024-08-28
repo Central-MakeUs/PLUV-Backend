@@ -28,17 +28,21 @@ public class TransferredMusic extends BaseEntity {
   private String imageUrl;
   @Getter
   private String artistNames;
+  @Getter
+  private String isrcCode;
   @Embedded
   private HistoryMusicId musicId;
 
   @Builder
-  public TransferredMusic(final Long historyId, final String title, final String imageUrl,
-      final String artistNames,
-      final HistoryMusicId musicId) {
+  public TransferredMusic(
+      final Long historyId, final String title, final String imageUrl,
+      final String artistNames, final String isrcCode, final HistoryMusicId musicId
+  ) {
     this.historyId = historyId;
     this.title = title;
     this.imageUrl = imageUrl;
     this.artistNames = artistNames;
+    this.isrcCode = isrcCode;
     this.musicId = musicId;
   }
 }

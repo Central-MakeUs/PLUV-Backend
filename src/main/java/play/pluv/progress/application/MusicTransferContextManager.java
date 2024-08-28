@@ -47,9 +47,9 @@ public class MusicTransferContextManager {
 
   public void initContext(final MusicTransferContext context) {
     final Long memberId = context.getMemberId();
-    if (musicTransferContextMap.containsKey(memberId)) {
-      throw new ProgressException(NOT_FINISHED_TRANSFER_PROGRESS);
-    }
+//    if (musicTransferContextMap.containsKey(memberId)) {
+//      throw new ProgressException(NOT_FINISHED_TRANSFER_PROGRESS);
+//    }
     musicTransferContextMap.put(memberId, context);
   }
 
@@ -91,7 +91,7 @@ public class MusicTransferContextManager {
     );
     transferredMusicRepository.saveAll(transferredMusics);
 
-    musicTransferContextMap.remove(memberId);
+//    musicTransferContextMap.remove(memberId);
     return history.getId();
   }
 }

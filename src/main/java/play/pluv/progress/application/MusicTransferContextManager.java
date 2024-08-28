@@ -1,11 +1,13 @@
 package play.pluv.progress.application;
 
+import static play.pluv.progress.exception.ProgressExceptionType.AlREADY_FINISHED_TRANSFER_PROGRESS;
 import static play.pluv.progress.exception.ProgressExceptionType.NOT_FINISHED_TRANSFER_PROGRESS;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,9 @@ public class MusicTransferContextManager {
   }
 
   public TransferProgress getCurrentProgress(final Long memberId) {
-    return musicTransferContextMap.get(memberId).currentProgress();
+    return Optional.ofNullable(musicTransferContextMap.get(memberId))
+        .map(MusicTransferContext::currentProgress)
+        .orElseThrow(() -> new ProgressException(AlREADY_FINISHED_TRANSFER_PROGRESS));
   }
 
   public MusicTransferContext getContext(final Long memberId) {

@@ -11,6 +11,7 @@ import play.pluv.base.BaseExceptionType;
 @RequiredArgsConstructor
 public enum ProgressExceptionType implements BaseExceptionType {
 
+  AlREADY_FINISHED_TRANSFER_PROGRESS(BAD_REQUEST, "진행중인 이전 작업이 없습니다."),
   NOT_FINISHED_TRANSFER_PROGRESS(BAD_REQUEST, "진행중인 이전 작업이 있습니다.");
 
   private final HttpStatus httpStatus;

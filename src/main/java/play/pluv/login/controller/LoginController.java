@@ -5,7 +5,9 @@ import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +16,9 @@ import play.pluv.login.application.LoginService;
 import play.pluv.login.application.dto.AppleLoginRequest;
 import play.pluv.login.application.dto.GoogleLoginRequest;
 import play.pluv.login.application.dto.LoginResponse;
+import play.pluv.login.application.dto.LoginTypeResponse;
 import play.pluv.login.application.dto.SpotifyLoginRequest;
+import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.security.JwtMemberId;
 import play.pluv.security.JwtProvider;
 
@@ -74,5 +78,11 @@ public class LoginController {
   ) {
     loginService.addOtherLoginWay(APPLE, jwtMemberId.memberId(), loginRequest.idToken());
     return BaseResponse.ok("");
+  }
+
+  @GetMapping("/login/type")
+  public BaseResponse<List<LoginTypeResponse>> getLoginType(final JwtMemberId jwtMemberId) {
+    final List<MusicStreaming> types = loginService.getLoginTypes(jwtMemberId.memberId());
+    return BaseResponse.ok(LoginTypeResponse.createList(types));
   }
 }

@@ -6,10 +6,12 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -20,6 +22,8 @@ import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import play.pluv.login.application.dto.AppleLoginRequest;
 import play.pluv.login.application.dto.GoogleLoginRequest;
@@ -194,6 +198,32 @@ public class LoginApiTest extends ApiTest {
                 fieldWithPath("code").type(NUMBER).description("상태 코드"),
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data").type(STRING).description("")
+            )
+        ));
+  }
+
+  @Test
+  void 연결한_소셜_계정확인하기() throws Exception {
+    final String token = "access Token";
+    final Long memberId = 10L;
+
+    setAccessToken(token, memberId);
+    when(loginService.getLoginTypes(memberId)).thenReturn(List.of(APPLE, YOUTUBE));
+
+    mockMvc.perform(get("/login/type")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("login-type",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            requestHeaders(
+                headerWithName(AUTHORIZATION).description("Bearer Token")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data[]").type(ARRAY).description("로그인 방법 목록"),
+                fieldWithPath("data[].type").type(STRING).description("유저가 등록한 로그인 방법")
             )
         ));
   }

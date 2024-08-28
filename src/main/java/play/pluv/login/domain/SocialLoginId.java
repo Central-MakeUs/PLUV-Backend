@@ -1,5 +1,6 @@
 package play.pluv.login.domain;
 
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -23,7 +24,7 @@ public class SocialLoginId {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  @ManyToOne
+  @ManyToOne(cascade = PERSIST)
   @Getter
   @NotNull
   private Member member;

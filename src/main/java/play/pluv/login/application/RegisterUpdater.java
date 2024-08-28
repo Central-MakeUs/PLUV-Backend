@@ -22,7 +22,7 @@ public class RegisterUpdater {
 
   public Member registerNewMember(final OAuthMemberInfo memberInfo) {
     final NickName nickName = nickNameGenerator.generateNickName();
-    final Member member = new Member(nickName);
+    final Member member = memberRepository.save(new Member(nickName));
 
     final SocialLoginId loginId = SocialLoginId.builder()
         .oauthMemberInfo(memberInfo)
@@ -30,7 +30,7 @@ public class RegisterUpdater {
         .build();
     socialLoginIdRepository.save(loginId);
 
-    return memberRepository.save(member);
+    return member;
   }
 
   public void addOtherLoginSource(final Long memberId, final OAuthMemberInfo memberInfo) {

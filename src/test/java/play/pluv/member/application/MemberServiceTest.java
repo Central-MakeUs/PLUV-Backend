@@ -31,6 +31,16 @@ class MemberServiceTest extends ApplicationTest {
   }
 
   @Test
+  void 닉네임을_조회한다() {
+    final Member member = 멤버_홍혁준(memberRepository);
+
+    final String actual = memberService.getNickName(member.getId());
+
+    assertThat(actual)
+        .isEqualTo(member.getNickName().getNickName());
+  }
+
+  @Test
   void 회원탈퇴한다() {
     final Member member = 멤버_홍혁준(memberRepository);
 

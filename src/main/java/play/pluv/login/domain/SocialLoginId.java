@@ -1,6 +1,5 @@
 package play.pluv.login.domain;
 
-import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -15,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import play.pluv.member.domain.Member;
 import play.pluv.oauth.domain.OAuthMemberInfo;
+import play.pluv.playlist.domain.MusicStreaming;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
@@ -23,7 +23,7 @@ public class SocialLoginId {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  @ManyToOne(cascade = PERSIST)
+  @ManyToOne
   @Getter
   @NotNull
   private Member member;
@@ -35,5 +35,9 @@ public class SocialLoginId {
   public SocialLoginId(final Member member, final OAuthMemberInfo oauthMemberInfo) {
     this.member = member;
     this.oauthMemberInfo = oauthMemberInfo;
+  }
+
+  public MusicStreaming getSource() {
+    return oauthMemberInfo.source();
   }
 }

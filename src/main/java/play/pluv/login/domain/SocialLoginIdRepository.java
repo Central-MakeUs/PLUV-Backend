@@ -1,8 +1,10 @@
 package play.pluv.login.domain;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import play.pluv.member.domain.Member;
 import play.pluv.oauth.domain.OAuthMemberInfo;
 
 public interface SocialLoginIdRepository extends JpaRepository<SocialLoginId, Long> {
@@ -16,4 +18,6 @@ public interface SocialLoginIdRepository extends JpaRepository<SocialLoginId, Lo
   Optional<SocialLoginId> findByOAuthMemberInfo(final OAuthMemberInfo oauthMemberInfo);
 
   Boolean existsByOauthMemberInfo(final OAuthMemberInfo oauthMemberInfo);
+
+  List<SocialLoginId> findAllByMember(final Member member);
 }

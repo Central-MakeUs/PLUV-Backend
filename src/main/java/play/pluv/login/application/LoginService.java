@@ -1,8 +1,10 @@
 package play.pluv.login.application;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import play.pluv.login.domain.SocialLoginId;
 import play.pluv.member.domain.Member;
 import play.pluv.oauth.application.SocialLoginClientComposite;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -35,5 +37,12 @@ public class LoginService {
         .fetchMemberInfo(serverType, key);
 
     registerUpdater.addOtherLoginSource(memberId, memberInfo);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MusicStreaming> getLoginTypes(final Long memberId) {
+    return registerReader.findMemberSocialLoginIds(memberId).stream()
+        .map(SocialLoginId::getSource)
+        .toList();
   }
 }

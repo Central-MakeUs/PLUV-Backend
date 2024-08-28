@@ -42,7 +42,8 @@ public class FeedService {
   }
 
   @Transactional
-  public void cancelBookmark(final Long aLong, final Long id) {
-
+  public void cancelBookmark(final Long memberId, final Long feedId) {
+    final Member member = memberReader.readById(memberId);
+    feedUpdater.cancelBookmarkFeed(member, feedId);
   }
 }

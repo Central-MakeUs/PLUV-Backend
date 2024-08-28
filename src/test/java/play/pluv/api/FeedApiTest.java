@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
@@ -81,7 +82,7 @@ public class FeedApiTest extends ApiTest {
 
     setAccessToken(token, memberId);
 
-    mockMvc.perform(post("/feed/{id}/cancel", feedId)
+    mockMvc.perform(delete("/feed/{id}/save", feedId)
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
         .andDo(document("cancel-bookmark-feed",

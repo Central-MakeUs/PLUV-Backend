@@ -74,6 +74,7 @@ class FeedServiceTest extends ApplicationTest {
   void 북마크된_피드를_취소한다() {
     final Member member = 멤버_홍혁준(memberRepository);
     final Feed savedFeed1 = 저장된_피드_1(feedRepository);
+    feedService.bookmarkFeed(member.getId(), savedFeed1.getId());
 
     feedService.cancelBookmark(member.getId(), savedFeed1.getId());
 

@@ -1,5 +1,7 @@
 package play.pluv.history.application;
 
+import static java.util.Comparator.comparing;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,9 @@ public class HistoryReader {
   private final TransferFailMusicRepository transferFailMusicRepository;
 
   public List<History> readByMemberId(final Long memberId) {
-    return historyRepository.findByMemberId(memberId);
+    return historyRepository.findByMemberId(memberId).stream()
+        .sorted(comparing(History::getCreatedAt).reversed())
+        .toList();
   }
 
   public History readRecentHistoryByMemberId(final Long memberId) {

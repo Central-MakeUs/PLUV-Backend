@@ -1,5 +1,8 @@
 package play.pluv.feed.application.dto;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import play.pluv.feed.domain.Feed;
 
@@ -10,6 +13,7 @@ public record FeedDetailResponse(
     String imageUrl,
     String creatorName,
     Boolean isBookMarked,
+    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
     LocalDate createdAt
 ) {
 

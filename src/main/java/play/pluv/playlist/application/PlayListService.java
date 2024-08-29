@@ -22,4 +22,17 @@ public class PlayListService {
   ) {
     return playListConnectorComposite.getMusics(source, accessToken, playListId);
   }
+
+  public List<PlayListMusic> getOcrPlayListMusics(final List<String> base64EncodedImages) {
+    return List.of(
+        new PlayListMusic(
+            "좋은 날", List.of("아이유"), null,
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
+        ),
+        new PlayListMusic(
+            "ㅈㅣㅂ", List.of("한로로"), null,
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
+        )
+    );
+  }
 }

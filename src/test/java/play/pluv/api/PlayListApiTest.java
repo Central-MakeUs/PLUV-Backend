@@ -24,6 +24,7 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import play.pluv.playlist.application.dto.ApplePlayListMusicReadRequest;
 import play.pluv.playlist.application.dto.ApplePlayListReadRequest;
 import play.pluv.playlist.application.dto.PlayListMusicReadRequest;
+import play.pluv.playlist.application.dto.PlayListOcrRequest;
 import play.pluv.playlist.application.dto.PlayListReadRequest;
 import play.pluv.playlist.domain.PlayList;
 import play.pluv.playlist.domain.PlayListId;
@@ -253,6 +254,40 @@ public class PlayListApiTest extends ApiTest {
             requestFields(
                 fieldWithPath("musicUserToken").type(STRING)
                     .description("apple Music의 music user token")
+            ),
+            responseFields(
+                MUSIC_RESPONSE
+            )
+        ));
+  }
+
+  @Test
+  void ocr로_음악들을_읽는다() throws Exception {
+    final List<PlayListMusic> playListMusics = List.of(
+        new PlayListMusic(
+            "좋은 날", List.of("아이유"), null,
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
+        ),
+        new PlayListMusic(
+            "ㅈㅣㅂ", List.of("한로로"), null,
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
+        )
+    );
+
+    final PlayListOcrRequest request = new PlayListOcrRequest(List.of(
+        "base64EncodedImages1", "base64EncodedImages2"
+    ));
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    when(playListService.getOcrPlayListMusics(any())).thenReturn(playListMusics);
+
+    mockMvc.perform(post("/playlist/ocr/read")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("read-playList-ocr-musics",
+            requestFields(
+                fieldWithPath("base64EncodedImages.[]").type(ARRAY).description("base64 인코딩된 이미지")
             ),
             responseFields(
                 MUSIC_RESPONSE

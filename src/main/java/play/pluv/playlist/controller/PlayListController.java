@@ -17,6 +17,7 @@ import play.pluv.base.BaseResponse;
 import play.pluv.playlist.application.PlayListService;
 import play.pluv.playlist.application.dto.ApplePlayListReadRequest;
 import play.pluv.playlist.application.dto.PlayListMusicResponse;
+import play.pluv.playlist.application.dto.PlayListOcrRequest;
 import play.pluv.playlist.application.dto.PlayListOverViewResponse;
 import play.pluv.playlist.application.dto.PlayListReadRequest;
 
@@ -43,6 +44,15 @@ public class PlayListController {
     final var playLists = playListService.getPlayLists(request.accessToken(), YOUTUBE);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
     return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/ocr/read")
+  public BaseResponse<List<PlayListMusicResponse>> readOcrPlayLists(
+      @Valid @RequestBody final PlayListOcrRequest request
+  ) {
+    final var musics = playListService.getOcrPlayListMusics(request.base64EncodedImages());
+    final List<PlayListMusicResponse> responses = PlayListMusicResponse.createList(musics);
+    return BaseResponse.ok(responses);
   }
 
   @PostMapping("/spotify/{id}/read")

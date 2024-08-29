@@ -1,7 +1,9 @@
 package play.pluv.history.application.dto;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 import static java.util.Comparator.comparing;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.util.List;
 import play.pluv.history.domain.History;
@@ -9,6 +11,7 @@ import play.pluv.history.domain.History;
 public record HistoryListResponse(
     Long id,
     Integer transferredSongCount,
+    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
     LocalDate transferredDate,
     String title,
     String imageUrl

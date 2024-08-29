@@ -3,7 +3,7 @@ package play.pluv.oauth.google.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 record ThumbnailUrls(
-    @JsonProperty("standard")
+    @JsonProperty("high")
     Thumbnail thumbnail
 ) {
 

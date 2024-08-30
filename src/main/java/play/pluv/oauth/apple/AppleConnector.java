@@ -29,6 +29,7 @@ import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.apple.dto.AppleAddMusicRequest;
 import play.pluv.oauth.apple.dto.AppleCreatePlayListRequest;
+import play.pluv.oauth.apple.dto.ApplePlayListResponses;
 import play.pluv.oauth.apple.dto.AppleTokenResponse;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -106,8 +107,15 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
   @Override
   public PlayListId createPlayList(final String musicUserToken, final String name) {
     final AppleCreatePlayListRequest request = AppleCreatePlayListRequest.from(name);
-    return appleApiClient.createPlayList(developerAuthorization, musicUserToken, request)
-        .getId();
+    appleApiClient.createPlayList(developerAuthorization, musicUserToken, request);
+    try {
+      Thread.sleep(1000 * 90);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+    final ApplePlayListResponses playLists = appleApiClient.getPlayList(developerAuthorization,
+        musicUserToken);
+    return playLists.recentPlayListIds();
   }
 
   @Override

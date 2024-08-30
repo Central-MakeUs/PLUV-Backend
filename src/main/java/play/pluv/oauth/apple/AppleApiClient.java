@@ -1,6 +1,7 @@
 package play.pluv.oauth.apple;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,6 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 import play.pluv.oauth.apple.dto.AppleAddMusicRequest;
 import play.pluv.oauth.apple.dto.AppleCreatePlayListRequest;
-import play.pluv.oauth.apple.dto.AppleCreatePlayListResponse;
 import play.pluv.oauth.apple.dto.AppleMusicSongs;
 import play.pluv.oauth.apple.dto.ApplePlayListMusicResponses;
 import play.pluv.oauth.apple.dto.ApplePlayListResponses;
@@ -48,8 +48,8 @@ public interface AppleApiClient {
       @RequestParam("filter[isrc]") final String isrc
   );
 
-  @PostExchange(url = "https://api.music.apple.com/v1/me/library/playlists")
-  AppleCreatePlayListResponse createPlayList(
+  @PostExchange(url = "https://api.music.apple.com/v1/me/library/playlists", contentType = APPLICATION_JSON_VALUE)
+  String createPlayList(
       @RequestHeader("Authorization") final String developerToken,
       @RequestHeader("Music-User-Token") final String musicUserToken,
       @RequestBody final AppleCreatePlayListRequest request

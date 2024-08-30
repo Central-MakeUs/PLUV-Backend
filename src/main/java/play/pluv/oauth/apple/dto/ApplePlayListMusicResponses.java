@@ -1,6 +1,7 @@
 package play.pluv.oauth.apple.dto;
 
 import java.util.List;
+import java.util.Optional;
 import play.pluv.playlist.domain.PlayListMusic;
 
 public record ApplePlayListMusicResponses(
@@ -22,7 +23,7 @@ public record ApplePlayListMusicResponses(
           .title(attributes.name)
           .artistNames(List.of(attributes.artistName))
           .isrcCode(null)
-          .imageUrl(attributes.artwork.url())
+          .imageUrl(attributes.artworkUrl())
           .build();
     }
 
@@ -30,6 +31,11 @@ public record ApplePlayListMusicResponses(
         Artwork artwork, String name, String artistName
     ) {
 
+      public String artworkUrl() {
+        return Optional.ofNullable(artwork)
+            .map(Artwork::url)
+            .orElse("");
+      }
     }
   }
 }

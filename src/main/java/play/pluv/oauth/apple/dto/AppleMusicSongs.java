@@ -1,6 +1,7 @@
 package play.pluv.oauth.apple.dto;
 
 import java.util.List;
+import java.util.Optional;
 import play.pluv.music.domain.DestinationMusic;
 import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
@@ -26,7 +27,7 @@ public record AppleMusicSongs(
           .title(attributes.name)
           .artistNames(List.of(attributes.artistName))
           .isrcCode(attributes.isrc)
-          .imageUrl(attributes().artwork.url())
+          .imageUrl(attributes().artworkUrl())
           .build();
     }
 
@@ -34,6 +35,11 @@ public record AppleMusicSongs(
         String isrc, Artwork artwork, String name, String artistName
     ) {
 
+      public String artworkUrl() {
+        return Optional.ofNullable(artwork)
+            .map(Artwork::url)
+            .orElse("");
+      }
     }
   }
 }

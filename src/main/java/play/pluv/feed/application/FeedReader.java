@@ -23,7 +23,7 @@ public class FeedReader {
   public List<Feed> findAll() {
     return feedRepository.findAll().stream()
         .sorted(comparing(Feed::getCreatedAt).reversed())
-        .sorted(comparing(feed -> feed.getId() > 116))
+        .sorted(comparing(feed -> feed.getId() <= 116))
         .toList();
   }
 

@@ -105,6 +105,9 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
       final PlayListId playListId, final MusicId musicId,
       final String authorization, final Long memberId
   ) {
+    if (musicId.id().isBlank()) {
+      return;
+    }
     final YoutubeAddMusicRequest request = YoutubeAddMusicRequest.of(playListId
         .id(), musicId);
     googleApiClient.addMusic(authorization, request);

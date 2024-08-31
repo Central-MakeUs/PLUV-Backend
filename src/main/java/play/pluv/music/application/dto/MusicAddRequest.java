@@ -13,7 +13,7 @@ public record MusicAddRequest(
     @NotBlank String destinationAccessToken,
     @NotNull List<String> musicIds,
     @Valid @NotNull List<TransferFailMusicRequest> transferFailMusics,
-    @NotBlank String thumbNailUrl,
+    String thumbNailUrl,
     @NotBlank String source
 ) {
 

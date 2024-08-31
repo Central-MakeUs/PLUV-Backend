@@ -94,6 +94,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
         CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
     );
     final var historyMusicIds = musicIds.stream()
+        .filter(musicId -> !musicId.id().isBlank())
         .map(subMusicId -> new HistoryMusicId(subMusicId.musicStreaming(), subMusicId.id()))
         .toList();
     musicTransferContextManager.addTransferredMusics(memberId, historyMusicIds);

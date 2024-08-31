@@ -84,9 +84,9 @@ public class MusicTransferContext {
         .map(artistNames -> artistNames.split(","))
         .flatMap(Arrays::stream)
         .collect(groupingBy(identity(), counting()));
-    return artistCountMap.keySet().stream()
+    final String artistNames = artistCountMap.keySet().stream()
         .sorted(comparing(artistCountMap::get).reversed())
-        .collect(Collectors.joining(","))
-        .substring(0, 100);
+        .collect(Collectors.joining(","));
+    return artistNames.length() > 100 ? artistNames.substring(0, 100) : artistNames;
   }
 }

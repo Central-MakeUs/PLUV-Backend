@@ -86,6 +86,7 @@ public class MusicTransferContext {
         .collect(groupingBy(identity(), counting()));
     return artistCountMap.keySet().stream()
         .sorted(comparing(artistCountMap::get).reversed())
-        .collect(Collectors.joining(","));
+        .collect(Collectors.joining(","))
+        .substring(0, 100);
   }
 }

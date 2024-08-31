@@ -8,6 +8,6 @@ import play.pluv.playlist.infra.dto.OcrMusicResponse;
 
 public interface OcrApiClient {
 
-  @PostExchange("http://192.168.0.22:8000/ocr")
+  @PostExchange("http://192.168.0.26:8000/ocr")
   List<OcrMusicResponse> ocrPlayListImage(@RequestBody final OcrMusicRequest request);
 }

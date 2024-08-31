@@ -15,6 +15,8 @@ import play.pluv.music.domain.DestinationMusics;
 import play.pluv.music.domain.MusicId;
 import play.pluv.oauth.application.SocialLoginClient;
 import play.pluv.oauth.domain.OAuthMemberInfo;
+import play.pluv.oauth.exception.OAuthException;
+import play.pluv.oauth.exception.OAuthExceptionType;
 import play.pluv.oauth.google.dto.GoogleOAuthResponse;
 import play.pluv.oauth.google.dto.YoutubeAddMusicRequest;
 import play.pluv.oauth.google.dto.YoutubeCreatePlayListRequest;
@@ -88,6 +90,9 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
       final Long memberId, final String accessToken, final List<MusicId> musicIds,
       final String playListName
   ) {
+    if (musicIds.size() > 1) {
+      throw new OAuthException(OAuthExceptionType.YOUTUBE_TRANSFER_OVER_SIZE);
+    }
     final PlayListId playListId = createPlayList(accessToken, playListName);
     final String authorization = CREATE_AUTH_HEADER.apply(accessToken);
 

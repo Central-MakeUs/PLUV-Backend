@@ -29,21 +29,21 @@ public class PlayListController {
   private final PlayListService playListService;
 
   @PostMapping("/spotify/read")
-  public ResponseEntity<List<PlayListOverViewResponse>> readSpotifyPlayLists(
+  public BaseResponse<List<PlayListOverViewResponse>> readSpotifyPlayLists(
       @Valid @RequestBody final PlayListReadRequest request
   ) {
     final var playLists = playListService.getPlayLists(request.accessToken(), SPOTIFY);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
-    return ResponseEntity.ok(response);
+    return BaseResponse.ok(response);
   }
 
   @PostMapping("/youtube/read")
-  public ResponseEntity<List<PlayListOverViewResponse>> readYoutubePlayLists(
+  public BaseResponse<List<PlayListOverViewResponse>> readYoutubePlayLists(
       @Valid @RequestBody final PlayListReadRequest request
   ) {
     final var playLists = playListService.getPlayLists(request.accessToken(), YOUTUBE);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
-    return ResponseEntity.ok(response);
+    return BaseResponse.ok(response);
   }
 
   @PostMapping("/ocr/read")
@@ -74,12 +74,12 @@ public class PlayListController {
   }
 
   @PostMapping("/apple/read")
-  public ResponseEntity<List<PlayListOverViewResponse>> readApplePlayLists(
+  public BaseResponse<List<PlayListOverViewResponse>> readApplePlayLists(
       @Valid @RequestBody final ApplePlayListReadRequest request
   ) {
     final var playLists = playListService.getPlayLists(request.musicUserToken(), APPLE);
     final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
-    return ResponseEntity.ok(response);
+    return BaseResponse.ok(response);
   }
 
   @PostMapping("/apple/{id}/read")

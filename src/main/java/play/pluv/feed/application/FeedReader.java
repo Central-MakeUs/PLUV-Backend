@@ -29,6 +29,7 @@ public class FeedReader {
 
   public List<Feed> findBookmarkedFeeds(final Member member) {
     return feedBookmarkRepository.findByMemberIdWithJoin(member.getId()).stream()
+        .sorted(comparing(FeedBookmark::getCreatedAt).reversed())
         .map(FeedBookmark::getFeed)
         .toList();
   }

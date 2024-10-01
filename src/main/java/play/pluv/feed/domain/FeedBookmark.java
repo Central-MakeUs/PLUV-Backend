@@ -9,10 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import play.pluv.base.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class FeedBookmark {
+public class FeedBookmark extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

@@ -34,12 +34,14 @@ import play.pluv.support.ApiTest;
 public class PlayListApiTest extends ApiTest {
 
   private static final FieldDescriptor[] PLAY_LIST_RESPONSE = {
-      fieldWithPath("[]").type(ARRAY).description("플레이리스트 전체"),
-      fieldWithPath("[].thumbNailUrl").type(STRING).description("플레이리스트 섬네일 url"),
-      fieldWithPath("[].songCount").type(NUMBER).description("플레이리스트 안에 있는 곡 수").optional(),
-      fieldWithPath("[].name").type(STRING).description("플레이리스트 이름"),
-      fieldWithPath("[].source").type(STRING).description("플레이리스트 출처"),
-      fieldWithPath("[].id").type(STRING).description("플레이리스트 식별자")};
+      fieldWithPath("code").type(NUMBER).description("상태 코드"),
+      fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+      fieldWithPath("data[]").type(ARRAY).description("플레이리스트 전체"),
+      fieldWithPath("data[].thumbNailUrl").type(STRING).description("플레이리스트 섬네일 url"),
+      fieldWithPath("data[].songCount").type(NUMBER).description("플레이리스트 안에 있는 곡 수").optional(),
+      fieldWithPath("data[].name").type(STRING).description("플레이리스트 이름"),
+      fieldWithPath("data[].source").type(STRING).description("플레이리스트 출처"),
+      fieldWithPath("data[].id").type(STRING).description("플레이리스트 식별자")};
 
   private static final FieldDescriptor[] MUSIC_RESPONSE = {
       fieldWithPath("code").type(NUMBER).description("상태 코드"),

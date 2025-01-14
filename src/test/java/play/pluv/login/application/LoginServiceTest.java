@@ -9,6 +9,7 @@ import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.support.TransactionTemplate;
 import play.pluv.login.domain.SocialLoginId;
 import play.pluv.login.domain.SocialLoginIdRepository;
@@ -28,6 +29,8 @@ class LoginServiceTest extends ApplicationTest {
   private MemberRepository memberRepository;
   @Autowired
   private SocialLoginIdRepository socialLoginIdRepository;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @Test
   void 회원가입하고_토큰을_반환한다() {
@@ -59,5 +62,16 @@ class LoginServiceTest extends ApplicationTest {
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrderElementsOf(expected);
+  }
+
+  @Test
+  void 아이디_패스워드로_테스터_id를_반환한다() {
+    final Long expected = -9999L;
+    final String sql = "INSERT INTO member (id, nick_name, deleted) VALUES (?, ?, ?)";
+    jdbcTemplate.update(sql, expected, "tester", 0);
+    final Long actual = loginService.getTesterId("id", "password");
+
+    assertThat(actual)
+        .isEqualTo(expected);
   }
 }

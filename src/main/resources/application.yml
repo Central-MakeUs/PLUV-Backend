@@ -32,6 +32,9 @@ restClient:
   logging: true
 jwt:
   secret: "local"
+tester:
+  secret: "e05c25000d34852035c8f0a5807bfa8e4ad66b16ce8cba0c68ab1290cce1da0f"
+  id: -9999
 ---
 
 spring:

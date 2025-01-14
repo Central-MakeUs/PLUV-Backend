@@ -22,12 +22,12 @@ import static play.pluv.playlist.domain.MusicStreaming.APPLE;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 import static play.pluv.playlist.domain.MusicStreaming.YOUTUBE;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import play.pluv.login.application.dto.AppleLoginRequest;
 import play.pluv.login.application.dto.GoogleLoginRequest;
 import play.pluv.login.application.dto.SpotifyLoginRequest;
+import play.pluv.login.application.dto.TesterLoginRequest;
 import play.pluv.support.ApiTest;
 
 public class LoginApiTest extends ApiTest {
@@ -224,6 +224,33 @@ public class LoginApiTest extends ApiTest {
                 fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
                 fieldWithPath("data[]").type(ARRAY).description("로그인 방법 목록"),
                 fieldWithPath("data[].type").type(STRING).description("유저가 등록한 로그인 방법")
+            )
+        ));
+  }
+
+  @Test
+  void id_password로_로그인한다() throws Exception {
+    final TesterLoginRequest loginRequest = new TesterLoginRequest("id", "password");
+
+    final String requestBody = objectMapper.writeValueAsString(loginRequest);
+    final Long memberId = 10L;
+
+    when(loginService.getTesterId("id", "password")).thenReturn(memberId);
+    setCreateToken("accessToken", memberId);
+
+    mockMvc.perform(post("/login/tester")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody))
+        .andExpect(status().isOk())
+        .andDo(document("tester-login",
+            requestFields(
+                fieldWithPath("id").type(STRING).description("tester의 id"),
+                fieldWithPath("password").type(STRING).description("tester의 password")
+            ),
+            responseFields(
+                fieldWithPath("code").type(NUMBER).description("상태 코드"),
+                fieldWithPath("msg").type(STRING).description("상태 코드에 해당하는 메시지"),
+                fieldWithPath("data.token").type(STRING).description("로그인 할 떄 쓸 accessToken")
             )
         ));
   }

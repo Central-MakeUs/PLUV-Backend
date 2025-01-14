@@ -18,6 +18,7 @@ import play.pluv.login.application.dto.GoogleLoginRequest;
 import play.pluv.login.application.dto.LoginResponse;
 import play.pluv.login.application.dto.LoginTypeResponse;
 import play.pluv.login.application.dto.SpotifyLoginRequest;
+import play.pluv.login.application.dto.TesterLoginRequest;
 import play.pluv.playlist.domain.MusicStreaming;
 import play.pluv.security.JwtMemberId;
 import play.pluv.security.JwtProvider;
@@ -43,6 +44,15 @@ public class LoginController {
       @Valid @RequestBody final GoogleLoginRequest loginRequest
   ) {
     final var memberId = loginService.createToken(YOUTUBE, loginRequest.idToken());
+    final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
+    return BaseResponse.ok(loginResponse);
+  }
+
+  @PostMapping("/login/tester")
+  public BaseResponse<LoginResponse> loginGoogle(
+      @Valid @RequestBody final TesterLoginRequest loginRequest
+  ) {
+    final var memberId = loginService.getTesterId(loginRequest.id(), loginRequest.password());
     final var loginResponse = new LoginResponse(jwtProvider.createAccessTokenWith(memberId));
     return BaseResponse.ok(loginResponse);
   }

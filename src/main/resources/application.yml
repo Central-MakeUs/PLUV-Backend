@@ -31,7 +31,7 @@ apple:
 restClient:
   logging: true
 jwt:
-  secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="
+  secret: "local"
 ---
 
 spring:

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import play.pluv.login.domain.SocialLoginId;
+import play.pluv.login.domain.TesterLoginValidator;
 import play.pluv.member.domain.Member;
 import play.pluv.oauth.application.SocialLoginClientComposite;
 import play.pluv.oauth.domain.OAuthMemberInfo;
@@ -17,6 +18,7 @@ public class LoginService {
   private final RegisterReader registerReader;
   private final RegisterUpdater registerUpdater;
   private final SocialLoginClientComposite socialLoginClientComposite;
+  private final TesterLoginValidator testerLoginValidator;
 
   @Transactional
   public Long createToken(final MusicStreaming serverType, final String key) {
@@ -44,5 +46,11 @@ public class LoginService {
     return registerReader.findMemberSocialLoginIds(memberId).stream()
         .map(SocialLoginId::getSource)
         .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getTesterId(final String id, final String password) {
+    final Long testerId = testerLoginValidator.getTesterId(id, password);
+    return registerReader.findById(testerId).getId();
   }
 }

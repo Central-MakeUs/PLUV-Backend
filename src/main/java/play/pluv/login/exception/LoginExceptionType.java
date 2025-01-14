@@ -15,6 +15,7 @@ public enum LoginExceptionType implements BaseExceptionType {
 
   PLAYLIST_PROVIDER_NOT_FOUND(NOT_FOUND, "지원하지 않는 스트리밍 서비스입니다"),
   INVALID_ACCESS_TOKEN(UNAUTHORIZED, "토큰이 유효하지 않습니다."),
+  INVALID_TESTER_ID_PASSWORD(UNAUTHORIZED, "유효한 아이디와 비밀번호가 아닙니다."),
   NOT_FOUND_AUTHORIZATION_TOKEN(BAD_REQUEST, "인증 토큰을 찾을 수 없습니다."),
   INVALID_ACCESS_TOKEN_TYPE(BAD_REQUEST, "Access Token Type이 올바르지 않습니다.");
 

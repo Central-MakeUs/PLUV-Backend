@@ -28,4 +28,8 @@ public class RegisterReader {
     final Member member = memberReader.readById(memberId);
     return socialLoginIdRepository.findAllByMember(member);
   }
+
+  public Member findById(final Long memberId) {
+    return memberReader.readById(memberId);
+  }
 }

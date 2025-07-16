@@ -1,7 +1,6 @@
 package play.pluv.music.exception;
 
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 

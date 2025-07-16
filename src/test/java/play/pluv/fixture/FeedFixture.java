@@ -1,6 +1,5 @@
 package play.pluv.fixture;
 
-import play.pluv.feed.application.dto.FeedDetailResponse;
 import play.pluv.feed.domain.Feed;
 import play.pluv.feed.domain.repository.FeedRepository;
 

@@ -12,9 +12,9 @@ import play.pluv.history.domain.HistoryMusicId;
 import play.pluv.member.domain.Member;
 import play.pluv.member.domain.repository.MemberRepository;
 import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.support.ApplicationTest;
 import play.pluv.progress.domain.MusicTransferContext;
 import play.pluv.progress.domain.TransferProgress;
+import play.pluv.support.ApplicationTest;
 
 class ProgressServiceTest extends ApplicationTest {
 

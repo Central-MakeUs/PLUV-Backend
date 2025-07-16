@@ -2,7 +2,6 @@ package play.pluv.feed.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 

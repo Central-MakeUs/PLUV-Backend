@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import play.pluv.base.BaseResponse;
-import play.pluv.security.JwtMemberId;
 import play.pluv.progress.application.ProgressService;
 import play.pluv.progress.application.dto.ProgressResponse;
+import play.pluv.security.JwtMemberId;
 
 @RestController
 @RequiredArgsConstructor

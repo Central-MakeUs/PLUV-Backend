@@ -18,16 +18,4 @@ public enum HistoryExceptionType implements BaseExceptionType {
 
   private final HttpStatus httpStatus;
   private final String message;
-
-  @Override
-  @NotNull
-  public String message() {
-    return message;
-  }
-
-  @Override
-  @NotNull
-  public HttpStatus httpStatus() {
-    return httpStatus;
-  }
 }

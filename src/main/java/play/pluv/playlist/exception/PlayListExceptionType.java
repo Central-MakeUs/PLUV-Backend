@@ -2,11 +2,12 @@ package play.pluv.playlist.exception;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 
+@Getter
 @RequiredArgsConstructor
 public enum PlayListExceptionType implements BaseExceptionType {
 
@@ -14,16 +15,4 @@ public enum PlayListExceptionType implements BaseExceptionType {
 
   private final HttpStatus httpStatus;
   private final String message;
-
-  @NotNull
-  @Override
-  public String message() {
-    return message;
-  }
-
-  @NotNull
-  @Override
-  public HttpStatus httpStatus() {
-    return httpStatus;
-  }
 }

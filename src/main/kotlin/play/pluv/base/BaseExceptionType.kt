@@ -3,6 +3,6 @@ package play.pluv.base
 import org.springframework.http.HttpStatus
 
 interface BaseExceptionType {
-    fun message(): String
-    fun httpStatus(): HttpStatus
+    val message: String
+    val httpStatus: HttpStatus
 }

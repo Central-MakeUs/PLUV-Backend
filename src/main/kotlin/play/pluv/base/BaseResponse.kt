@@ -38,7 +38,7 @@ data class BaseResponse<T>(
         @JvmStatic
         fun exception(exceptionType: BaseExceptionType): BaseResponse<String> {
             return BaseResponse(
-                exceptionType.httpStatus().value(), exceptionType.message(), EXCEPTION_DATA
+                exceptionType.httpStatus.value(), exceptionType.message, EXCEPTION_DATA
             )
         }
 

@@ -17,16 +17,4 @@ public enum ProgressExceptionType implements BaseExceptionType {
 
   private final HttpStatus httpStatus;
   private final String message;
-
-  @NotNull
-  @Override
-  public String message() {
-    return message;
-  }
-
-  @NotNull
-  @Override
-  public HttpStatus httpStatus() {
-    return httpStatus;
-  }
 }

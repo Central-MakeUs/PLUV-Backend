@@ -1,5 +1,6 @@
 package play.pluv.music.exception;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 
@@ -15,13 +16,15 @@ public enum MusicExceptionType implements BaseExceptionType {
     this.message = message;
   }
 
+  @NotNull
   @Override
-  public HttpStatus getHttpStatus() {
-    return httpStatus;
+  public String message() {
+    return message;
   }
 
+  @NotNull
   @Override
-  public String getMessage() {
-    return message;
+  public HttpStatus httpStatus() {
+    return httpStatus;
   }
 }

@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 
@@ -21,4 +22,16 @@ public enum LoginExceptionType implements BaseExceptionType {
 
   private final HttpStatus httpStatus;
   private final String message;
+
+  @NotNull
+  @Override
+  public String message() {
+    return message;
+  }
+
+  @NotNull
+  @Override
+  public HttpStatus httpStatus() {
+    return httpStatus;
+  }
 }

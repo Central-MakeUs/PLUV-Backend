@@ -22,8 +22,8 @@ public class ControllerAdvice {
   @ExceptionHandler(BaseException.class)
   public ResponseEntity<BaseResponse<String>> handleCustomException(final BaseException exception) {
     final BaseExceptionType type = exception.getExceptionType();
-    loggingClientException(exception, type.getMessage());
-    return new ResponseEntity<>(BaseResponse.exception(type), type.getHttpStatus());
+    loggingClientException(exception, type.message());
+    return new ResponseEntity<>(BaseResponse.exception(type), type.httpStatus());
   }
 
   @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentNotValidException.class})

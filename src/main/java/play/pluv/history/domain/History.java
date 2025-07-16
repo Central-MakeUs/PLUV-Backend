@@ -1,7 +1,6 @@
 package play.pluv.history.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static java.util.stream.Collectors.joining;
 import static lombok.AccessLevel.PROTECTED;
 import static play.pluv.history.exception.HistoryExceptionType.HISTORY_NOT_OWNER;
 
@@ -11,16 +10,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import play.pluv.base.BaseEntity;
-import play.pluv.feed.domain.Feed;
 import play.pluv.history.exception.HistoryException;
 import play.pluv.playlist.domain.MusicStreaming;
-import play.pluv.progress.domain.TransferredMusicInContext;
 
 @Entity
 @Getter

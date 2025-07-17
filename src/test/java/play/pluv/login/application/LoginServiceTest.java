@@ -36,7 +36,7 @@ class LoginServiceTest extends ApplicationTest {
   void 회원가입하고_토큰을_반환한다() {
     final String authCode = "authCode";
 
-    final Long id = loginService.createToken(SPOTIFY, authCode);
+    final Long id = loginService.registerAndGetMemberId(SPOTIFY, authCode);
 
     assertThat(memberRepository.findById(id)).isNotEmpty();
   }

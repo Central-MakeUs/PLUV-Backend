@@ -13,7 +13,7 @@ public record LoginTypeResponse(
     if (type == YOUTUBE) {
       return new LoginTypeResponse("google");
     }
-    return new LoginTypeResponse(type.getName());
+    return new LoginTypeResponse(type.name());
   }
 
   public static List<LoginTypeResponse> createList(final List<MusicStreaming> types) {

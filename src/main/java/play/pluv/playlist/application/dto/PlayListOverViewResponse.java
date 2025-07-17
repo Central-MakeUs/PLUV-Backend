@@ -26,8 +26,8 @@ public record PlayListOverViewResponse(
         .thumbNailUrl(playList.getThumbNailUrl())
         .songCount(playList.getSongCount())
         .name(playList.getName())
-        .source(playListId.musicStreaming().getName())
-        .id(playListId.id())
+        .source(playListId.musicStreaming.name())
+        .id(playListId.id)
         .build();
   }
 }

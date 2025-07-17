@@ -24,12 +24,12 @@ public record SpotifyPlayListResponses(
           .map(images -> images.get(0).url())
           .orElse(IMAGE_NULL_RESPONSE);
 
-      return PlayList.builder()
-          .playListId(new PlayListId(id, SPOTIFY))
-          .thumbNailUrl(thumbNailUrl)
-          .songCount(tracks.total())
-          .name(name)
-          .build();
+      return new PlayList(
+          new PlayListId(id, SPOTIFY),
+          name,
+          thumbNailUrl,
+          tracks.total
+      );
     }
 
     public record TrackOverviewResponse(

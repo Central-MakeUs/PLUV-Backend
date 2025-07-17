@@ -153,7 +153,7 @@ public class AppleConnector implements SocialLoginClient, PlayListConnector, Mus
   ) {
     final AppleAddMusicRequest request = AppleAddMusicRequest.of(musicIds);
     appleApiClient.addMusics(
-        developerAuthorization, musicUserToken, playlistId.id(), request
+        developerAuthorization, musicUserToken, playlistId.id, request
     );
     final var historyMusicIds = musicIds.stream()
         .map(subMusicId -> new HistoryMusicId(subMusicId.musicStreaming(), subMusicId.id()))

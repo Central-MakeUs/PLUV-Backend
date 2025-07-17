@@ -92,12 +92,12 @@ public class PlayListApiTest extends ApiTest {
             new PlayList(
                 new PlayListId("id1", YOUTUBE),
                 "테스트용 플레이리스트 #1",
-                "https://testImage.com/testImage.png", null
+                "https://testImage.com/testImage.png"
             ),
             new PlayList(
                 new PlayListId("id2", YOUTUBE),
                 "테스트용 플레이리스트 #2",
-                "https://testImage.com/testImage.png", null
+                "https://testImage.com/testImage.png"
             )
         );
 
@@ -125,12 +125,12 @@ public class PlayListApiTest extends ApiTest {
             new PlayList(
                 new PlayListId("id1", APPLE),
                 "테스트용 플레이리스트",
-                "https://testImage.com/testImage.png", null
+                "https://testImage.com/testImage.png"
             ),
             new PlayList(
                 new PlayListId("id2", APPLE),
                 "테스트용 플레이리스트",
-                "https://testImage.com/testImage.png", null
+                "https://testImage.com/testImage.png"
             )
         );
 

@@ -19,8 +19,8 @@ public record HistoryDetailResponse(
         history.getTransferredSongCount(),
         history.getTitle(),
         history.getThumbNailUrl(),
-        history.getSource().getName(),
-        history.getDestination().getName()
+        history.getSource().name(),
+        history.getDestination().name()
     );
   }
 }

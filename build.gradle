@@ -98,3 +98,5 @@ tasks.withType(GenerateSwaggerUI) {
 bootJar {
     dependsOn(':openapi3')
 }
+compileKotlin {
+}

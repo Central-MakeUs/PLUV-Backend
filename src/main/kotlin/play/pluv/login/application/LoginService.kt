@@ -18,7 +18,7 @@ open class LoginService(
     open fun registerAndGetMemberId(serverType: MusicStreaming, key: String): Long {
         val memberInfo = socialLoginClientComposite.fetchMemberInfo(serverType, key)
         val member = registerReader.findByOAuthMemberInfo(memberInfo)
-            .orElseGet { registerUpdater.registerNewMember(memberInfo) }
+            ?: registerUpdater.registerNewMember(oAuthMemberInfo = memberInfo)
 
         return member.identifier
     }

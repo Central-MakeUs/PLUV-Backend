@@ -21,7 +21,7 @@ class Member(
     var nickName: NickName = nickName
         private set
 
-    protected constructor() : this(NickName(""))
+    constructor() : this(NickName(""))
 
     val identifier
         get() = id!!

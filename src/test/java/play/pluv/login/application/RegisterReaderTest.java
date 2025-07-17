@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.pluv.fixture.MemberFixture.멤버_홍혁준;
 import static play.pluv.playlist.domain.MusicStreaming.SPOTIFY;
 
-import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,9 @@ class RegisterReaderTest extends ApplicationTest {
     void 가입된_멤버가_없는_경우() {
       final OAuthMemberInfo oAuthMemberInfo = new OAuthMemberInfo("1234", SPOTIFY);
 
-      final Optional<Member> member = registerReader.findByOAuthMemberInfo(oAuthMemberInfo);
+      final Member member = registerReader.findByOAuthMemberInfo(oAuthMemberInfo);
 
-      assertThat(member).isEmpty();
+      assertThat(member).isNull();
     }
 
     @Test
@@ -39,9 +38,9 @@ class RegisterReaderTest extends ApplicationTest {
       final SocialLoginId socialLoginId = new SocialLoginId(멤버_홍혁준(), oAuthMemberInfo);
       socialLoginIdRepository.save(socialLoginId);
 
-      final Optional<Member> member = registerReader.findByOAuthMemberInfo(oAuthMemberInfo);
+      final Member member = registerReader.findByOAuthMemberInfo(oAuthMemberInfo);
 
-      assertThat(member).isNotEmpty();
+      assertThat(member).isNotNull();
     }
   }
 

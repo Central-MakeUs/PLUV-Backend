@@ -49,7 +49,7 @@ class LoginController(
     @GetMapping("/login/type")
     fun getLoginType(memberId: JwtMemberId): BaseResponse<List<LoginTypeResponse>> {
         val types = loginService.getLoginTypes(memberId.memberId)
-        return BaseResponse.ok(LoginTypeResponse.createList(types))
+        return BaseResponse.ok(LoginTypeResponse.Companion.createList(types))
     }
 
     @PostMapping("/login/apple/add")

@@ -67,14 +67,14 @@ public class MusicTransferContext {
   public Feed createFeed(final String creatorName) {
     final String artistNames = extractArtistNames(transferredMusics);
 
-    return Feed.builder()
-        .memberId(memberId)
-        .title(title)
-        .creatorName(creatorName)
-        .artistNames(artistNames)
-        .thumbNailUrl(thumbNailUrl)
-        .songCount(transferredMusics.size())
-        .build();
+    return new Feed(
+        memberId,
+        title,
+        creatorName,
+        artistNames,
+        thumbNailUrl,
+        transferredMusics.size()
+    );
   }
 
   private String extractArtistNames(final List<TransferredMusicInContext> transferredMusics) {

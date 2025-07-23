@@ -21,8 +21,6 @@ class Member(
     var nickName: NickName = nickName
         private set
 
-    constructor() : this(NickName(""))
-
     val identifier
         get() = id!!
 

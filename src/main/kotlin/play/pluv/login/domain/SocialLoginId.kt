@@ -24,11 +24,6 @@ class SocialLoginId(
     var oauthMemberInfo: OAuthMemberInfo = oauthMemberInfo
         private set
 
-    protected constructor() : this(
-        member = Member(),
-        oauthMemberInfo = OAuthMemberInfo.blankMemberInfo()
-    )
-
     val source: MusicStreaming
         get() = oauthMemberInfo.source
 }

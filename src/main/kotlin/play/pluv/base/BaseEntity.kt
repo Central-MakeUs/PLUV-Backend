@@ -22,5 +22,5 @@ abstract class BaseEntity {
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null
 
-    fun getCreatedAt(): LocalDateTime? = createdAt
+    fun getCreatedAt(): LocalDateTime = requireNotNull(createdAt)
 }

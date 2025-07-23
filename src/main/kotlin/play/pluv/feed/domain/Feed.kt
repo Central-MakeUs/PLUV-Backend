@@ -19,6 +19,7 @@ class Feed(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @get:JvmName("getNullableId")
     var id: Long? = null
     var memberId: Long = memberId
         private set
@@ -34,6 +35,8 @@ class Feed(
         private set
     var songCount: Int = songCount
         private set
+
+    fun getId(): Long = requireNotNull(id)
 
     constructor(
         id: Long,

@@ -22,7 +22,7 @@ class Member(
         private set
 
     val identifier
-        get() = id!!
+        get() = requireNotNull(id)
 
     fun updateNickName(nickName: NickName) {
         this.nickName = nickName

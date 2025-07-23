@@ -19,12 +19,12 @@ public record ApplePlayListMusicResponses(
   ) {
 
     private PlayListMusic toPlayListMusic() {
-      return PlayListMusic.builder()
-          .title(attributes.name)
-          .artistNames(List.of(attributes.artistName))
-          .isrcCode(null)
-          .imageUrl(attributes.artworkUrl())
-          .build();
+      return new PlayListMusic(
+          attributes.name,
+          List.of(attributes.artistName),
+          attributes.artworkUrl(),
+          null
+      );
     }
 
     private record MusicAttributes(

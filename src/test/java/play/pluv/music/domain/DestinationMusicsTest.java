@@ -17,7 +17,7 @@ class DestinationMusicsTest {
     void 포함되어_있는_경우() {
       final DestinationMusics destinationMusics = 한로로_집_아이유_좋은날();
       final PlayListMusic playListMusic
-          = new PlayListMusic("good day", List.of("iu"), "KRDDAFA3", "image");
+          = new PlayListMusic("good day", List.of("iu"), "image", "KRDDAFA3");
 
       final Boolean result = destinationMusics.containEqual(playListMusic);
 
@@ -29,7 +29,7 @@ class DestinationMusicsTest {
     void 포함되어_있지_않은_경우() {
       final DestinationMusics destinationMusics = 한로로_집_아이유_좋은날();
       final PlayListMusic playListMusic
-          = new PlayListMusic("always awake", List.of("재지팩트"), null, "image");
+          = new PlayListMusic("always awake", List.of("재지팩트"), "image", null);
 
       final Boolean result = destinationMusics.containEqual(playListMusic);
 

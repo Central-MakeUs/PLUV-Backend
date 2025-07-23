@@ -27,12 +27,12 @@ public record MusicSearchRequest(
           .map(String::trim)
           .toList();
 
-      return PlayListMusic.builder()
-          .title(title)
-          .artistNames(names)
-          .imageUrl(imageUrl)
-          .isrcCode(isrcCode)
-          .build();
+      return new PlayListMusic(
+          title,
+          names,
+          imageUrl,
+          isrcCode
+      );
     }
   }
 }

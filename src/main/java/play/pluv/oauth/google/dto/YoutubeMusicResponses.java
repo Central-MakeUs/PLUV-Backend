@@ -20,11 +20,12 @@ public record YoutubeMusicResponses(
   ) {
 
     private PlayListMusic toPlayListMusic() {
-      return PlayListMusic.builder()
-          .imageUrl(snippet.thumbnails().getUrl())
-          .title(snippet().title())
-          .artistNames(List.of())
-          .build();
+      return new PlayListMusic(
+          snippet().title(),
+          List.of(),
+          snippet.thumbnails().getUrl(),
+          null
+      );
     }
   }
 }

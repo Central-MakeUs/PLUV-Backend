@@ -194,12 +194,14 @@ public class PlayListApiTest extends ApiTest {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
-                "좋은 날", List.of("아이유"), null,
-                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
+                "좋은 날", List.of("아이유"),
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1",
+                null
             ),
             new PlayListMusic(
-                "ㅈㅣㅂ", List.of("hanroro"), null,
-                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
+                "ㅈㅣㅂ", List.of("hanroro"),
+                "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314",
+                null
             )
         );
 
@@ -231,12 +233,14 @@ public class PlayListApiTest extends ApiTest {
     final List<PlayListMusic> playListMusics =
         List.of(
             new PlayListMusic(
-                "Supernatural", List.of("뉴진스"), null,
-                "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ab/ce/d6/abced6f6-2b90-c230-eb4b-e146734a3a22/196922907821_Cover.jpg/{w}x{h}bb.jpg"
+                "Supernatural", List.of("뉴진스"),
+                "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ab/ce/d6/abced6f6-2b90-c230-eb4b-e146734a3a22/196922907821_Cover.jpg/{w}x{h}bb.jpg",
+                null
             ),
             new PlayListMusic(
-                "Flex", List.of("기리보이, 키드밀리, NO:EL & 스윙스"), null,
-                "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/96/7a/8a/967a8a1e-8630-5b3e-13be-aca62500d91b/cover-_Kid_Milli_NOEL_DS.jpg/{w}x{h}bb.jpg"
+                "Flex", List.of("기리보이, 키드밀리, NO:EL & 스윙스"),
+                "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/96/7a/8a/967a8a1e-8630-5b3e-13be-aca62500d91b/cover-_Kid_Milli_NOEL_DS.jpg/{w}x{h}bb.jpg",
+                null
             )
         );
 
@@ -267,12 +271,14 @@ public class PlayListApiTest extends ApiTest {
   void ocr로_음악들을_읽는다() throws Exception {
     final List<PlayListMusic> playListMusics = List.of(
         new PlayListMusic(
-            "좋은 날", List.of("아이유"), null,
-            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1"
+            "좋은 날", List.of("아이유"),
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a24943d1",
+            null
         ),
         new PlayListMusic(
-            "ㅈㅣㅂ", List.of("한로로"), null,
-            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314"
+            "ㅈㅣㅂ", List.of("한로로"),
+            "https://i.scdn.co/image/ab67616d00001e0215cf3110f19687b1a22314",
+            null
         )
     );
 

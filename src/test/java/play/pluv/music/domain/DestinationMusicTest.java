@@ -19,8 +19,8 @@ class DestinationMusicTest {
 
       @Test
       void ISRC가_둘다_있는경우() {
-        final PlayListMusic sourceMusic = new PlayListMusic("좋은 날", List.of("아이유"), "KRA381001057",
-            "imageUrl");
+        final PlayListMusic sourceMusic = new PlayListMusic("좋은 날", List.of("아이유"),
+            "imageUrl", "KRA381001057");
         final DestinationMusic destinationMusic = new DestinationMusic(
             new MusicId(SPOTIFY, "nljewu5"), List.of("IU"), "Good Day", "imageUrl", "KRA381001057"
         );
@@ -32,8 +32,8 @@ class DestinationMusicTest {
 
       @Test
       void PlayListMusic의_Isrc가_없는_경우() {
-        final PlayListMusic sourceMusic = new PlayListMusic("좋은 날", List.of("아이유"), null,
-            "imageUrl");
+        final PlayListMusic sourceMusic = new PlayListMusic("좋은 날", List.of("아이유"),
+            "imageUrl", null);
         final DestinationMusic destinationMusic = new DestinationMusic(
             new MusicId(SPOTIFY, "nljewu5"), List.of("IU"), "Good Day", "imageUrl", "KRA381001057"
         );
@@ -59,8 +59,8 @@ class DestinationMusicTest {
 
     @Test
     void Isrc가_없는경우_이름과_가수를_비교한다() {
-      final PlayListMusic sourceMusic = new PlayListMusic("SPOT!", List.of("제니", "지코"), null,
-          "imageUrl");
+      final PlayListMusic sourceMusic = new PlayListMusic("SPOT!", List.of("제니", "지코"),
+          "imageUrl", null);
       final DestinationMusic destinationMusic = new DestinationMusic(
           new MusicId(SPOTIFY, "dfd124"), List.of("지코", "제니"), "SPOT!", "imageUrl", null
       );

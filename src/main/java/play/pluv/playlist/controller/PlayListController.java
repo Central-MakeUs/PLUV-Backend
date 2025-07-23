@@ -31,8 +31,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListOverViewResponse>> readSpotifyPlayLists(
       @Valid @RequestBody final PlayListReadRequest request
   ) {
-    final var playLists = playListService.getPlayLists(request.accessToken(), SPOTIFY);
-    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
+    final var playLists = playListService.getPlayLists(request.getAccessToken(), SPOTIFY);
+    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.Companion.createList(playLists);
     return BaseResponse.ok(response);
   }
 
@@ -40,8 +40,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListOverViewResponse>> readYoutubePlayLists(
       @Valid @RequestBody final PlayListReadRequest request
   ) {
-    final var playLists = playListService.getPlayLists(request.accessToken(), YOUTUBE);
-    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
+    final var playLists = playListService.getPlayLists(request.getAccessToken(), YOUTUBE);
+    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.Companion.createList(playLists);
     return BaseResponse.ok(response);
   }
 
@@ -49,8 +49,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListMusicResponse>> readOcrPlayLists(
       @Valid @RequestBody final PlayListOcrRequest request
   ) {
-    final var musics = playListService.getOcrPlayListMusics(request.base64EncodedImages());
-    final List<PlayListMusicResponse> responses = PlayListMusicResponse.createList(musics);
+    final var musics = playListService.getOcrPlayListMusics(request.getBase64EncodedImages());
+    final List<PlayListMusicResponse> responses = PlayListMusicResponse.Companion.createList(musics);
     return BaseResponse.ok(responses);
   }
 
@@ -58,8 +58,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListMusicResponse>> readSpotifyMusics(
       @Valid @RequestBody final PlayListReadRequest request, @PathVariable final String id
   ) {
-    final var musics = playListService.getPlayListMusics(id, request.accessToken(), SPOTIFY);
-    final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
+    final var musics = playListService.getPlayListMusics(id, request.getAccessToken(), SPOTIFY);
+    final List<PlayListMusicResponse> response = PlayListMusicResponse.Companion.createList(musics);
     return BaseResponse.ok(response);
   }
 
@@ -67,8 +67,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListMusicResponse>> readYoutubeMusics(
       @Valid @RequestBody final PlayListReadRequest request, @PathVariable final String id
   ) {
-    final var musics = playListService.getPlayListMusics(id, request.accessToken(), YOUTUBE);
-    final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
+    final var musics = playListService.getPlayListMusics(id, request.getAccessToken(), YOUTUBE);
+    final List<PlayListMusicResponse> response = PlayListMusicResponse.Companion.createList(musics);
     return BaseResponse.ok(response);
   }
 
@@ -76,8 +76,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListOverViewResponse>> readApplePlayLists(
       @Valid @RequestBody final ApplePlayListReadRequest request
   ) {
-    final var playLists = playListService.getPlayLists(request.musicUserToken(), APPLE);
-    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.createList(playLists);
+    final var playLists = playListService.getPlayLists(request.getMusicUserToken(), APPLE);
+    final List<PlayListOverViewResponse> response = PlayListOverViewResponse.Companion.createList(playLists);
     return BaseResponse.ok(response);
   }
 
@@ -85,8 +85,8 @@ public class PlayListController {
   public BaseResponse<List<PlayListMusicResponse>> readAppleMusics(
       @Valid @RequestBody final ApplePlayListReadRequest request, @PathVariable final String id
   ) {
-    final var musics = playListService.getPlayListMusics(id, request.musicUserToken(), APPLE);
-    final List<PlayListMusicResponse> response = PlayListMusicResponse.createList(musics);
+    final var musics = playListService.getPlayListMusics(id, request.getMusicUserToken(), APPLE);
+    final List<PlayListMusicResponse> response = PlayListMusicResponse.Companion.createList(musics);
     return BaseResponse.ok(response);
   }
 }

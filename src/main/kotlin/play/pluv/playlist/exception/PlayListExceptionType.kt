@@ -1,7 +1,5 @@
 package play.pluv.playlist.exception
 
-import lombok.Getter
-import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import play.pluv.base.BaseExceptionType
 

@@ -1,8 +1,10 @@
 package play.pluv.music.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import play.pluv.base.BaseExceptionType;
 
+@Getter
 public enum MusicExceptionType implements BaseExceptionType {
 
   MUSIC_STREAMING_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 음원 서비스를 찾을 수 없습니다.");
@@ -13,15 +15,5 @@ public enum MusicExceptionType implements BaseExceptionType {
   MusicExceptionType(final HttpStatus httpStatus, final String message) {
     this.httpStatus = httpStatus;
     this.message = message;
-  }
-
-  @Override
-  public HttpStatus getHttpStatus() {
-    return httpStatus;
-  }
-
-  @Override
-  public String getMessage() {
-    return message;
   }
 }

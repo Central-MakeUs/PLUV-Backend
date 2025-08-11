@@ -38,7 +38,7 @@ public class LoginApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
 
-    when(loginService.createToken(SPOTIFY, "accessToken")).thenReturn(2L);
+    when(loginService.registerAndGetMemberId(SPOTIFY, "accessToken")).thenReturn(2L);
     setCreateToken("accessToken", 2L);
 
     mockMvc.perform(post("/login/spotify")
@@ -63,7 +63,7 @@ public class LoginApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
 
-    when(loginService.createToken(YOUTUBE, "idToken")).thenReturn(2L);
+    when(loginService.registerAndGetMemberId(YOUTUBE, "idToken")).thenReturn(2L);
     setCreateToken("accessToken", 2L);
 
     mockMvc.perform(post("/login/google")
@@ -90,7 +90,7 @@ public class LoginApiTest extends ApiTest {
 
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
 
-    when(loginService.createToken(APPLE, "idToken")).thenReturn(2L);
+    when(loginService.registerAndGetMemberId(APPLE, "idToken")).thenReturn(2L);
     setCreateToken("idToken", 2L);
 
     mockMvc.perform(post("/login/apple")

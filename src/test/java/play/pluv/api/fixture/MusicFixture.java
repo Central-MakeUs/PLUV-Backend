@@ -113,12 +113,18 @@ public class MusicFixture {
 
   public static List<PlayListMusic> 이전되지_못한_음악_목록() {
     return List.of(
-        PlayListMusic.builder()
-            .title("레이디버드").imageUrl("imageUrl").isrcCode(null).artistNames(List.of("잔나비"))
-            .build(),
-        PlayListMusic.builder()
-            .title("하루살이").imageUrl("imageUrl").isrcCode(null).artistNames(List.of("한로로"))
-            .build()
+        new PlayListMusic(
+            "레이디버드",
+            List.of("잔나비"),
+            "imageUrl",
+            null
+        ),
+        new PlayListMusic(
+            "하루살이",
+            List.of("한로로"),
+            "imageUrl",
+            null
+        )
     );
   }
 }

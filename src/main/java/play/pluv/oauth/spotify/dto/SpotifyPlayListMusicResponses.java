@@ -18,12 +18,12 @@ public record SpotifyPlayListMusicResponses(
   ) {
 
     public PlayListMusic toMusic() {
-      return PlayListMusic.builder()
-          .artistNames(track.getArtistNames())
-          .isrcCode(track.getIsrcCode())
-          .title(track.name())
-          .imageUrl(track.getImageUrl())
-          .build();
+      return new PlayListMusic(
+          track.name(),
+          track.getArtistNames(),
+          track.getImageUrl(),
+          track.getIsrcCode()
+      );
     }
   }
 }

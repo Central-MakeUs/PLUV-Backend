@@ -18,7 +18,7 @@ public record MusicAddRequest(
 ) {
 
   public MusicStreaming toSource() {
-    return MusicStreaming.from(source);
+    return MusicStreaming.Companion.from(source);
   }
 
   public List<TransferFailMusicInContext> toTransferFailMusics() {

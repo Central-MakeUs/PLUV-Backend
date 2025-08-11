@@ -21,11 +21,11 @@ public record YoutubePlayListResponses(
   ) {
 
     private PlayList toPlayList() {
-      return PlayList.builder()
-          .name(snippet.title)
-          .thumbNailUrl(snippet.thumbnails.getUrl())
-          .playListId(new PlayListId(id, YOUTUBE))
-          .build();
+      return new PlayList(
+          new PlayListId(id, YOUTUBE),
+          snippet.title,
+          snippet.thumbnails.getUrl()
+      );
     }
 
     private record YoutubePlayListDetail(

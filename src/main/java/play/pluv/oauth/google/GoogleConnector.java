@@ -108,8 +108,7 @@ public class GoogleConnector implements SocialLoginClient, PlayListConnector, Mu
     if (musicId.id().isBlank()) {
       return;
     }
-    final YoutubeAddMusicRequest request = YoutubeAddMusicRequest.of(playListId
-        .id(), musicId);
+    final YoutubeAddMusicRequest request = YoutubeAddMusicRequest.of(playListId.id, musicId);
     googleApiClient.addMusic(authorization, request);
     final HistoryMusicId historyId = new HistoryMusicId(musicId.musicStreaming(), musicId.id());
     musicTransferContextManager.addTransferredMusics(memberId, List.of(historyId));

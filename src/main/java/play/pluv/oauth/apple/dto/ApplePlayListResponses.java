@@ -36,11 +36,11 @@ public record ApplePlayListResponses(
     }
 
     private PlayList toPlayList() {
-      return PlayList.builder()
-          .playListId(new PlayListId(id, APPLE))
-          .name(attributes.name)
-          .thumbNailUrl(attributes.artworkUrl())
-          .build();
+      return new PlayList(
+          new PlayListId(id, APPLE),
+          attributes.name,
+          attributes.artworkUrl()
+      );
     }
 
     private record PlayListAttributes(

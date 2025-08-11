@@ -91,7 +91,7 @@ public class SpotifyConnector implements PlayListConnector, MusicExplorer, Socia
   ) {
     final SpotifyAddMusicRequest request = SpotifyAddMusicRequest.from(musicIds);
     spotifyApiClient.addMusics(
-        CREATE_AUTH_HEADER.apply(accessToken), playlistId.id(), request
+        CREATE_AUTH_HEADER.apply(accessToken), playlistId.id, request
     );
     final var historyMusicIds = musicIds.stream()
         .filter(musicId -> !musicId.id().isBlank())

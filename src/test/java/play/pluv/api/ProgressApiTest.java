@@ -13,8 +13,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import play.pluv.support.ApiTest;
 import play.pluv.progress.domain.TransferProgress;
+import play.pluv.support.ApiTest;
 
 public class ProgressApiTest extends ApiTest {
 

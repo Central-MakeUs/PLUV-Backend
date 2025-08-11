@@ -11,8 +11,8 @@ import play.pluv.music.application.dto.MusicSearchRequest.MusicQuery;
 import play.pluv.music.application.dto.MusicSearchResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.DestinationMusicResponse;
 import play.pluv.music.application.dto.MusicSearchResponse.SourceMusicResponse;
-import play.pluv.support.ApplicationTest;
 import play.pluv.progress.application.MusicTransferContextManager;
+import play.pluv.support.ApplicationTest;
 
 class MusicServiceTest extends ApplicationTest {
 
